@@ -17,21 +17,28 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>如何进行技术面试（面试官视角） | Yoga Blog</title>
-  <meta name="description" content="说起来在我第一次做面试官之前，并没有人教过我应该怎么做，我则一直将面试视作通过一小时左右的沟通，对候选人形成一个整体的印象，最后给出一个主观的评价的过程。在这么多次的面试中，我也总结出了一些经验可以和大家分享。 验证简历真实性首先花一些时间聊一聊简历上提到的项目，请对方进一步介绍这个项目的业务、自己在其中承担的职责和遇到的问题。然后针对其中自己了解的部分提几个问题，如「据我所知这类项目的难点是某某">
+  <title>如何在 Django REST Framework 中使用 JWT 身份验证 | Yoga Blog</title>
+  <meta name="description" content="JWT 代表JSON Web Token，它是客户端&#x2F;服务器应用程序使用的一种身份验证策略，其中客户端是使用 JavaScript 和一些前端框架（如 Angular、React 或 VueJS）的 Web 应用程序。 JWT 是如何工作的？JWT 只是一个授权令牌，应该包含在所有请求中： 1curl http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;hello&#x2F; -H &amp;#x27;Autho">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何进行技术面试（面试官视角）">
-<meta property="og:url" content="http://example.com/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/index.html">
+<meta property="og:title" content="如何在 Django REST Framework 中使用 JWT 身份验证">
+<meta property="og:url" content="http://example.com/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/index.html">
 <meta property="og:site_name" content="Yoga Blog">
-<meta property="og:description" content="说起来在我第一次做面试官之前，并没有人教过我应该怎么做，我则一直将面试视作通过一小时左右的沟通，对候选人形成一个整体的印象，最后给出一个主观的评价的过程。在这么多次的面试中，我也总结出了一些经验可以和大家分享。 验证简历真实性首先花一些时间聊一聊简历上提到的项目，请对方进一步介绍这个项目的业务、自己在其中承担的职责和遇到的问题。然后针对其中自己了解的部分提几个问题，如「据我所知这类项目的难点是某某">
+<meta property="og:description" content="JWT 代表JSON Web Token，它是客户端&#x2F;服务器应用程序使用的一种身份验证策略，其中客户端是使用 JavaScript 和一些前端框架（如 Angular、React 或 VueJS）的 Web 应用程序。 JWT 是如何工作的？JWT 只是一个授权令牌，应该包含在所有请求中： 1curl http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;hello&#x2F; -H &amp;#x27;Autho">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-28T03:49:29.000Z">
-<meta property="article:modified_time" content="2023-05-27T03:56:32.439Z">
+<meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/drf-web.png">
+<meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/jwt-obtain-token.png">
+<meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/jwt-bearer.png">
+<meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/jwt-expired.png">
+<meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/jwt-refresh-token.png">
+<meta property="article:published_time" content="2023-05-28T07:46:05.000Z">
+<meta property="article:modified_time" content="2023-05-28T07:48:37.239Z">
 <meta property="article:author" content="Yoga">
-<meta property="article:tag" content="面试">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="rest_framework">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://simpleisbetterthancomplex.com/media/2018/12/drf-web.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/index.html">
+  <link rel="canonical" href="http://example.com/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Yoga Blog" type="application/atom+xml">
   
@@ -331,14 +338,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-如何进行技术面试（面试官视角）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-如何在-Django-REST-Framework-中使用-JWT-身份验证" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      如何进行技术面试（面试官视角）
+      如何在 Django REST Framework 中使用 JWT 身份验证
     </h1>
   
 
@@ -346,29 +353,29 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/" class="article-date">
-	  <time datetime="2023-02-28T03:49:29.000Z" itemprop="datePublished">2023-02-28</time>
+	<a href="/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/" class="article-date">
+	  <time datetime="2023-05-28T07:46:05.000Z" itemprop="datePublished">2023-05-28</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>►<a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/Django/">Django</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a>
+	<a class="article-tag-link-link" href="/tags/django/" rel="tag">django</a>, <a class="article-tag-link-link" href="/tags/rest-framework/" rel="tag">rest_framework</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.6k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.2k(字)</span>
 	
 	
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
@@ -378,22 +385,80 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>说起来在我第一次做面试官之前，并没有人教过我应该怎么做，我则一直将面试视作通过一小时左右的沟通，对候选人形成一个整体的印象，<br>最后给出一个主观的评价的过程。在这么多次的面试中，我也总结出了一些经验可以和大家分享。</p>
-<h4 id="验证简历真实性"><a href="#验证简历真实性" class="headerlink" title="验证简历真实性"></a>验证简历真实性</h4><p>首先花一些时间聊一聊简历上提到的项目，请对方进一步介绍这个项目的业务、自己在其中承担的职责和遇到的问题。然后针对其中自己了解<br>的部分提几个问题，如「据我所知这类项目的难点是某某方面，请问你是否有遇到、是如何解决的」，确认对方的项目经验是否真实、是否比<br>较深度地参与了项目。</p>
-<h4 id="围绕简历提问"><a href="#围绕简历提问" class="headerlink" title="围绕简历提问"></a>围绕简历提问</h4><p>尽量提问对方了解和擅长的话题，让对方有足够的表达机会，发挥出正常水平，考察候选人擅长的部分要比不擅长的部分更有价值。</p>
-<h4 id="开放性问题"><a href="#开放性问题" class="headerlink" title="开放性问题"></a>开放性问题</h4><p>避免问有标准答案的问题，而是可以问「遇到某种情况时可能是什么原因、你会怎么做」或「请解释一下某个事物是如何工作的」这样开放性<br>的问题，给对方足够的发挥空间、主动提到一些自己的知识和经验。</p>
-<p>也许有些候选人不喜欢这样的问题，认为缺少安全感、不知道该说什么，但我觉得开放性问题才有足够的区分度，才能在短时间内对候选人形<br>成立体的印象。我们可以在候选人实在不知道从何说起时，对问题再做进一步的解释和提示。</p>
-<h4 id="围绕话题由浅入深"><a href="#围绕话题由浅入深" class="headerlink" title="围绕话题由浅入深"></a>围绕话题由浅入深</h4><p>应该针对同一话题准备多个难度逐步增加的问题，让对方回答时思路能够相对流畅，更容易考察对方在这一话题上的深度；反过来应该避免大<br>量零散、无联系、无难度区分的小问题。</p>
-<h4 id="没必要执着于答案"><a href="#没必要执着于答案" class="headerlink" title="没必要执着于答案"></a>没必要执着于答案</h4><p>有时在反复提示下对方的答案仍差那么一点，在面试时间大多比较紧张的情况下，我们没必要花更多的时间去让对方答出答案。在候选人表示<br>无法准确回答问题时，也可以引导他做出一些合理的猜测（这时的重点在于猜测是否合理而不是是否正确）。只要候选人在这一问题上说足够<br>多的话，我们就可以考察到其水平了，不一定要等他说出最后的答案。</p>
-<p>自己不懂也没关系</p>
-<p>在一开始，我会担心问出的问题我自己也不了解，对方回答之后会把自己问倒或者无法考察对方水平。但后来发现完全没有必要，因为面试官<br>没有义务即时地对候选人的回答做出评价（告诉对方对还是错），即使对于不了解的话题，自己也可以从对方的自信程度、逻辑层面，对回答<br>有一个大体的判断的。</p>
-<h4 id="现场编码可以很简单"><a href="#现场编码可以很简单" class="headerlink" title="现场编码可以很简单"></a>现场编码可以很简单</h4><p>候选人在现场会非常紧张，面试时间也有限，在现场编码环节没必要出太难的题，重点在于考察候选人是否有最基本编程思维和编码能力。例<br>如我觉得一些难度不高，但适合用递归解决的题目会比较合适，可以考虑在候选人编码的过程中一直保持沟通，注重过程而不是结果。</p>
-<p>同时我反对为候选人在面试前或面试后布置编码的作业，这会让候选人付出不对等的时间去准备面试，也很容易从「考察候选人的能力」变成<br>「考察候选人的诚意」。</p>
-<h4 id="重复使用一套题库没什么问题"><a href="#重复使用一套题库没什么问题" class="headerlink" title="重复使用一套题库没什么问题"></a>重复使用一套题库没什么问题</h4><p>可以自己建立自己的面试题库，在一次次面试中对其进行反复地打磨，让问题更准确、考察更全面。有些话题可能是永远都不过时的，例如对于<br>后端工程师可能是并发模型及与之相关的线程、内存等话题。</p>
-<h4 id="给对方提问的机会"><a href="#给对方提问的机会" class="headerlink" title="给对方提问的机会"></a>给对方提问的机会</h4><p>一般面试的最后一个步骤是让候选人提问，不要把这个过程敷衍掉，可以引导对方提问，告诉对方都可以问哪些问题。如可以补充一下没有提及<br>的技术话题、可以问我司的技术架构或选型、可以问所面试的职位和如果入职之后所参与的项目、可以问日常工作环境和时间等。这样可以让对<br>方有一个主动打开话题的机会，互相判断需求是否匹配，即使没有通过面试也让对方对公司有一个比较好的印象。</p>
-<h4 id="有任何顾虑都可以-pass-掉"><a href="#有任何顾虑都可以-pass-掉" class="headerlink" title="有任何顾虑都可以 pass 掉"></a>有任何顾虑都可以 pass 掉</h4><p>我们前面做了这么多都是为了让候选人有更好的面试体验、发挥出自己最好的水平。这种情况下如果仍对候选人某一方面的表现有顾虑的话，应该<br>果断地拒绝掉，招进来一个不合适的人损失远比错过一个合适的人大。</p>
-<h4 id="沟通是否顺畅很重要"><a href="#沟通是否顺畅很重要" class="headerlink" title="沟通是否顺畅很重要"></a>沟通是否顺畅很重要</h4><p>沟通是后续开展一切工作的基础，如果觉得与候选人的沟通不顺畅，对方总是不能理解自己的意思，那么即使候选人的技术水平满足要求，也应该<br>慎重考虑。</p>
-<h4 id="留下面试的记录"><a href="#留下面试的记录" class="headerlink" title="留下面试的记录"></a>留下面试的记录</h4><p>我每次面试结束后都会尽快开始写对候选人的评价，大多在一两百字，先列出面试聊到的内容、觉得好和不好的地方、了解到的对方的技术栈，然<br>后总结一下对候选人技术水平和沟通情况的评价。这样可以帮助自己整理思路，在候选人比较多的时候也不会记混，最后给出通过与否的评价，同<br>时还能给下一轮的面试官提供参考。</p>
+        <p>JWT 代表<strong>JSON Web Token</strong>，它是客户端&#x2F;服务器应用程序使用的一种身份验证策略，其中客户端是使用 JavaScript 和一些前端框架（如 Angular、React 或 VueJS）的 Web 应用程序。</p>
+<h4 id="JWT-是如何工作的？"><a href="#JWT-是如何工作的？" class="headerlink" title="JWT 是如何工作的？"></a>JWT 是如何工作的？</h4><p>JWT 只是一个授权令牌，应该包含在所有请求中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8000/hello/ -H &#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9.Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>JWT 是通过将用户名+密码交换为<strong>访问令牌</strong>和<strong>刷新令牌</strong>来获取的。</p>
+<p>访问<strong>令牌</strong>通常是短暂的（5 分钟左右过期，但可以自定义）。</p>
+<p>刷新<strong>令牌的</strong>寿命稍长一些（24 小时后过期，也可自定义）。它类似于身份验证会话。过期后，您需要再次使用用户名+密码进行完整登录。</p>
+<p>这是为什么？</p>
+<p>这是一项安全功能，也是因为 JWT 拥有更多信息。如果你仔细看我上面给出的例子，你会看到令牌由三部分组成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxx.yyyyy.zzzzz</span><br></pre></td></tr></table></figure>
+
+<p>这些是构成 JWT 的三个独特部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure>
+
+<p>所以我们在这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">header = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</span><br><span class="line">payload = eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9</span><br><span class="line">signature = Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY</span><br></pre></td></tr></table></figure>
+
+<p>此信息使用 Base64 编码。如果我们解码，我们会看到这样的东西：</p>
+<p><strong>标头</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;,</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>有效负载</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;token_type&quot;: &quot;access&quot;,</span><br><span class="line">  &quot;exp&quot;: 1543828431,</span><br><span class="line">  &quot;jti&quot;: &quot;7f5997b7150d46579dc2b49167097e7b&quot;,</span><br><span class="line">  &quot;user_id&quot;: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>签名</strong></p>
+<p>签名由 JWT 后端发出，使用 header base64 + payload base64 + <code>SECRET_KEY</code>。根据每个请求验证此签名。如果客户端更改了标头或有效负载中的任何信息，它将使签名无效。检查和验证签名的唯一方法是使用应用程序的 <code>SECRET_KEY</code>. 除此之外，这就是为什么您应该始终保守<code>SECRET_KEY</code> <strong>秘密</strong>！</p>
+<hr>
+<h4 id="安装与设置"><a href="#安装与设置" class="headerlink" title="安装与设置"></a>安装与设置</h4><p>对于本教程，我们将使用<a target="_blank" rel="noopener" href="https://github.com/davesque/django-rest-framework-simplejwt"><code>djangorestframework_simplejwt</code></a> DRF 开发人员推荐的库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework_simplejwt</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置.py</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    &#x27;DEFAULT_AUTHENTICATION_CLASSES&#x27;: [</span><br><span class="line">        &#x27;rest_framework_simplejwt.authentication.JWTAuthentication&#x27;,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>网址.py</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from rest_framework_simplejwt import views as jwt_views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    # Your URLs...</span><br><span class="line">    path(&#x27;api/token/&#x27;, jwt_views.TokenObtainPairView.as_view(), name=&#x27;token_obtain_pair&#x27;),</span><br><span class="line">    path(&#x27;api/token/refresh/&#x27;, jwt_views.TokenRefreshView.as_view(), name=&#x27;token_refresh&#x27;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><p>对于本教程，我将使用以下路由和 API 视图：</p>
+<p><strong>视图.py</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework.views import APIView</span><br><span class="line">from rest_framework.response import Response</span><br><span class="line">from rest_framework.permissions import IsAuthenticated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class HelloView(APIView):</span><br><span class="line">    permission_classes = (IsAuthenticated,)</span><br><span class="line"></span><br><span class="line">    def get(self, request):</span><br><span class="line">        content = &#123;&#x27;message&#x27;: &#x27;Hello, World!&#x27;&#125;</span><br><span class="line">        return Response(content)</span><br></pre></td></tr></table></figure>
+
+<p><strong>网址.py</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from myapi.core import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;hello/&#x27;, views.HelloView.as_view(), name=&#x27;hello&#x27;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><p>我将使用<a target="_blank" rel="noopener" href="https://httpie.org/">HTTPie</a>通过终端使用 API 端点。但您也可以使用 <a target="_blank" rel="noopener" href="https://curl.haxx.se/">cURL</a>（在许多操作系统中都很容易使用）在本地进行尝试。</p>
+<p>或者，通过访问端点 URL 来使用 DRF Web 界面，如下所示：</p>
+<p><img src="https://simpleisbetterthancomplex.com/media/2018/12/drf-web.png" alt="DRF JWT 获取token"></p>
+<h5 id="获取令牌"><a href="#获取令牌" class="headerlink" title="获取令牌"></a>获取令牌</h5><p>第一步是<strong>验证并获取令牌</strong>。端点是<code>/api/token/</code>，它只接受<strong>POST</strong>请求。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http://127.0.0.1:8000/api/token/ username=vitor password=123</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-obtain-token.png" alt="HTTPie JWT 获取令牌"></p>
+<p>所以基本上你的响应主体是两个标记：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;access&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjU5LCJqdGkiOiIyYmQ1NjI3MmIzYjI0YjNmOGI1MjJlNThjMzdjMTdlMSIsInVzZXJfaWQiOjF9.D92tTuVi_YcNkJtiLGHtcn6tBcxLCBxz9FKD3qzhUg8&quot;,</span><br><span class="line">    &quot;refresh&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMxMDM1OSwianRpIjoiMjk2ZDc1ZDA3Nzc2NDE0ZjkxYjhiOTY4MzI4NGRmOTUiLCJ1c2VyX2lkIjoxfQ.rA-mnGRg71NEW_ga0sJoaMODS5ABjE5HnxJDb0F8xAo&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后，您将在客户端存储<strong>访问令牌</strong>和<strong>刷新令牌，通常在</strong><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a>中。</p>
+<p>为了访问后端受保护的视图（即需要身份验证的 API 端点），您应该在所有请求的标头中包含访问令牌<strong>，</strong>如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http://127.0.0.1:8000/hello/ &quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-bearer.png" alt="HTTPie JWT 你好，世界！"></p>
+<p>您可以在接下来的五分钟内使用此<strong>访问令牌。</strong></p>
+<p>五分钟后，令牌将过期，如果您再次尝试访问该视图，您将收到以下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http://127.0.0.1:8000/hello/ &quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-expired.png" alt="HTTPie JWT 已过期"></p>
+<h5 id="刷新令牌"><a href="#刷新令牌" class="headerlink" title="刷新令牌"></a>刷新令牌</h5><p>要获取新的<strong>访问令牌</strong><code>/api/token/refresh/</code>，您应该使用发布 刷新令牌的<strong>刷新令牌</strong>端点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http://127.0.0.1:8000/api/token/refresh/ refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMwODIyMiwianRpIjoiNzAyOGFlNjc0ZTdjNDZlMDlmMzUwYjg3MjU1NGUxODQiLCJ1c2VyX2lkIjoxfQ.Md8AO3dDrQBvWYWeZsd_A1J39z6b6HEwWIUZ7ilOiPE</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-refresh-token.png" alt="HTTPie JWT 刷新令牌"></p>
+<p>返回的是一个新的<strong>访问令牌</strong>，您应该在后续请求中使用它。</p>
+<p>刷新<strong>令牌</strong>在接下来的 24 小时内有效。当它最终也过期时，用户将需要使用他们的用户名和密码再次执行完全身份验证以获得一组新的<strong>访问令牌</strong>+<strong>刷新令牌</strong>。</p>
+<hr>
+<h4 id="刷新令牌有什么意义？"><a href="#刷新令牌有什么意义？" class="headerlink" title="刷新令牌有什么意义？"></a>刷新令牌有什么意义？</h4><p>乍一看，<strong>刷新令牌</strong>可能看起来毫无意义，但实际上有必要确保用户仍然拥有正确的权限。如果您的<strong>访问令牌的</strong>过期时间很长，则更新与令牌关联的信息可能需要更长的时间。这是因为身份验证检查是通过密码学手段完成的，而不是查询数据库和验证数据。所以一些信息有点缓存。</p>
+<p>还有一个安全方面，从某种意义上说，<strong>刷新令牌</strong>仅在 POST 数据中传输。并且 <strong>访问令牌</strong>是通过 HTTP 标头发送的，该标头可能会在传输过程中被记录下来。<strong>因此，如果您的访问令牌</strong>被泄露，这也会提供一个较短的窗口。</p>
 
       
     </div>
@@ -403,7 +468,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/" title="如何进行技术面试（面试官视角）" target="_blank" rel="external">http://example.com/2023/02/28/如何进行技术面试（面试官视角）/</a>
+      <a href="http://example.com/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/" title="如何在 Django REST Framework 中使用 JWT 身份验证" target="_blank" rel="external">http://example.com/2023/05/28/如何在-Django-REST-Framework-中使用-JWT-身份验证/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -449,13 +514,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2023/05/27/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E4%BB%8B%E7%BB%8D/" title="Markdown常用语法介绍"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2023/02/27/%E9%82%A3%E4%BA%9B%E6%9C%89%E8%B6%A3%E7%9A%84%E6%B3%A8%E9%87%8A%EF%BC%8C%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BD%A0%E6%9B%BE%E7%94%A8%E8%BF%87%E7%9A%84/" title="那些有趣的注释，有没有你曾用过的"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2023/05/27/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E4%BB%8B%E7%BB%8D/" title="Markdown常用语法介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
