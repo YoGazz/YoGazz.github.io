@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker/</loc>
+    
+    <lastmod>2023-05-31</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/</loc>
     
     <lastmod>2023-05-28</lastmod>
@@ -144,6 +153,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/tags/docker/</loc>
+    <lastmod>2023-05-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -169,6 +185,20 @@
   
   <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/Django/</loc>
+    <lastmod>2023-05-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/Linux/</loc>
+    <lastmod>2023-05-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/Linux/Docker/</loc>
     <lastmod>2023-05-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-05-28T07:48:37.239Z</updated>
+  <updated>2023-05-31T10:06:27.885Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Centos安装docker</title>
+    <link href="http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker/"/>
+    <id>http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker/</id>
+    <published>2023-05-31T09:46:14.000Z</published>
+    <updated>2023-05-31T10:06:27.885Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、安装前必读"><a href="#一、安装前必读" class="headerlink" title="一、安装前必读"></a>一、安装前必读</h4><p>在安装 Docker 之前，先说一下配置，我这里是Centos7<br>Linux 内核：官方建议 3.10 以上，3.8以上貌似也可。</p><p>1.查看当前的内核版本</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure><p><img src="/img.png" alt="img.png"></p><p>2.使用 root 权限更新 yum 包（生产环境中此步操作需慎重，看自己情况，学习的话随便搞）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y update</span><br></pre></td></tr></table></figure><p>这个命令不是必须执行的，看个人情况，后面出现不兼容的情况的话就必须update了</p><p>注意</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y update：升级所有包同时也升级软件和系统内核；</span><br><span class="line">yum -y upgrade：只升级所有包，不升级软件和系统内核</span><br></pre></td></tr></table></figure><p>3.卸载旧版本（如果之前安装过的话）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker  docker-common docker-selinux docker-engine</span><br></pre></td></tr></table></figure><p><img src="/img_3.png" alt="img_3.png"></p><h4 id="二、安装Docker的详细步骤"><a href="#二、安装Docker的详细步骤" class="headerlink" title="二、安装Docker的详细步骤"></a>二、安装Docker的详细步骤</h4><p>1.安装需要的软件包， yum-util 提供yum-config-manager功能，另两个是devicemapper驱动依赖</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure><p>2.设置 yum 源</p><p>设置一个yum源，下面两个都可用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）</span><br><span class="line"></span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）</span><br></pre></td></tr></table></figure><p><img src="/img_4.png" alt="img_4.png"></p><p>3.选择docker版本并安装<br>（1）查看可用版本有哪些</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure><p><img src="/img_5.png" alt="img_5.png"></p><p>（2）选择一个版本并安装：yum install docker-ce-版本号</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker-ce-18.06.0.ce-3.el7</span><br></pre></td></tr></table></figure><p><img src="/img_6.png" alt="img_6.png"></p><p>4.启动 Docker 并设置开机自启</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure><p><img src="/img_7.png" alt="img_7.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、安装前必读&quot;&gt;&lt;a href=&quot;#一、安装前必读&quot; class=&quot;headerlink&quot; title=&quot;一、安装前必读&quot;&gt;&lt;/a&gt;一、安装前必读&lt;/h4&gt;&lt;p&gt;在安装 Docker 之前，先说一下配置，我这里是Centos7&lt;br&gt;Linux 内核：官方建议 </summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    <category term="Docker" scheme="http://example.com/categories/Linux/Docker/"/>
+    
+    
+    <category term="docker" scheme="http://example.com/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>如何在 Django REST Framework 中使用 JWT 身份验证</title>
