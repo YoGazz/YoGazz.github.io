@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-05-31T10:09:58.410Z</updated>
+  <updated>2023-06-02T07:04:03.972Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,9 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Docker安装jenkins教程</title>
+    <link href="http://example.com/2023/06/01/Docker%E5%AE%89%E8%A3%85jenkins%E6%95%99%E7%A8%8B/"/>
+    <id>http://example.com/2023/06/01/Docker%E5%AE%89%E8%A3%85jenkins%E6%95%99%E7%A8%8B/</id>
+    <published>2023-06-01T06:22:12.000Z</published>
+    <updated>2023-06-02T07:04:03.972Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、jenkins安装"><a href="#一、jenkins安装" class="headerlink" title="一、jenkins安装"></a>一、jenkins安装</h4><p>1.查找，下载jenkins镜像文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search jenkins</span><br></pre></td></tr></table></figure><p>下载Jenkins镜像文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins/jenkins:lts</span><br></pre></td></tr></table></figure><p>2.创建Jenkins挂载目录并授权权限，这样我们就可以很方便地对容器内的配置文件进行修改。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/jenkins_home/</span><br><span class="line"></span><br><span class="line">chmod 777 /data/jenkins_home/</span><br></pre></td></tr></table></figure><p>3.创建并启动Jenkins容器</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name jenkins \</span><br><span class="line">  -p 8080:8080 -p 50000:50000 \</span><br><span class="line">  -v /root/Yoga/data/jenkins_home:/var/jenkins_home \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  jenkins/jenkins:lts</span><br><span class="line"></span><br></pre></td></tr></table></figure><ul><li>-d 后台运行镜像</li><li>-p 8080:8080 -p 50000:50000 表示将容器内部的 8080 和 50000 端口映射到主机的 8080 和 50000 端口</li><li>-v &#x2F;root&#x2F;Yoga&#x2F;data&#x2F;jenkins_home:&#x2F;var&#x2F;jenkins_home &#x2F;var&#x2F;jenkins_home目录为容器jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。这里我们设置的就是上面我们创建的 &#x2F;data&#x2F;jenkins_home目录</li><li>-e TZ&#x3D;Asia&#x2F;Shanghai 表示设置时区为亚洲上海时区。</li><li>–name myjenkins 给容器起一个别名</li></ul><p>4.查看jenkins是否启动成功，如下图出现端口号，就为启动成功了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure><p>5.查看docker容器日志</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs jenkins</span><br></pre></td></tr></table></figure><p>6.配置镜像加速，进入 cd &#x2F;data&#x2F;jenkins_home 目录</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改hudson.model.UpdateCenter.xml里的内容</span><br><span class="line"></span><br><span class="line">将 url 修改为清华大学官方镜像：https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</span><br></pre></td></tr></table></figure><p>7.访问Jenkins页面，输入你的ip加上8090</p><p>8.管理员密码获取方法，编辑initialAdminPassword文件查看，把密码输入登录中的密码即可，开始使用。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /root/Yoga/data/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、jenkins安装&quot;&gt;&lt;a href=&quot;#一、jenkins安装&quot; class=&quot;headerlink&quot; title=&quot;一、jenkins安装&quot;&gt;&lt;/a&gt;一、jenkins安装&lt;/h4&gt;&lt;p&gt;1.查找，下载jenkins镜像文件&lt;/p&gt;
+&lt;figure cla</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    <category term="Docker" scheme="http://example.com/categories/Linux/Docker/"/>
+    
+    
+    <category term="jenkins" scheme="http://example.com/tags/jenkins/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Centos安装docker</title>
-    <link href="http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker/"/>
-    <id>http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker/</id>
+    <link href="http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker%E6%95%99%E7%A8%8B/"/>
+    <id>http://example.com/2023/05/31/Centos%E5%AE%89%E8%A3%85docker%E6%95%99%E7%A8%8B/</id>
     <published>2023-05-31T09:46:14.000Z</published>
     <updated>2023-05-31T10:09:58.410Z</updated>
     
