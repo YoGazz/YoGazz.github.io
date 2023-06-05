@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-02T07:04:03.972Z</updated>
+  <updated>2023-06-05T04:21:48.202Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jmeter压测-linux运行jmeter环境</title>
+    <link href="http://example.com/2023/06/05/jmeter%E5%8E%8B%E6%B5%8B-linux%E8%BF%90%E8%A1%8Cjmeter%E7%8E%AF%E5%A2%83/"/>
+    <id>http://example.com/2023/06/05/jmeter%E5%8E%8B%E6%B5%8B-linux%E8%BF%90%E8%A1%8Cjmeter%E7%8E%AF%E5%A2%83/</id>
+    <published>2023-06-05T04:13:37.000Z</published>
+    <updated>2023-06-05T04:21:48.202Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用jmeter做压测的时候，在windows上不太稳定，所有一直在linux服务器上使用jmeter做压力测试。<br>本篇记录下linux上搭建jmeter环境，以及运行jmeter脚本，查看报告。<br>相关环境：<br>java 1.8<br>jmeter 5.5</p><h4 id="一、java环境"><a href="#一、java环境" class="headerlink" title="一、java环境"></a>一、java环境</h4><p>先在Linux上安装java环境，安装1.8.0版本，先查找java相关的列表</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y list java*</span><br></pre></td></tr></table></figure><p>安装java-1.8.0-openjdk相关的文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install java-1.8.0-openjdk*</span><br></pre></td></tr></table></figure><p>安装完成后环境变量自动已经生效了，输入java -version查看版本号</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure><h4 id="二、安装jmeter"><a href="#二、安装jmeter" class="headerlink" title="二、安装jmeter"></a>二、安装jmeter</h4><p>在jmeter官网<a href="https://jmeter.apache.org/%E4%B8%8B%E8%BD%BDjmeter%E7%9A%84zip%E5%AE%89%E8%A3%85%E5%8C%85,%E4%B8%8B%E8%BD%BD%E5%AE%8C%E6%88%90%E5%90%8E%E4%BC%A0%E5%88%B0linux%E4%B8%8A%E4%BB%BB%E6%84%8F%E7%9B%AE%E5%BD%95%EF%BC%8C%E6%AF%94%E5%A6%82%E6%88%91%E7%9A%84%E6%98%AF/root/jmeter%E3%80%82">https://jmeter.apache.org/下载jmeter的zip安装包,下载完成后传到linux上任意目录，比如我的是/root/jmeter。</a><br>使用unzip命令解压zip文件，如果没有安装过unzip，先yum安装下</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install unzip</span><br></pre></td></tr></table></figure><p>使用unzip 解压.zip 文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip apache-jmeter-5.5.zip</span><br></pre></td></tr></table></figure><p>解压完成后，接下来vi编辑&#x2F;etc&#x2F;profile文件，设置环境变量,在文件底部编辑</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/root/jmeter/apache-jmeter-5.5/bin/:$PATH</span><br></pre></td></tr></table></figure><p>接下来source执行&#x2F;etc&#x2F;profile文件让环境变量生效</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure><p>输入jmeter -v能看到内容说明安装成功了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -v</span><br></pre></td></tr></table></figure><h4 id="三、启动jmeter脚本测试"><a href="#三、启动jmeter脚本测试" class="headerlink" title="三、启动jmeter脚本测试"></a>三、启动jmeter脚本测试</h4><p>脚本文件(Test Plan.jmx)导入linux服务器上,执行以下命令启动测试计划</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -n -t Test\ Plan.jmx -l testplan.jtl</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>n 表示以no gui方式运行测试计划</li><li>t 表示测试计划，后面跟测试计划名称, 有空格的话用\空格表示</li><li>l表示测试结果，后面跟测试结果文件名称，后缀是.jtl文件</li></ul><h4 id="四、查看报告文件"><a href="#四、查看报告文件" class="headerlink" title="四、查看报告文件"></a>四、查看报告文件</h4><p>测试结束后导出testplan.jtl文件，在本地jmeter上查看运行结果</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;使用jmeter做压测的时候，在windows上不太稳定，所有一直在linux服务器上使用jmeter做压力测试。&lt;br&gt;本篇记录下linu</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+    <category term="Jmeter" scheme="http://example.com/tags/Jmeter/"/>
+    
+    <category term="性能测试" scheme="http://example.com/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker安装jenkins教程</title>
