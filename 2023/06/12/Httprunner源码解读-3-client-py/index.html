@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Httprunner源码解读(3)client.py | Yoga Blog</title>
+  <meta name="description" content="client.py的代码结构这个模块中定义了2个类和1个方法 ApiResponse类1234567891011class ApiResponse(Response):    &quot;&quot;&quot;    继承Response 类，重写了raise_for_status方法，用于检查响应是否包含错误信息，并在响应中包含错误信息时抛出相应的异常    raise_for_status">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Httprunner源码解读(3)client.py">
+<meta property="og:url" content="http://example.com/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/index.html">
+<meta property="og:site_name" content="Yoga Blog">
+<meta property="og:description" content="client.py的代码结构这个模块中定义了2个类和1个方法 ApiResponse类1234567891011class ApiResponse(Response):    &quot;&quot;&quot;    继承Response 类，重写了raise_for_status方法，用于检查响应是否包含错误信息，并在响应中包含错误信息时抛出相应的异常    raise_for_status">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/client.png">
+<meta property="article:published_time" content="2023-06-12T02:38:38.000Z">
+<meta property="article:modified_time" content="2023-06-17T12:01:26.054Z">
+<meta property="article:author" content="Yoga">
+<meta property="article:tag" content="httprunner">
+<meta property="article:tag" content="接口自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/client.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Yoga Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">佑珈</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Tester &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/YoGazz" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://space.bilibili.com/277259094" target="_blank" title="Bilibili" data-toggle=tooltip data-placement=top><i class="icon icon-bilibili"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>世上无难事，只要肯放弃！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Httprunner/">Httprunner</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/Django/">Django</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/" rel="tag">django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httprunner/" rel="tag">httprunner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest-framework/" rel="tag">rest_framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" rel="tag">程序员</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Jmeter/" style="font-size: 13px;">Jmeter</a> <a href="/tags/django/" style="font-size: 13px;">django</a> <a href="/tags/docker/" style="font-size: 13px;">docker</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/httprunner/" style="font-size: 14px;">httprunner</a> <a href="/tags/jenkins/" style="font-size: 13px;">jenkins</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/rest-framework/" style="font-size: 13px;">rest_framework</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13px;">性能测试</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 14px;">接口自动化</a> <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" style="font-size: 13px;">程序员</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/" class="title">Httprunner源码解读(3)client.py</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-12T02:38:38.000Z" itemprop="datePublished">2023-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="title">Httprunner源码解读(2)models.py</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-11T10:18:24.000Z" itemprop="datePublished">2023-06-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" class="title">Httprunner源码解读(1)源码模块内容</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-10T03:12:13.000Z" itemprop="datePublished">2023-06-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Git/">Git</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="title">Git使用详细教程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-05T05:37:53.000Z" itemprop="datePublished">2023-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/05/Jmeter%E5%8E%8B%E6%B5%8B-Linux%E8%BF%90%E8%A1%8CJmeter%E7%8E%AF%E5%A2%83/" class="title">Jmeter压测-Linux运行Jmeter环境</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-05T04:13:37.000Z" itemprop="datePublished">2023-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Httprunner源码解读-3-client-py" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Httprunner源码解读(3)client.py
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/" class="article-date">
+	  <time datetime="2023-06-12T02:38:38.000Z" itemprop="datePublished">2023-06-12</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Httprunner/">Httprunner</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/httprunner/" rel="tag">httprunner</a>, <a class="article-tag-link-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="client-py的代码结构"><a href="#client-py的代码结构" class="headerlink" title="client.py的代码结构"></a>client.py的代码结构</h3><p><img src="/../images/client.png" alt="img.png"><br><strong>这个模块中定义了2个类和1个方法</strong></p>
+<h4 id="ApiResponse类"><a href="#ApiResponse类" class="headerlink" title="ApiResponse类"></a>ApiResponse类</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class ApiResponse(Response):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    继承Response 类，重写了raise_for_status方法，用于检查响应是否包含错误信息，并在响应中包含错误信息时抛出相应的异常</span><br><span class="line">    raise_for_status 方法首先检查响应对象是否包含 error 属性，并且该属性的值不为 None。如果 error 属性存在且不为 None，则抛出 error 异常。</span><br><span class="line">    否则，调用父类 Response 的 raise_for_status 方法，检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def raise_for_status(self):</span><br><span class="line">        if hasattr(self, &quot;error&quot;) and self.error:</span><br><span class="line">            raise self.error</span><br><span class="line">        Response.raise_for_status(self)</span><br></pre></td></tr></table></figure>
+
+<h4 id="get-req-resp-record方法"><a href="#get-req-resp-record方法" class="headerlink" title="get_req_resp_record方法"></a>get_req_resp_record方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">def get_req_resp_record(resp_obj: Response) -&gt; ReqRespData:</span><br><span class="line">    &quot;&quot;&quot;get request and response info from Response() object.&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"># 定义了一个打印日志的函数，将打印的日志解析为标准的json格式</span><br><span class="line">    def log_print(req_or_resp, r_type):</span><br><span class="line">        msg = f&quot;\n================== &#123;r_type&#125; details ==================\n&quot;</span><br><span class="line">        for key, value in req_or_resp.dict().items():</span><br><span class="line">            if isinstance(value, dict) or isinstance(value, list):</span><br><span class="line">                value = json.dumps(value, indent=4, ensure_ascii=False)</span><br><span class="line"></span><br><span class="line">            msg += &quot;&#123;:&lt;8&#125; : &#123;&#125;\n&quot;.format(key, value)</span><br><span class="line">        logger.debug(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record actual request info</span><br><span class="line">    # 是先获取request_headers、request_cookies、request_body，然后将获取到的信息放入RequestData模型中，最后打印请求的信息</span><br><span class="line">    request_headers = dict(resp_obj.request.headers)</span><br><span class="line">    request_cookies = resp_obj.request._cookies.get_dict()</span><br><span class="line"></span><br><span class="line">    request_body = resp_obj.request.body</span><br><span class="line">    if request_body is not None:</span><br><span class="line">        try:</span><br><span class="line">            request_body = json.loads(request_body)</span><br><span class="line">        except json.JSONDecodeError:</span><br><span class="line">            # str: a=1&amp;b=2</span><br><span class="line">            pass</span><br><span class="line">        except UnicodeDecodeError:</span><br><span class="line">            # bytes/bytearray: request body in protobuf</span><br><span class="line">            pass</span><br><span class="line">        except TypeError:</span><br><span class="line">            # neither str nor bytes/bytearray, e.g. &lt;MultipartEncoder&gt;</span><br><span class="line">            pass</span><br><span class="line"></span><br><span class="line">        request_content_type = lower_dict_keys(request_headers).get(&quot;content-type&quot;)</span><br><span class="line">        if request_content_type and &quot;multipart/form-data&quot; in request_content_type:</span><br><span class="line">            # upload file type</span><br><span class="line">            request_body = &quot;upload file stream (OMITTED)&quot;</span><br><span class="line"></span><br><span class="line">    request_data = RequestData(</span><br><span class="line">        method=resp_obj.request.method,</span><br><span class="line">        url=resp_obj.request.url,</span><br><span class="line">        headers=request_headers,</span><br><span class="line">        cookies=request_cookies,</span><br><span class="line">        body=request_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log request details in debug mode</span><br><span class="line">    log_print(request_data, &quot;request&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record response info</span><br><span class="line">    # 获取resp_headers、content_type、response_body，最后将这些数据都放入ResponseData模型类中，最后打印响应日志</span><br><span class="line">    resp_headers = dict(resp_obj.headers)</span><br><span class="line">    lower_resp_headers = lower_dict_keys(resp_headers)</span><br><span class="line">    content_type = lower_resp_headers.get(&quot;content-type&quot;, &quot;&quot;)</span><br><span class="line"></span><br><span class="line">    if &quot;image&quot; in content_type:</span><br><span class="line">        # response is image type, record bytes content only</span><br><span class="line">        response_body = resp_obj.content</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            # try to record json data</span><br><span class="line">            response_body = resp_obj.json()</span><br><span class="line">        except ValueError:</span><br><span class="line">            # only record at most 512 text charactors</span><br><span class="line">            resp_text = resp_obj.text</span><br><span class="line">            response_body = omit_long_data(resp_text)</span><br><span class="line"></span><br><span class="line">    response_data = ResponseData(</span><br><span class="line">        status_code=resp_obj.status_code,</span><br><span class="line">        cookies=resp_obj.cookies or &#123;&#125;,</span><br><span class="line">        encoding=resp_obj.encoding,</span><br><span class="line">        headers=resp_headers,</span><br><span class="line">        content_type=content_type,</span><br><span class="line">        body=response_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log response details in debug mode</span><br><span class="line">    log_print(response_data, &quot;response&quot;)</span><br><span class="line"></span><br><span class="line">    # 请求信息和响应信息全部放入ReqRespData模型中，最后get_req_resp_record函数返回的内容就是ReqRespData模型</span><br><span class="line">req_resp_data = ReqRespData(request=request_data, response=response_data)</span><br><span class="line">    return req_resp_data</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="HttpSession类"><a href="#HttpSession类" class="headerlink" title="HttpSession类"></a>HttpSession类</h4><p><strong><code>HttpSession</code> 是一个用于执行 HTTP 请求的类，它继承自 <code>requests.Session</code> 类，并扩展了一些功能。<code>HttpSession</code> 类的主要作用是在发送 HTTP 请求时记录请求和响应的信息，以便后续进行统计和分析</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self):</span><br><span class="line">    super(HttpSession, self).__init__()</span><br><span class="line">    self.data = SessionData()</span><br></pre></td></tr></table></figure>
+<p><strong>初始化方法，定义了data属性的默认值为SessionData模型，该模型包含了req_resps: List[ReqRespData] &#x3D; []请求响应内容</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def update_last_req_resp_record(self, resp_obj):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    update request and response info from Response() object.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # TODO: fix</span><br><span class="line">    self.data.req_resps.pop()</span><br><span class="line">    self.data.req_resps.append(get_req_resp_record(resp_obj))</span><br></pre></td></tr></table></figure>
+<p><strong>update_last_req_resp_record 方法用于更新最后一次请求和响应的信息，该方法会从 Response 对象中提取请求和响应的信息，并更新到 SessionData 对象中</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def _send_request_safe_mode(self, method, url, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Send a HTTP request, and catch any exception that might occur due to connection problems.</span><br><span class="line">    Safe mode has been removed from requests 1.x.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    try:</span><br><span class="line">        return requests.Session.request(self, method, url, **kwargs)</span><br><span class="line">    except (MissingSchema, InvalidSchema, InvalidURL):</span><br><span class="line">        raise</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        resp = ApiResponse()</span><br><span class="line">        resp.error = ex</span><br><span class="line">        resp.status_code = 0  # with this status_code, content returns None</span><br><span class="line">        resp.request = Request(method, url).prepare()</span><br><span class="line">        return resp</span><br></pre></td></tr></table></figure>
+<p><strong>_send_request_safe_mode 方法用于发送 HTTP 请求，并捕获可能发生的连接问题异常。如果发送请求时发生异常，则返回一个 ApiResponse 对象，该对象包含了异常信息和请求对象。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">def request(self, method, url, name=None, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Constructs and sends a :py:class:`requests.Request`.</span><br><span class="line">    Returns :py:class:`requests.Response` object.</span><br><span class="line"></span><br><span class="line">    :param method:</span><br><span class="line">        method for the new :class:`Request` object.</span><br><span class="line">    :param url:</span><br><span class="line">        URL for the new :class:`Request` object.</span><br><span class="line">    :param name: (optional)</span><br><span class="line">        Placeholder, make compatible with Locust&#x27;s HttpSession</span><br><span class="line">    :param params: (optional)</span><br><span class="line">        Dictionary or bytes to be sent in the query string for the :class:`Request`.</span><br><span class="line">    :param data: (optional)</span><br><span class="line">        Dictionary or bytes to send in the body of the :class:`Request`.</span><br><span class="line">    :param headers: (optional)</span><br><span class="line">        Dictionary of HTTP Headers to send with the :class:`Request`.</span><br><span class="line">    :param cookies: (optional)</span><br><span class="line">        Dict or CookieJar object to send with the :class:`Request`.</span><br><span class="line">    :param files: (optional)</span><br><span class="line">        Dictionary of ``&#x27;filename&#x27;: file-like-objects`` for multipart encoding upload.</span><br><span class="line">    :param auth: (optional)</span><br><span class="line">        Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.</span><br><span class="line">    :param timeout: (optional)</span><br><span class="line">        How long to wait for the server to send data before giving up, as a float, or \</span><br><span class="line">        a (`connect timeout, read timeout &lt;user/advanced.html#timeouts&gt;`_) tuple.</span><br><span class="line">        :type timeout: float or tuple</span><br><span class="line">    :param allow_redirects: (optional)</span><br><span class="line">        Set to True by default.</span><br><span class="line">    :type allow_redirects: bool</span><br><span class="line">    :param proxies: (optional)</span><br><span class="line">        Dictionary mapping protocol to the URL of the proxy.</span><br><span class="line">    :param stream: (optional)</span><br><span class="line">        whether to immediately download the response content. Defaults to ``False``.</span><br><span class="line">    :param verify: (optional)</span><br><span class="line">        if ``True``, the SSL cert will be verified. A CA_BUNDLE path can also be provided.</span><br><span class="line">    :param cert: (optional)</span><br><span class="line">        if String, path to ssl client cert file (.pem). If Tuple, (&#x27;cert&#x27;, &#x27;key&#x27;) pair.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.data = SessionData()</span><br><span class="line"></span><br><span class="line">    # timeout default to 120 seconds</span><br><span class="line">    kwargs.setdefault(&quot;timeout&quot;, 120)</span><br><span class="line"></span><br><span class="line">    # set stream to True, in order to get client/server IP/Port</span><br><span class="line">    kwargs[&quot;stream&quot;] = True</span><br><span class="line"></span><br><span class="line">    start_timestamp = time.time()</span><br><span class="line">    response = self._send_request_safe_mode(method, url, **kwargs)</span><br><span class="line">    response_time_ms = round((time.time() - start_timestamp) * 1000, 2)</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        client_ip, client_port = response.raw._connection.sock.getsockname()</span><br><span class="line">        self.data.address.client_ip = client_ip</span><br><span class="line">        self.data.address.client_port = client_port</span><br><span class="line">        logger.debug(f&quot;client IP: &#123;client_ip&#125;, Port: &#123;client_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        server_ip, server_port = response.raw._connection.sock.getpeername()</span><br><span class="line">        self.data.address.server_ip = server_ip</span><br><span class="line">        self.data.address.server_port = server_port</span><br><span class="line">        logger.debug(f&quot;server IP: &#123;server_ip&#125;, Port: &#123;server_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    # get length of the response content</span><br><span class="line">    content_size = int(dict(response.headers).get(&quot;content-length&quot;) or 0)</span><br><span class="line"></span><br><span class="line">    # record the consumed time</span><br><span class="line">    self.data.stat.response_time_ms = response_time_ms</span><br><span class="line">    self.data.stat.elapsed_ms = response.elapsed.microseconds / 1000.0</span><br><span class="line">    self.data.stat.content_size = content_size</span><br><span class="line"></span><br><span class="line">    # record request and response histories, include 30X redirection</span><br><span class="line">    response_list = response.history + [response]</span><br><span class="line">    self.data.req_resps = [</span><br><span class="line">        get_req_resp_record(resp_obj) for resp_obj in response_list</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        response.raise_for_status()</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        logger.error(f&quot;&#123;str(ex)&#125;&quot;)</span><br><span class="line">    else:</span><br><span class="line">        logger.info(</span><br><span class="line">            f&quot;status_code: &#123;response.status_code&#125;, &quot;</span><br><span class="line">            f&quot;response_time(ms): &#123;response_time_ms&#125; ms, &quot;</span><br><span class="line">            f&quot;response_length: &#123;content_size&#125; bytes&quot;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    return response</span><br></pre></td></tr></table></figure>
+<p><strong>最重要的 request 方法。request 方法用于构造并发送一个 HTTP 请求，并返回一个 requests.Response 对象。在发送请求之前，<br>request 方法会先清空之前的请求和响应信息，然后设置一些默认参数，如超时时间、是否允许重定向等。接着，request 方法会调用 _send_request_safe_mode 方法发送请求，<br>并记录请求和响应的信息。最后，request 方法会检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</strong><br><strong>主要做了以下事情</strong></p>
+<ul>
+<li>设置了超时时间120s</li>
+<li>计算整个请求花费了多少时间</li>
+<li>定义了客户端ip地址和端口号、服务端ip地址和端口号</li>
+<li>计算了响应体的内容大小</li>
+<li>记录了消耗时间</li>
+<li>记录了request和response记录，包括重定向记录</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/" title="Httprunner源码解读(3)client.py" target="_blank" rel="external">http://example.com/2023/06/12/Httprunner源码解读-3-client-py/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">佑珈</span><small class="ml-1x">Tester &amp; Designer</small></a></h3>
+        <div>临渊羡鱼，不如退而结网</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" title="Httprunner源码解读(2)models.py"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/pay.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechart.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/YoGazz" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://space.bilibili.com/277259094" target="_blank" title="Bilibili" data-toggle=tooltip data-placement=top><i class="icon icon-bilibili"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

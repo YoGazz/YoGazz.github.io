@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/</loc>
+    <loc>http://example.com/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/</loc>
     <lastmod>2023-06-17</lastmod>
   </url>
   <url>
-    <loc>http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/</loc>
+    <loc>http://example.com/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/</loc>
+    <lastmod>2023-06-17</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/</loc>
     <lastmod>2023-06-17</lastmod>
   </url>
   <url>

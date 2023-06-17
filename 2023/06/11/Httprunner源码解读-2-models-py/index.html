@@ -18,23 +18,23 @@
   
   
   <title>Httprunner源码解读(2)models.py | Yoga Blog</title>
-  <meta name="description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置">
+  <meta name="description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Httprunner源码解读(2)models.py">
-<meta property="og:url" content="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
+<meta property="og:url" content="http://example.com/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
 <meta property="og:site_name" content="Yoga Blog">
-<meta property="og:description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置">
+<meta property="og:description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置、">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/models.png">
-<meta property="article:published_time" content="2023-06-17T10:18:24.000Z">
-<meta property="article:modified_time" content="2023-06-17T11:24:07.523Z">
+<meta property="article:published_time" content="2023-06-11T10:18:24.000Z">
+<meta property="article:modified_time" content="2023-06-17T11:39:33.582Z">
 <meta property="article:author" content="Yoga">
 <meta property="article:tag" content="httprunner">
 <meta property="article:tag" content="接口自动化">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/models.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
+  <link rel="canonical" href="http://example.com/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Yoga Blog" type="application/atom+xml">
   
@@ -220,7 +220,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Httprunner/">Httprunner</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/Django/">Django</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Httprunner/">Httprunner</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/Django/">Django</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -230,7 +230,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/" rel="tag">django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httprunner/" rel="tag">httprunner</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest-framework/" rel="tag">rest_framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" rel="tag">程序员</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/" rel="tag">django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httprunner/" rel="tag">httprunner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest-framework/" rel="tag">rest_framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" rel="tag">程序员</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -249,7 +249,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -268,10 +268,10 @@
                 <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
               </p>
               <p class="item-title">
-                <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="title">Httprunner源码解读(2)models.py</a>
+                <a href="/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/" class="title">Httprunner源码解读(3)client.py</a>
               </p>
               <p class="item-date">
-                <time datetime="2023-06-17T10:18:24.000Z" itemprop="datePublished">2023-06-17</time>
+                <time datetime="2023-06-12T02:38:38.000Z" itemprop="datePublished">2023-06-12</time>
               </p>
             </div>
           </li>
@@ -283,10 +283,25 @@
                 <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
               </p>
               <p class="item-title">
-                <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" class="title">Httprunner源码解读(1)源码模块内容</a>
+                <a href="/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="title">Httprunner源码解读(2)models.py</a>
               </p>
               <p class="item-date">
-                <time datetime="2023-06-17T03:12:13.000Z" itemprop="datePublished">2023-06-17</time>
+                <time datetime="2023-06-11T10:18:24.000Z" itemprop="datePublished">2023-06-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" class="title">Httprunner源码解读(1)源码模块内容</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-10T03:12:13.000Z" itemprop="datePublished">2023-06-10</time>
               </p>
             </div>
           </li>
@@ -321,21 +336,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Linux/">Linux</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/Linux/Docker/">Docker</a>
-              </p>
-              <p class="item-title">
-                <a href="/2023/06/01/Docker%E5%AE%89%E8%A3%85jenkins%E6%95%99%E7%A8%8B/" class="title">Docker安装jenkins教程</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2023-06-01T06:22:12.000Z" itemprop="datePublished">2023-06-01</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -364,8 +364,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="article-date">
-	  <time datetime="2023-06-17T10:18:24.000Z" itemprop="datePublished">2023-06-17</time>
+	<a href="/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="article-date">
+	  <time datetime="2023-06-11T10:18:24.000Z" itemprop="datePublished">2023-06-11</time>
 	</a>
 </span>
         
@@ -383,7 +383,7 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/#comments" class="article-comment-link">评论</a></span>
         
 	
 		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4.7k(字)</span>
@@ -396,8 +396,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <hr>
-<h3 id="models-py的代码结构"><a href="#models-py的代码结构" class="headerlink" title="models.py的代码结构"></a>models.py的代码结构</h3><p><img src="/../images/models.png" alt="img.png"><br><strong>这个模块中定义了12个属性和29个模型类</strong><br><strong>文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。</strong></p>
+        <h3 id="models-py的代码结构"><a href="#models-py的代码结构" class="headerlink" title="models.py的代码结构"></a>models.py的代码结构</h3><p><img src="/../images/models.png" alt="img.png"><br><strong>这个模块中定义了12个属性和29个模型类</strong><br><strong>文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。</strong></p>
 <p><strong><code>models.py</code> 中的数据模型提供了以下几个方面的功能：</strong></p>
 <ul>
 <li>定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置、请求、响应和变量等。</li>
@@ -482,7 +481,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" title="Httprunner源码解读(2)models.py" target="_blank" rel="external">http://example.com/2023/06/17/Httprunner源码解读-2-models-py/</a>
+      <a href="http://example.com/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" title="Httprunner源码解读(2)models.py" target="_blank" rel="external">http://example.com/2023/06/11/Httprunner源码解读-2-models-py/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -528,9 +527,13 @@
   
   <ul class="pager pull-left">
     
+    <li class="prev">
+      <a href="/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/" title="Httprunner源码解读(3)client.py"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
     
     <li class="next">
-      <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" title="Httprunner源码解读(1)源码模块内容"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" title="Httprunner源码解读(1)源码模块内容"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
