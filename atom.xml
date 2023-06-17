@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-05T04:21:48.202Z</updated>
+  <updated>2023-06-17T04:15:41.638Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,61 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>jmeter压测-linux运行jmeter环境</title>
-    <link href="http://example.com/2023/06/05/jmeter%E5%8E%8B%E6%B5%8B-linux%E8%BF%90%E8%A1%8Cjmeter%E7%8E%AF%E5%A2%83/"/>
-    <id>http://example.com/2023/06/05/jmeter%E5%8E%8B%E6%B5%8B-linux%E8%BF%90%E8%A1%8Cjmeter%E7%8E%AF%E5%A2%83/</id>
+    <title>Httprunner源码解读(1)源码模块内容</title>
+    <link href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/"/>
+    <id>http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/</id>
+    <published>2023-06-17T03:12:13.000Z</published>
+    <updated>2023-06-17T04:15:41.638Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台<br>都是基于httprunner，所以，读懂源码必不可少</p><h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="/../images/h1.png" alt="git.png"></p><h4 id="builtin"><a href="#builtin" class="headerlink" title="builtin"></a>builtin</h4><p>这个包做了一些内置的功能</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">├── comparators.py</span><br><span class="line">└── functions.py</span><br></pre></td></tr></table></figure><ul><li>comparators：内置验证校验器</li><li>functions：内置的一些方法</li></ul><h4 id="database"><a href="#database" class="headerlink" title="database"></a>database</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">└── engine.py</span><br></pre></td></tr></table></figure><p>数据库模块是基于 DBEngine 实现的，用于对测试数据进行存储和管理。它支持多种类型数据库，如 MySQL、PostgreSQL、SQLite 等</p><p><strong>engine.py实现了一个数据库引擎类DBEngine，用于连接数据库并执行SQL语句。在初始化时，它会根据传入的数据库URI创建一个SQLAlchemy的engine，<br>并使用sessionmaker创建一个session。在执行SQL语句时，它会根据语句的类型（SELECT、UPDATE、DELETE、INSERT）返回不同的结果。如果是SELECT语句，<br>它会根据size参数返回对应数量的结果，如果size为1，则返回一个字典，否则返回一个字典列表。在返回结果前，它会对结果进行处理，将datetime.datetime<br>和datetime.date类型转换为字符串，将json字符串转换为字典。如果是UPDATE、DELETE、INSERT语句，则返回一个字典，包含受影响的行数。</strong> </p><h4 id="ext"><a href="#ext" class="headerlink" title="ext"></a>ext</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">└── uploader</span><br><span class="line">   └── __init__.py</span><br></pre></td></tr></table></figure><p>在httprunner基础上集成了别的插件</p><ul><li><p>uploader：集成了上传文件的功能<br>这是一个名为uploader的HTTPRunner扩展，它提供了上传文件的功能。如果要使用此扩展，需要先安装以下依赖项：</p></li><li><p>requests_toolbelt</p></li><li><p>filetype</p></li></ul><p><strong>uploader扩展提供了prepare_upload_step函数，用于预处理上传测试步骤。它会将上传信息替换为MultipartEncoder对象。<br>如果上传信息不存在，则不进行处理。MultipartEncoder对象是使用multipart_encoder函数初始化的，该函数接受上传字段作为参数，<br>并返回一个初始化的MultipartEncoder对象。multipart_content_type函数用于准备请求头的Content-Type。如果依赖项未安装，<br>则会引发ModuleNotFoundError异常。</strong> </p><h4 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">├── data_convertor.py</span><br><span class="line">└── thrift_client.py</span><br></pre></td></tr></table></figure><p><strong>thrift 模块是用于支持 Apache Thrift 的模块，可以将 thrift 服务定义文件（.thrift 文件）转换为 Python 代码，并生成可用的客户端和服务端代码。它基于 thrift 的 Python 库进行开发，<br>支持多种类型的 thrift 服务，如 TCP、HTTP 等。</strong></p><h4 id="cli-py"><a href="#cli-py" class="headerlink" title="cli.py"></a>cli.py</h4><p>命令行驱动执行</p><h4 id="client-py"><a href="#client-py" class="headerlink" title="client.py"></a>client.py</h4><p>客户端相关方法,主要是封装 requests.Session.request,安全调用,输出log等, 给runner.py调用.</p><h4 id="compat-py"><a href="#compat-py" class="headerlink" title="compat.py"></a>compat.py</h4><p>提供各种处理兼容性的方法,包括让v2版本的用例能在v3版本继续运行的相关转换方法</p><h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p><h4 id="loader-py"><a href="#loader-py" class="headerlink" title="loader.py"></a>loader.py</h4><p>加载文件内容的方法</p><h4 id="make-py"><a href="#make-py" class="headerlink" title="make.py"></a>make.py</h4><p>主要集成参数使之生效在测试用例中，如config、request、teststep等等，构成一个可用的用例</p><h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h4><p>定义各种model类,以BaseModel为父类</p><h4 id="parser-py"><a href="#parser-py" class="headerlink" title="parser.py"></a>parser.py</h4><p>各种解析方法，主要用于数值类型判断后自动转换</p><h4 id="response-py"><a href="#response-py" class="headerlink" title="response.py"></a>response.py</h4><p>处理响应报文格式</p><h4 id="runner-py"><a href="#runner-py" class="headerlink" title="runner.py"></a>runner.py</h4><p>运行项目的核心</p><h4 id="step-py"><a href="#step-py" class="headerlink" title="step.py"></a>step.py</h4><p>文件定义了 Step 类，该类表示 HttpRunner 测试用例中的一个步骤，提供了多个属性和方法，用于获取步骤的信息和运行步骤</p><h4 id="step-request-py"><a href="#step-request-py" class="headerlink" title="step_request.py"></a>step_request.py</h4><p>用于运行 HttpRunner 测试步骤中的请求</p><h4 id="step-sql-request-py"><a href="#step-sql-request-py" class="headerlink" title="step_sql_request.py"></a>step_sql_request.py</h4><p>定义了 run_step_sql_request 函数，该函数表示 HttpRunner 测试用例中的一个 SQL 查询步骤，提供了解析 SQL 查询请求、<br>执行 SQL 查询、提取 SQL 查询结果、更新 step_variables 和验证 SQL 查询结果等功能。 </p><h4 id="step-testcase-py"><a href="#step-testcase-py" class="headerlink" title="step_testcase.py"></a>step_testcase.py</h4><p>定义了 StepTestCase 类，该类表示 HttpRunner 测试用例中的一个测试步骤，继承自 Step 类，提供了多个属性和方法，<br>用于获取测试步骤的信息和运行测试步骤</p><h4 id="step-thrift-request-py"><a href="#step-thrift-request-py" class="headerlink" title="step_thrift_request.py"></a>step_thrift_request.py</h4><p>定义了 run_step_thrift_request 函数，该函数表示 HttpRunner 测试用例中的一个 Thrift 请求步骤，提供了解析 Thrift 请求、<br>执行 Thrift 请求、提取 Thrift 请求结果、更新 step_variables 和验证 Thrift 请求结果等功能。 </p><h4 id="utils-py"><a href="#utils-py" class="headerlink" title="utils.py"></a>utils.py</h4><p>一些工具函数用于处理数据、打印信息等,辅助测试用例的编写和执行，可以在测试用例中直接使用。 </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的</summary>
+      
+    
+    
+    
+    <category term="Httprunner" scheme="http://example.com/categories/Httprunner/"/>
+    
+    
+    <category term="httprunner" scheme="http://example.com/tags/httprunner/"/>
+    
+    <category term="接口自动化" scheme="http://example.com/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git使用详细教程</title>
+    <link href="http://example.com/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
+    <id>http://example.com/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</id>
+    <published>2023-06-05T05:37:53.000Z</published>
+    <updated>2023-06-17T03:26:10.342Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>现在大部分的开发团队都以 Git 作为自己的版本控制工具，需要对 Git 的使用非常的熟悉。<br>这篇文章中本人整理了自己在工作过程中经常使用到的 Git 命令，方便在偶尔忘记时速查。<br><img src="/../images/git.png" alt="git.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;现在大部分的开发团队都以 Git 作为自己的版本控制工具，需要对 Git 的使用非常的熟悉。&lt;br&gt;这篇文章中本人整理了自己在工作过程中经常</summary>
+      
+    
+    
+    
+    <category term="Git" scheme="http://example.com/categories/Git/"/>
+    
+    
+    <category term="git" scheme="http://example.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jmeter压测-Linux运行Jmeter环境</title>
+    <link href="http://example.com/2023/06/05/Jmeter%E5%8E%8B%E6%B5%8B-Linux%E8%BF%90%E8%A1%8CJmeter%E7%8E%AF%E5%A2%83/"/>
+    <id>http://example.com/2023/06/05/Jmeter%E5%8E%8B%E6%B5%8B-Linux%E8%BF%90%E8%A1%8CJmeter%E7%8E%AF%E5%A2%83/</id>
     <published>2023-06-05T04:13:37.000Z</published>
-    <updated>2023-06-05T04:21:48.202Z</updated>
+    <updated>2023-06-05T05:39:24.150Z</updated>
     
     <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用jmeter做压测的时候，在windows上不太稳定，所有一直在linux服务器上使用jmeter做压力测试。<br>本篇记录下linux上搭建jmeter环境，以及运行jmeter脚本，查看报告。<br>相关环境：<br>java 1.8<br>jmeter 5.5</p><h4 id="一、java环境"><a href="#一、java环境" class="headerlink" title="一、java环境"></a>一、java环境</h4><p>先在Linux上安装java环境，安装1.8.0版本，先查找java相关的列表</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y list java*</span><br></pre></td></tr></table></figure><p>安装java-1.8.0-openjdk相关的文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install java-1.8.0-openjdk*</span><br></pre></td></tr></table></figure><p>安装完成后环境变量自动已经生效了，输入java -version查看版本号</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure><h4 id="二、安装jmeter"><a href="#二、安装jmeter" class="headerlink" title="二、安装jmeter"></a>二、安装jmeter</h4><p>在jmeter官网<a href="https://jmeter.apache.org/%E4%B8%8B%E8%BD%BDjmeter%E7%9A%84zip%E5%AE%89%E8%A3%85%E5%8C%85,%E4%B8%8B%E8%BD%BD%E5%AE%8C%E6%88%90%E5%90%8E%E4%BC%A0%E5%88%B0linux%E4%B8%8A%E4%BB%BB%E6%84%8F%E7%9B%AE%E5%BD%95%EF%BC%8C%E6%AF%94%E5%A6%82%E6%88%91%E7%9A%84%E6%98%AF/root/jmeter%E3%80%82">https://jmeter.apache.org/下载jmeter的zip安装包,下载完成后传到linux上任意目录，比如我的是/root/jmeter。</a><br>使用unzip命令解压zip文件，如果没有安装过unzip，先yum安装下</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install unzip</span><br></pre></td></tr></table></figure><p>使用unzip 解压.zip 文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip apache-jmeter-5.5.zip</span><br></pre></td></tr></table></figure><p>解压完成后，接下来vi编辑&#x2F;etc&#x2F;profile文件，设置环境变量,在文件底部编辑</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/root/jmeter/apache-jmeter-5.5/bin/:$PATH</span><br></pre></td></tr></table></figure><p>接下来source执行&#x2F;etc&#x2F;profile文件让环境变量生效</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure><p>输入jmeter -v能看到内容说明安装成功了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -v</span><br></pre></td></tr></table></figure><h4 id="三、启动jmeter脚本测试"><a href="#三、启动jmeter脚本测试" class="headerlink" title="三、启动jmeter脚本测试"></a>三、启动jmeter脚本测试</h4><p>脚本文件(Test Plan.jmx)导入linux服务器上,执行以下命令启动测试计划</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -n -t Test\ Plan.jmx -l testplan.jtl</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>n 表示以no gui方式运行测试计划</li><li>t 表示测试计划，后面跟测试计划名称, 有空格的话用\空格表示</li><li>l表示测试结果，后面跟测试结果文件名称，后缀是.jtl文件</li></ul><h4 id="四、查看报告文件"><a href="#四、查看报告文件" class="headerlink" title="四、查看报告文件"></a>四、查看报告文件</h4><p>测试结束后导出testplan.jtl文件，在本地jmeter上查看运行结果</p>]]></content>
     

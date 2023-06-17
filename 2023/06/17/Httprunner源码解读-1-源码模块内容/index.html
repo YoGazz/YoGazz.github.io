@@ -17,20 +17,24 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>书单 | Yoga Blog</title>
-  <meta name="description" content="我自是年少，韶华倾覆">
-<meta property="og:type" content="website">
-<meta property="og:title" content="书单">
-<meta property="og:url" content="http://example.com/books/index.html">
+  <title>Httprunner源码解读(1)源码模块内容 | Yoga Blog</title>
+  <meta name="description" content="前言由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台都是基于httprunner，所以，读懂源码必不可少 源码结构 builtin这个包做了一些内置的功能 123├── __init__.py├── comparators.py└── functions.py  comparators：内置验证校验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Httprunner源码解读(1)源码模块内容">
+<meta property="og:url" content="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/index.html">
 <meta property="og:site_name" content="Yoga Blog">
-<meta property="og:description" content="我自是年少，韶华倾覆">
+<meta property="og:description" content="前言由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台都是基于httprunner，所以，读懂源码必不可少 源码结构 builtin这个包做了一些内置的功能 123├── __init__.py├── comparators.py└── functions.py  comparators：内置验证校验">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-26T17:13:31.977Z">
-<meta property="article:modified_time" content="2023-05-26T16:47:29.354Z">
+<meta property="og:image" content="http://example.com/images/h1.png">
+<meta property="article:published_time" content="2023-06-17T03:12:13.000Z">
+<meta property="article:modified_time" content="2023-06-17T04:15:41.638Z">
 <meta property="article:author" content="Yoga">
+<meta property="article:tag" content="httprunner">
+<meta property="article:tag" content="接口自动化">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/h1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/books/index.html">
+  <link rel="canonical" href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Yoga Blog" type="application/atom+xml">
   
@@ -47,7 +51,7 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -342,40 +346,217 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="article article-links article-type-list" itemscope="">
-  <header class="article-header">
-    <h1 itemprop="title">书单</h1>
-    <p class="text-muted">个人收藏的书单推荐给大家 <a href="https://www.douban.com/people//" target="_blank">[我的豆瓣]</a></p>
-    <nav role="navigation" id="nav-main" class="okayNav">
-      <ul id="tabs">
-        <li><a id="reading-tab" href="javascript:show('reading')" rel="external">在读<span id="reading-total"></span></a></li>
-        <li><a id="wish-tab" href="javascript:show('wish')" rel="external">想读<span id="wish-total"></span></a></li>
-        <li><a id="read-tab" href="javascript:show('read')" rel="external">已读<span id="read-total"></span></a></li>
-      </ul>
-    </nav>
-  </header>
-  <div class="article-body">
-    <div id="loading">
-      <p>正在加载...</p>
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Httprunner源码解读-1-源码模块内容" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Httprunner源码解读(1)源码模块内容
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" class="article-date">
+	  <time datetime="2023-06-17T03:12:13.000Z" itemprop="datePublished">2023-06-17</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Httprunner/">Httprunner</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/httprunner/" rel="tag">httprunner</a>, <a class="article-tag-link-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.1k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3(分)</span>
+	
+
+      </div>
     </div>
-    <div id="douban">
-      <div id="collections">
-        <div id="reading" class="row hide">
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台<br>都是基于httprunner，所以，读懂源码必不可少</p>
+<h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="/../images/h1.png" alt="git.png"></p>
+<h4 id="builtin"><a href="#builtin" class="headerlink" title="builtin"></a>builtin</h4><p>这个包做了一些内置的功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">├── comparators.py</span><br><span class="line">└── functions.py</span><br></pre></td></tr></table></figure>
+<ul>
+<li>comparators：内置验证校验器</li>
+<li>functions：内置的一些方法</li>
+</ul>
+<h4 id="database"><a href="#database" class="headerlink" title="database"></a>database</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">└── engine.py</span><br></pre></td></tr></table></figure>
+<p>数据库模块是基于 DBEngine 实现的，用于对测试数据进行存储和管理。它支持多种类型数据库，如 MySQL、PostgreSQL、SQLite 等</p>
+<p><strong>engine.py实现了一个数据库引擎类DBEngine，用于连接数据库并执行SQL语句。在初始化时，它会根据传入的数据库URI创建一个SQLAlchemy的engine，<br>并使用sessionmaker创建一个session。在执行SQL语句时，它会根据语句的类型（SELECT、UPDATE、DELETE、INSERT）返回不同的结果。如果是SELECT语句，<br>它会根据size参数返回对应数量的结果，如果size为1，则返回一个字典，否则返回一个字典列表。在返回结果前，它会对结果进行处理，将datetime.datetime<br>和datetime.date类型转换为字符串，将json字符串转换为字典。如果是UPDATE、DELETE、INSERT语句，则返回一个字典，包含受影响的行数。</strong> </p>
+<h4 id="ext"><a href="#ext" class="headerlink" title="ext"></a>ext</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">└── uploader</span><br><span class="line">   └── __init__.py</span><br></pre></td></tr></table></figure>
+<p>在httprunner基础上集成了别的插件</p>
+<ul>
+<li><p>uploader：集成了上传文件的功能<br>这是一个名为uploader的HTTPRunner扩展，它提供了上传文件的功能。如果要使用此扩展，需要先安装以下依赖项：</p>
+</li>
+<li><p>requests_toolbelt</p>
+</li>
+<li><p>filetype</p>
+</li>
+</ul>
+<p><strong>uploader扩展提供了prepare_upload_step函数，用于预处理上传测试步骤。它会将上传信息替换为MultipartEncoder对象。<br>如果上传信息不存在，则不进行处理。MultipartEncoder对象是使用multipart_encoder函数初始化的，该函数接受上传字段作为参数，<br>并返回一个初始化的MultipartEncoder对象。multipart_content_type函数用于准备请求头的Content-Type。如果依赖项未安装，<br>则会引发ModuleNotFoundError异常。</strong> </p>
+<h4 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">├── data_convertor.py</span><br><span class="line">└── thrift_client.py</span><br></pre></td></tr></table></figure>
+
+<p><strong>thrift 模块是用于支持 Apache Thrift 的模块，可以将 thrift 服务定义文件（.thrift 文件）转换为 Python 代码，并生成可用的客户端和服务端代码。它基于 thrift 的 Python 库进行开发，<br>支持多种类型的 thrift 服务，如 TCP、HTTP 等。</strong></p>
+<h4 id="cli-py"><a href="#cli-py" class="headerlink" title="cli.py"></a>cli.py</h4><p>命令行驱动执行</p>
+<h4 id="client-py"><a href="#client-py" class="headerlink" title="client.py"></a>client.py</h4><p>客户端相关方法,主要是封装 requests.Session.request,安全调用,输出log等, 给runner.py调用.</p>
+<h4 id="compat-py"><a href="#compat-py" class="headerlink" title="compat.py"></a>compat.py</h4><p>提供各种处理兼容性的方法,包括让v2版本的用例能在v3版本继续运行的相关转换方法</p>
+<h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p>
+<h4 id="loader-py"><a href="#loader-py" class="headerlink" title="loader.py"></a>loader.py</h4><p>加载文件内容的方法</p>
+<h4 id="make-py"><a href="#make-py" class="headerlink" title="make.py"></a>make.py</h4><p>主要集成参数使之生效在测试用例中，如config、request、teststep等等，构成一个可用的用例</p>
+<h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h4><p>定义各种model类,以BaseModel为父类</p>
+<h4 id="parser-py"><a href="#parser-py" class="headerlink" title="parser.py"></a>parser.py</h4><p>各种解析方法，主要用于数值类型判断后自动转换</p>
+<h4 id="response-py"><a href="#response-py" class="headerlink" title="response.py"></a>response.py</h4><p>处理响应报文格式</p>
+<h4 id="runner-py"><a href="#runner-py" class="headerlink" title="runner.py"></a>runner.py</h4><p>运行项目的核心</p>
+<h4 id="step-py"><a href="#step-py" class="headerlink" title="step.py"></a>step.py</h4><p>文件定义了 Step 类，该类表示 HttpRunner 测试用例中的一个步骤，提供了多个属性和方法，用于获取步骤的信息和运行步骤</p>
+<h4 id="step-request-py"><a href="#step-request-py" class="headerlink" title="step_request.py"></a>step_request.py</h4><p>用于运行 HttpRunner 测试步骤中的请求</p>
+<h4 id="step-sql-request-py"><a href="#step-sql-request-py" class="headerlink" title="step_sql_request.py"></a>step_sql_request.py</h4><p>定义了 run_step_sql_request 函数，该函数表示 HttpRunner 测试用例中的一个 SQL 查询步骤，提供了解析 SQL 查询请求、<br>执行 SQL 查询、提取 SQL 查询结果、更新 step_variables 和验证 SQL 查询结果等功能。 </p>
+<h4 id="step-testcase-py"><a href="#step-testcase-py" class="headerlink" title="step_testcase.py"></a>step_testcase.py</h4><p>定义了 StepTestCase 类，该类表示 HttpRunner 测试用例中的一个测试步骤，继承自 Step 类，提供了多个属性和方法，<br>用于获取测试步骤的信息和运行测试步骤</p>
+<h4 id="step-thrift-request-py"><a href="#step-thrift-request-py" class="headerlink" title="step_thrift_request.py"></a>step_thrift_request.py</h4><p>定义了 run_step_thrift_request 函数，该函数表示 HttpRunner 测试用例中的一个 Thrift 请求步骤，提供了解析 Thrift 请求、<br>执行 Thrift 请求、提取 Thrift 请求结果、更新 step_variables 和验证 Thrift 请求结果等功能。 </p>
+<h4 id="utils-py"><a href="#utils-py" class="headerlink" title="utils.py"></a>utils.py</h4><p>一些工具函数用于处理数据、打印信息等,辅助测试用例的编写和执行，可以在测试用例中直接使用。 </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" title="Httprunner源码解读(1)源码模块内容" target="_blank" rel="external">http://example.com/2023/06/17/Httprunner源码解读-1-源码模块内容/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">佑珈</span><small class="ml-1x">Tester &amp; Designer</small></a></h3>
+        <div>临渊羡鱼，不如退而结网</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Git使用详细教程"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/pay.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechart.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="clearfix"></div>
-        <div id="wish" class="row hide">
-        </div>
-        <div class="clearfix"></div>
-        <div id="read" class="row hide">
-        </div>
-        <div class="clearfix"></div>
       </div>
     </div>
   </div>
-</article>
-
-  
+</div>
 
 
 
@@ -437,156 +618,37 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-   <script>
-function show(id) {
-  document.getElementById('reading').classList.remove('active');
-  document.getElementById('read').classList.remove('active');
-  document.getElementById('wish').classList.remove('active');
-  document.getElementById('reading').classList.add('hide');
-  document.getElementById('read').classList.add('hide');
-  document.getElementById('wish').classList.add('hide');
 
-  var ele = document.getElementById(id);
-  ele.classList.remove('hide');
-  ele.classList.add('active');
-
-  document.getElementById('reading-tab').classList.remove('active');
-  document.getElementById('read-tab').classList.remove('active');
-  document.getElementById('wish-tab').classList.remove('active');
-  document.getElementById(id + '-tab').classList.add('active');
-};
-
-(function() {
-  var read = [];
-  var wish = [];
-  var reading = [];
-
-  // XHR 获取豆瓣书单数据，数据格式json
-  // function loadDoubanCollections() {
-  //   var xhr = new XMLHttpRequest();
-  //   // https://api.douban.com/v2/book/user/:name/collections
-  //   xhr.open('GET', 'http://7b1fa0.com1.z0.glb.clouddn.com/douban-20170429-1.json', true);
-
-  //   xhr.onload = function() {
-  //     // console.log(this);
-  //     if (this.status >= 200 && this.status < 300) {
-  //       var res = JSON.parse(this.response);
-  //       searchData = res;
-  //       onLoadDouban(searchData);
-  //     } else {
-  //       console.error(this.statusText);
-  //     }
-  //   };
-
-  //   xhr.onerror = function() {
-  //     console.error(this.statusText);
-  //   };
-
-  //   xhr.send();
-  // }
-  
-  // Ajax 获取豆瓣书单数据，数据格式json
-  function loadDoubanCollections() {
-    var _this = this;
-    // https://api.douban.com/v2/book/user/:name/collections?start=0&count=100
-    var url = "https://api.douban.com/v2/book/user//collections"
-    $.ajax({
-      url: url,
-      type: 'GET',
-      data: {
-        start:0, // 从哪一条记录开始
-        count:100, // 获取豆瓣书单数据条数
-        apikey:'' // 豆瓣apikey
-      },
-      dataType: 'JSONP', //here
-      success: function(data) {
-        // console.log(data);
-        onLoadDouban(data);
-      }
-    });
-  }
-
-  function onLoadDouban(data) {
-    if (data['count'] > 0) {
-      for (var i = 0; i < data['collections'].length; ++i) {
-        resolveBook(data['collections'][i]);
-      }
-    }
-    render();
-  }
-
-  function resolveBook(book) {
-    if (book['status'] == 'read') {
-      read.push(book);
-    }
-    if (book['status'] == 'wish') {
-      wish.push(book);
-    }
-    if (book['status'] == 'reading') {
-      reading.push(book);
-    }
-  }
-
-  function render() {
-    renderList(read, 'read');
-    renderList(wish, 'wish');
-    renderList(reading, 'reading');
-
-    document.getElementById('reading-total').innerHTML = '(' + reading.length + ')';
-    document.getElementById('read-total').innerHTML = '(' + read.length + ')';
-    document.getElementById('wish-total').innerHTML = '(' + wish.length + ')';
-
-    show('reading');
-    document.getElementById('loading').classList.add('hide');
-  }
-
-  function renderList(list, id) {
-    for (var i = 0; i < list.length; ++i) {
-      var h = renderBook(list[i]);
-      if (i > 0 && i % 4 == 3) {
-        h += '<div class="clearfix"></div>';
-      }
-      document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + h;
-    }
-  }
-
-  function renderBook(book) {
-    var html = '<div class="col-sm-6 col-md-6"><div class="panel panel-default hover-grow"><div class="panel-body">'
-      + '<div class="media media-middle book book-' + book['status'] + '" itemscope itemtype="http://schema.org/Book">' 
-      + '<div class="media-left"><a class="media-middle" target="_blank" href="' + book.book.alt + '" rel="external nofollow noopener noreferrer"><img class="media-object" src="' + book.book.image + '" itemprop="image"/></a></div><div class="media-body">' 
-      + '<h3 class="media-heading" itemprop="name"><a target="_blank" href="' + book.book.alt + '" rel="external nofollow noopener noreferrer">' + book.book.title + '</a></h3>' 
-      + '<p class="meta text-nowrap-1x"><small itemprop="author">' + book.book.author[0] + '</small> / <small itemprop="datePublished">' + book.book.pubdate + '</small> / <small itemprop="ratingValue">' + book.book.rating.average + '分</small></p>' 
-      + '<p class="meta text-nowrap-1x">' + book.updated.substring(0, 10) + resolveRating(book.rating) + resolveTags(book.tags) + '</p>' 
-      + '<div class="comments text-muted text-nowrap-3x" itemprop="comment">' + (book.comment ? book.comment : '') + '</div>' 
-      + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
-    return html;
-  }
-
-  function resolveRating(rating) {
-    if (rating && rating.value) {
-      return ' / ' + rating.value + '星';
-    }
-    return '';
-  }
-
-  function resolveTags(tags) {
-    if (tags && tags.length > 0) {
-      var html = ' / ';
-      for (var i = 0; i < tags.length; ++i) {
-        html += tags[i] + ' ';
-      }
-      return html;
-    }
-    return '';
-  }
-
-  setTimeout(function() {
-    loadDoubanCollections();
-  }, 0)
-})()
-</script>
+   
 
 
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
 
 
 
