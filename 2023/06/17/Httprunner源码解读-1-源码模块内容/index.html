@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/h1.png">
 <meta property="article:published_time" content="2023-06-17T03:12:13.000Z">
-<meta property="article:modified_time" content="2023-06-17T04:15:41.638Z">
+<meta property="article:modified_time" content="2023-06-17T10:14:26.743Z">
 <meta property="article:author" content="Yoga">
 <meta property="article:tag" content="httprunner">
 <meta property="article:tag" content="接口自动化">
@@ -386,10 +386,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.1k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.2k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4(分)</span>
 	
 
       </div>
@@ -424,7 +424,8 @@
 <h4 id="cli-py"><a href="#cli-py" class="headerlink" title="cli.py"></a>cli.py</h4><p>命令行驱动执行</p>
 <h4 id="client-py"><a href="#client-py" class="headerlink" title="client.py"></a>client.py</h4><p>客户端相关方法,主要是封装 requests.Session.request,安全调用,输出log等, 给runner.py调用.</p>
 <h4 id="compat-py"><a href="#compat-py" class="headerlink" title="compat.py"></a>compat.py</h4><p>提供各种处理兼容性的方法,包括让v2版本的用例能在v3版本继续运行的相关转换方法</p>
-<h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p>
+<h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><p>包含三个类：ConfigThrift、ConfigDB 和 Config。<br>这些类的作用是为 HttpRunner 提供配置信息，包括 Thrift 协议相关的配置信息和数据库相关的配置信息。通过使用这些类，用户可以方便地设置和管理配置信息，从而更好地控制测试用例的执行过程。 </p>
+<h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p>
 <h4 id="loader-py"><a href="#loader-py" class="headerlink" title="loader.py"></a>loader.py</h4><p>加载文件内容的方法</p>
 <h4 id="make-py"><a href="#make-py" class="headerlink" title="make.py"></a>make.py</h4><p>主要集成参数使之生效在测试用例中，如config、request、teststep等等，构成一个可用的用例</p>
 <h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h4><p>定义各种model类,以BaseModel为父类</p>
