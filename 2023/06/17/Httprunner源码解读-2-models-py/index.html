@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Httprunner源码解读(2)models.py | Yoga Blog</title>
+  <meta name="description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Httprunner源码解读(2)models.py">
+<meta property="og:url" content="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
+<meta property="og:site_name" content="Yoga Blog">
+<meta property="og:description" content="models.py的代码结构这个模块中定义了12个属性和29个模型类文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。 models.py 中的数据模型提供了以下几个方面的功能：  定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/models.png">
+<meta property="article:published_time" content="2023-06-17T10:18:24.000Z">
+<meta property="article:modified_time" content="2023-06-17T11:24:07.523Z">
+<meta property="article:author" content="Yoga">
+<meta property="article:tag" content="httprunner">
+<meta property="article:tag" content="接口自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/models.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Yoga Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">佑珈</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Tester &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/YoGazz" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://space.bilibili.com/277259094" target="_blank" title="Bilibili" data-toggle=tooltip data-placement=top><i class="icon icon-bilibili"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>世上无难事，只要肯放弃！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Httprunner/">Httprunner</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/Django/">Django</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/" rel="tag">django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httprunner/" rel="tag">httprunner</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest-framework/" rel="tag">rest_framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" rel="tag">程序员</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Jmeter/" style="font-size: 13px;">Jmeter</a> <a href="/tags/django/" style="font-size: 13px;">django</a> <a href="/tags/docker/" style="font-size: 13px;">docker</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/httprunner/" style="font-size: 14px;">httprunner</a> <a href="/tags/jenkins/" style="font-size: 13px;">jenkins</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/rest-framework/" style="font-size: 13px;">rest_framework</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13px;">性能测试</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 14px;">接口自动化</a> <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" style="font-size: 13px;">程序员</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="title">Httprunner源码解读(2)models.py</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-17T10:18:24.000Z" itemprop="datePublished">2023-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Httprunner/">Httprunner</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" class="title">Httprunner源码解读(1)源码模块内容</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-17T03:12:13.000Z" itemprop="datePublished">2023-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Git/">Git</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="title">Git使用详细教程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-05T05:37:53.000Z" itemprop="datePublished">2023-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/05/Jmeter%E5%8E%8B%E6%B5%8B-Linux%E8%BF%90%E8%A1%8CJmeter%E7%8E%AF%E5%A2%83/" class="title">Jmeter压测-Linux运行Jmeter环境</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-05T04:13:37.000Z" itemprop="datePublished">2023-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Linux/">Linux</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/Linux/Docker/">Docker</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/06/01/Docker%E5%AE%89%E8%A3%85jenkins%E6%95%99%E7%A8%8B/" class="title">Docker安装jenkins教程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-06-01T06:22:12.000Z" itemprop="datePublished">2023-06-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Httprunner源码解读-2-models-py" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Httprunner源码解读(2)models.py
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" class="article-date">
+	  <time datetime="2023-06-17T10:18:24.000Z" itemprop="datePublished">2023-06-17</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Httprunner/">Httprunner</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/httprunner/" rel="tag">httprunner</a>, <a class="article-tag-link-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">接口自动化</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4.7k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 19(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <hr>
+<h3 id="models-py的代码结构"><a href="#models-py的代码结构" class="headerlink" title="models.py的代码结构"></a>models.py的代码结构</h3><p><img src="/../images/models.png" alt="img.png"><br><strong>这个模块中定义了12个属性和29个模型类</strong><br><strong>文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。</strong></p>
+<p><strong><code>models.py</code> 中的数据模型提供了以下几个方面的功能：</strong></p>
+<ul>
+<li>定义测试用例的数据结构：通过创建数据模型来表示测试用例的各个组成部分，如配置、请求、响应和变量等。</li>
+<li>类型检查和数据验证：利用 <code>Pydantic</code> 提供的类型检查和验证机制，确保从 YAML&#x2F;JSON 测试用例文件中加载的数据符合预期格式和约束。</li>
+<li>序列化与反序列化：<code>Pydantic</code> 数据模型可以轻松地将 Python 对象转换为 JSON 格式，或者将 JSON 数据反序列化为 Python 对象。</li>
+<li>总的来说，models.py 文件对 HttpRunner 的整个测试流程提供了结构支持，确保了测试用例以一种结构化、可靠且易于解析的方式进行编写和执行。通过使用这些数据模型，HttpRunner 可以更容易地处理、验证和操作来自测试用例文件的数据。</li>
+</ul>
+<p><strong><code>BaseModel</code> 是一个pydantic的基础类，用于数据验证和序列化。它的作用主要包括：</strong></p>
+<ul>
+<li>类型检查：确保输入数据符合预期类型。</li>
+<li>数据验证：根据模型中定义的限制条件对输入数据进行验证。</li>
+<li>默认值设置：自动为缺失字段提供默认值。</li>
+<li>序列化与反序列化：将 Python 对象转换为 JSON 格式，以及从 JSON 转换回 Python 对象。</li>
+<li>通过继承 <code>BaseModel</code> 并定义字段，用户可以轻松构建自己的数据模型。这有助于减少代码错误、提高数据质量和简化数据处理流程。</li>
+</ul>
+<h3 id="属性源码分析"><a href="#属性源码分析" class="headerlink" title="属性源码分析"></a>属性源码分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from enum import Enum</span><br><span class="line">from typing import Any, Callable, Dict, List, Text, Union</span><br><span class="line"></span><br><span class="line">from pydantic import BaseModel, Field, HttpUrl</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">Text =&gt; str / 文本</span><br><span class="line">List =&gt; list / 列表</span><br><span class="line">Dict =&gt; dict / 字典</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">Name = Text</span><br><span class="line">Url = Text</span><br><span class="line">BaseUrl = Union[HttpUrl, Text]</span><br><span class="line">VariablesMapping = Dict[Text, Any]</span><br><span class="line">FunctionsMapping = Dict[Text, Callable]</span><br><span class="line">Headers = Dict[Text, Text]</span><br><span class="line">Cookies = Dict[Text, Text]</span><br><span class="line">Verify = bool</span><br><span class="line">Hooks = List[Union[Text, Dict[Text, Text]]]</span><br><span class="line">Export = List[Text]</span><br><span class="line">Validators = List[Dict]</span><br><span class="line">Env = Dict[Text, Any]</span><br></pre></td></tr></table></figure>
+<p><strong>用到了typing和pydantic模块，定义了这些属性的类型</strong></p>
+<h3 id="模型类源码分析"><a href="#模型类源码分析" class="headerlink" title="模型类源码分析"></a>模型类源码分析</h3><h4 id="MethodEnum"><a href="#MethodEnum" class="headerlink" title="MethodEnum"></a>MethodEnum</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class MethodEnum(Text, Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类，常用请求的方式</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    GET = &quot;GET&quot;</span><br><span class="line">    POST = &quot;POST&quot;</span><br><span class="line">    PUT = &quot;PUT&quot;</span><br><span class="line">    DELETE = &quot;DELETE&quot;</span><br><span class="line">    HEAD = &quot;HEAD&quot;</span><br><span class="line">    OPTIONS = &quot;OPTIONS&quot;</span><br><span class="line">    PATCH = &quot;PATCH&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ProtoType"><a href="#ProtoType" class="headerlink" title="ProtoType"></a>ProtoType</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class ProtoType(Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类，请求数据类型</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Binary = 1</span><br><span class="line">    CyBinary = 2</span><br><span class="line">    Compact = 3</span><br><span class="line">    Json = 4</span><br></pre></td></tr></table></figure>
+
+<h4 id="TransType"><a href="#TransType" class="headerlink" title="TransType"></a>TransType</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class ProtoType(Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类，请求数据类型</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Binary = 1</span><br><span class="line">    CyBinary = 2</span><br><span class="line">    Compact = 3</span><br><span class="line">    Json = 4</span><br></pre></td></tr></table></figure>
+
+<h4 id="TransType-1"><a href="#TransType-1" class="headerlink" title="TransType"></a>TransType</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class TransType(Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类，它定义了 thrift 协议中数据传输类型</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Buffered = 1</span><br><span class="line">    CyBuffered = 2</span><br><span class="line">    Framed = 3</span><br><span class="line">    CyFramed = 4</span><br></pre></td></tr></table></figure>
+
+<h4 id="TConfigThrift"><a href="#TConfigThrift" class="headerlink" title="TConfigThrift"></a>TConfigThrift</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class TConfigThrift(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类, 定义TConfigThrift 的数据模型</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    psm: Text = None</span><br><span class="line">    env: Text = None</span><br><span class="line">    cluster: Text = None</span><br><span class="line">    target: Text = None</span><br><span class="line">    include_dirs: List[Text] = None</span><br><span class="line">    thrift_client: Any = None</span><br><span class="line">    timeout: int = 10</span><br><span class="line">    idl_path: Text = None</span><br><span class="line">    method: Text = None</span><br><span class="line">    ip: Text = &quot;127.0.0.1&quot;</span><br><span class="line">    port: int = 9000</span><br><span class="line">    service_name: Text = None</span><br><span class="line">    proto_type: ProtoType = ProtoType.Binary</span><br><span class="line">    trans_type: TransType = TransType.Buffered</span><br></pre></td></tr></table></figure>
+
+<h4 id="TConfigDB"><a href="#TConfigDB" class="headerlink" title="TConfigDB"></a>TConfigDB</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class TConfigDB(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类, 定义用于存储与数据库相关的配置信息</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    psm: Text = None</span><br><span class="line">    user: Text = None</span><br><span class="line">    password: Text = None</span><br><span class="line">    ip: Text = None</span><br><span class="line">    port: int = 3306</span><br><span class="line">    database: Text = None</span><br></pre></td></tr></table></figure>
+
+<h4 id="TransportEnum"><a href="#TransportEnum" class="headerlink" title="TransportEnum"></a>TransportEnum</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class TransportEnum(Text, Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类,继承自 Text 和 Enum。它定义了两个枚举值：BUFFERED 和 FRAMED，分别表示缓冲传输和帧传输。枚举值的类型是 Text，</span><br><span class="line">    因此它们可以是任何字符串。枚举类的作用是为 HttpRunner 提供传输类型的选择</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    BUFFERED = &quot;buffered&quot;</span><br><span class="line">    FRAMED = &quot;framed&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="TThriftRequest"><a href="#TThriftRequest" class="headerlink" title="TThriftRequest"></a>TThriftRequest</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class TThriftRequest(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    rpc request model</span><br><span class="line">    内置枚举类，它继承自 BaseModel。它定义了一些属性，用于表示 Thrift 请求的相关信息，包括方法名、参数、Thrift 客户端、IDL 文件路径、</span><br><span class="line">    超时时间、传输类型、目标地址、环境、集群、PSM、服务名、IP、端口、协议类型和传输类型等。这些属性都有默认值，可以通过实例化对象来设置它们的值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    method: Text = &quot;&quot;</span><br><span class="line">    params: Dict = &#123;&#125;</span><br><span class="line">    thrift_client: Any = None</span><br><span class="line">    idl_path: Text = &quot;&quot;  # idl local path</span><br><span class="line">    timeout: int = 10  # sec</span><br><span class="line">    transport: TransportEnum = TransportEnum.BUFFERED</span><br><span class="line">    include_dirs: List[Union[Text, None]] = []  # param of thriftpy2.load</span><br><span class="line">    target: Text = &quot;&quot;  # tcp://&#123;ip&#125;:&#123;port&#125; or sd://psm?cluster=xx&amp;env=xx</span><br><span class="line">    env: Text = &quot;prod&quot;</span><br><span class="line">    cluster: Text = &quot;default&quot;</span><br><span class="line">    psm: Text = &quot;&quot;</span><br><span class="line">    service_name: Text = None</span><br><span class="line">    ip: Text = None</span><br><span class="line">    port: int = None</span><br><span class="line">    proto_type: ProtoType = None</span><br><span class="line">    trans_type: TransType = None</span><br></pre></td></tr></table></figure>
+
+<h4 id="SqlMethodEnum"><a href="#SqlMethodEnum" class="headerlink" title="SqlMethodEnum"></a>SqlMethodEnum</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class SqlMethodEnum(Text, Enum):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类，它继承自 Text 和 Enum。它定义了一些枚举值，用于表示 SQL 操作的类型，包括 FETCHONE、FETCHMANY、FETCHALL、INSERT、UPDATE 和 DELETE。</span><br><span class="line">    这些枚举值可以通过实例化对象来访问，以执行相应的 SQL 操作</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    FETCHONE = &quot;FETCHONE&quot;</span><br><span class="line">    FETCHMANY = &quot;FETCHMANY&quot;</span><br><span class="line">    FETCHALL = &quot;FETCHALL&quot;</span><br><span class="line">    INSERT = &quot;INSERT&quot;</span><br><span class="line">    UPDATE = &quot;UPDATE&quot;</span><br><span class="line">    DELETE = &quot;DELETE&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="TSqlRequest"><a href="#TSqlRequest" class="headerlink" title="TSqlRequest"></a>TSqlRequest</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class TSqlRequest(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    sql request model</span><br><span class="line">    内置枚举类, 它继承自 BaseModel。它定义了一些属性，用于表示 SQL 请求的相关信息，包括数据库配置、SQL 操作类型、SQL 语句和结果集大小等。其中，db_config 属性表示数据库配置信息，</span><br><span class="line">    它是一个 TConfigDB 类型的对象，包括 PSM、用户名、密码、IP、端口和数据库名等。method 属性表示 SQL 操作类型，它是一个 SqlMethodEnum 类型的枚举值，包括 FETCHONE、FETCHMANY、FETCHALL、</span><br><span class="line">    INSERT、UPDATE 和 DELETE。sql 属性表示 SQL 语句，size 属性表示结果集大小，用于限制 SQL 查询结果的数量。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    db_config: TConfigDB = TConfigDB()</span><br><span class="line">    method: SqlMethodEnum = None</span><br><span class="line">    sql: Text = None</span><br><span class="line">    size: int = 0  # limit nums of sql result</span><br></pre></td></tr></table></figure>
+
+<h4 id="TConfig"><a href="#TConfig" class="headerlink" title="TConfig"></a>TConfig</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class TConfig(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    内置枚举类</span><br><span class="line">    它定义了一些属性，用于表示 HttpRunner 的配置信息，包括名称、验证、基础 URL、变量、参数、导出变量、路径、Thrift 配置和数据库配置等。</span><br><span class="line">    其中，name 属性表示配置对象的名称，</span><br><span class="line">    verify 属性表示是否验证 SSL 证书，</span><br><span class="line">    base_url 属性表示基础 URL，</span><br><span class="line">    variables 属性表示变量，可以是一个字典或者是一个字符串，字符串表示变量的 Python 代码，</span><br><span class="line">    parameters 属性表示参数，可以是一个字典或者是一个字符串，字符串表示参数的 Python 代码，export 属性表示导出变量的名称列表，</span><br><span class="line">    path 属性表示配置文件的路径，</span><br><span class="line">    thrift 属性表示 Thrift 配置信息，是一个 TConfigThrift 类型的对象，</span><br><span class="line">    db 属性表示数据库配置信息，是一个 TConfigDB 类型的对象。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    name: Name</span><br><span class="line">    verify: Verify = False</span><br><span class="line">    base_url: BaseUrl = &quot;&quot;</span><br><span class="line">    # Text: prepare variables in debugtalk.py, $&#123;gen_variables()&#125;</span><br><span class="line">    variables: Union[VariablesMapping, Text] = &#123;&#125;</span><br><span class="line">    parameters: Union[VariablesMapping, Text] = &#123;&#125;</span><br><span class="line">    # setup_hooks: Hooks = []</span><br><span class="line">    # teardown_hooks: Hooks = []</span><br><span class="line">    export: Export = []</span><br><span class="line">    path: Text = None</span><br><span class="line">    # configs for other protocols</span><br><span class="line">    thrift: TConfigThrift = None</span><br><span class="line">    db: TConfigDB = TConfigDB()</span><br></pre></td></tr></table></figure>
+
+<h4 id="TRequest"><a href="#TRequest" class="headerlink" title="TRequest"></a>TRequest</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class TRequest(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    requests.Request model</span><br><span class="line">    内置枚举类</span><br><span class="line">    它继承自 BaseModel。它定义了一些属性，用于表示 HTTP 请求的相关信息，包括请求方法、URL、查询参数、请求头、请求体、数据、超时时间、重定向、SSL 验证和上传文件等。</span><br><span class="line">    method 属性表示请求方法，它是一个 MethodEnum 类型的枚举值，包括 GET、POST、PUT、DELETE、HEAD、OPTIONS、PATCH 和 TRACE。</span><br><span class="line">    url 属性表示请求的 URL，</span><br><span class="line">    params 属性表示查询参数，headers 属性表示请求头，</span><br><span class="line">    req_json 属性表示请求体，可以是一个字典、列表或者字符串，字符串表示请求体的 JSON 格式的字符串，</span><br><span class="line">    data 属性表示请求数据，可以是一个字典或者字符串，字符串表示请求数据的 Python 代码，</span><br><span class="line">    cookies 属性表示请求的 cookies，</span><br><span class="line">    timeout 属性表示超时时间，</span><br><span class="line">    allow_redirects 属性表示是否允许重定向，</span><br><span class="line">    verify 属性表示是否验证 SSL 证书，</span><br><span class="line">    upload 属性表示上传文件的信息，是一个字典，包括文件名、文件路径和文件类型等。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    method: MethodEnum</span><br><span class="line">    url: Url</span><br><span class="line">    params: Dict[Text, Text] = &#123;&#125;</span><br><span class="line">    headers: Headers = &#123;&#125;</span><br><span class="line">    req_json: Union[Dict, List, Text] = Field(None, alias=&quot;json&quot;)</span><br><span class="line">    data: Union[Text, Dict[Text, Any]] = None</span><br><span class="line">    cookies: Cookies = &#123;&#125;</span><br><span class="line">    timeout: float = 120</span><br><span class="line">    allow_redirects: bool = True</span><br><span class="line">    verify: Verify = False</span><br><span class="line">    upload: Dict = &#123;&#125;  # used for upload files</span><br></pre></td></tr></table></figure>
+
+<h4 id="TStep"><a href="#TStep" class="headerlink" title="TStep"></a>TStep</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class TStep(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试步骤，里面包含了request请求</span><br><span class="line">    它继承自 BaseModel。它定义了一些属性，用于表示测试步骤的相关信息，包括名称、请求、测试用例、变量、setup 和 teardown 钩子、提取变量、导出变量、验证器、验证脚本、重试次数、重试间隔、Thrift 请求和 SQL 请求等。</span><br><span class="line">    其中，name 属性表示测试步骤的名称，</span><br><span class="line">    request 属性表示 HTTP 请求的相关信息，是一个 TRequest 类型的对象，</span><br><span class="line">    testcase 属性表示测试用例，可以是一个字符串或者是一个函数，字符串表示测试用例的 Python 代码，函数表示测试用例的函数对象，</span><br><span class="line">    variables 属性表示变量，是一个字典，setup_hooks 属性表示 setup 钩子，是一个列表，列表中的元素可以是字符串或者是函数，字符串表示 setup 钩子的 Python 代码，函数表示 setup 钩子的函数对象，t</span><br><span class="line">    eardown_hooks 属性表示 teardown 钩子，是一个列表，列表中的元素可以是字符串或者是函数，字符串表示 teardown 钩子的 Python 代码，函数表示 teardown 钩子的函数对象，</span><br><span class="line">    extract 属性表示提取变量，是一个字典，export 属性表示导出变量，是一个列表，列表中的元素是字符串，表示要导出的变量名，</span><br><span class="line">    validators 属性表示验证器，是一个列表，列表中的元素是一个字典，表示验证器的相关信息，validate_script 属性表示验证脚本，是一个列表，列表中的元素是字符串，表示验证脚本的 Python 代码，</span><br><span class="line">    retry_times 属性表示重试次数，</span><br><span class="line">    retry_interval 属性表示重试间隔，</span><br><span class="line">    thrift_request 属性表示 Thrift 请求的相关信息，是一个 TThriftRequest 类型的对象，</span><br><span class="line">    sql_request 属性表示 SQL 请求的相关信息，是一个 TSqlRequest 类型的对象。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    name: Name</span><br><span class="line">    request: Union[TRequest, None] = None</span><br><span class="line">    testcase: Union[Text, Callable, None] = None</span><br><span class="line">    variables: VariablesMapping = &#123;&#125;</span><br><span class="line">    setup_hooks: Hooks = []</span><br><span class="line">    teardown_hooks: Hooks = []</span><br><span class="line">    # used to extract request&#x27;s response field</span><br><span class="line">    extract: VariablesMapping = &#123;&#125;</span><br><span class="line">    # used to export session variables from referenced testcase</span><br><span class="line">    export: Export = []</span><br><span class="line">    validators: Validators = Field([], alias=&quot;validate&quot;)</span><br><span class="line">    validate_script: List[Text] = []</span><br><span class="line">    retry_times: int = 0</span><br><span class="line">    retry_interval: int = 0  # sec</span><br><span class="line">    thrift_request: Union[TThriftRequest, None] = None</span><br><span class="line">    sql_request: Union[TSqlRequest, None] = None</span><br></pre></td></tr></table></figure>
+<p><strong>这个类的作用是定义测试步骤的相关信息，方便用户进行接口测试。用户可以通过实例化对象来设置这些属性的值，然后将对象传递给 HttpRunner 类的相应方法，<br>以执行相应的接口测试。在执行接口测试之前，用户需要先创建一个 HttpRunner 对象，并将配置信息传递给它。然后，用户可以通过调用 HttpRunner 对象的相应方法，<br>传递 TStep 对象作为参数，来执行相应的接口测试。在执行测试步骤之前，用户需要先创建一个 TRequest 对象，并将 HTTP 请求的相关信息传递给它。<br>然后，用户可以通过设置 TStep 对象的 request 属性，将 TRequest 对象作为参数传递给它，来定义测试步骤的 HTTP 请求。如果用户需要在测试步骤中执行测试用例，<br>可以将测试用例的 Python 代码或者函数对象作为参数传递给 TStep 对象的 testcase 属性。如果用户需要在测试步骤中执行 setup 或 teardown 钩子，可以将钩子的<br>Python 代码或者函数对象作为参数传递给 TStep 对象的 setup_hooks 或 teardown_hooks 属性。如果用户需要在测试步骤中提取变量，可以将变量名和提取规则作为参数传递给<br>TStep 对象的 extract 属性。如果用户需要在测试步骤中导出变量，可以将变量名作为参数传递给 TStep 对象的 export 属性。如果用户需要在测试步骤中执行验证器，可以将验证器<br>的相关信息作为参数传递给 TStep 对象的 validators 属性。如果用户需要在测试步骤中执行验证脚本，可以将验证脚本的 Python 代码作为参数传递给 TStep 对象的 validate_script 属性。<br>如果用户需要在测试步骤中执行重试操作，可以将重试次数和重试间隔作为参数传递给 TStep 对象的 retry_times 和 retry_interval 属性。如果用户需要在测试步骤中执行 Thrift 请求，<br>可以将 Thrift 请求的相关信息作为参数传递给 TStep 对象的 thrift_request 属性。如果用户需要在测试步骤中执行 SQL 请求，可以将 SQL 请求的相关信息作为参数传递给 TStep 对象的 sql_request 属性。</strong></p>
+<h4 id="TestCase"><a href="#TestCase" class="headerlink" title="TestCase"></a>TestCase</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class TestCase(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试用例，包含了测试步骤和配置信息</span><br><span class="line">    它定义了一些属性，用于表示测试用例的相关信息，包括配置信息和测试步骤等。</span><br><span class="line">    config 属性表示配置信息，是一个 TConfig 类型的对象，</span><br><span class="line">    teststeps 属性表示测试步骤，是一个 TStep 类型的对象的列表。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    config: TConfig</span><br><span class="line">    teststeps: List[TStep]</span><br></pre></td></tr></table></figure>
+
+<h4 id="ProjectMeta"><a href="#ProjectMeta" class="headerlink" title="ProjectMeta"></a>ProjectMeta</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class ProjectMeta(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    项目结构</span><br><span class="line">    定义了一些属性，用于表示项目的相关信息，</span><br><span class="line">     debugtalk.py 文件的内容和路径、.env 文件的路径、在 debugtalk.py 中定义的函数、环境变量和项目根目录等。</span><br><span class="line">     其中，debugtalk_py 属性表示 debugtalk.py 文件的内容，</span><br><span class="line">     debugtalk_path 属性表示 debugtalk.py 文件的路径，</span><br><span class="line">     dot_env_path 属性表示 .env 文件的路径，</span><br><span class="line">     functions 属性表示在 debugtalk.py 中定义的函数，是一个字典，</span><br><span class="line">     env 属性表示环境变量，是一个字典，</span><br><span class="line">     RootDir 属性表示项目根目录，是一个字符串，表示 debugtalk.py 文件所在的目录。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    debugtalk_py: Text = &quot;&quot;  # debugtalk.py file content</span><br><span class="line">    debugtalk_path: Text = &quot;&quot;  # debugtalk.py file path</span><br><span class="line">    dot_env_path: Text = &quot;&quot;  # .env file path</span><br><span class="line">    functions: FunctionsMapping = &#123;&#125;  # functions defined in debugtalk.py</span><br><span class="line">    env: Env = &#123;&#125;</span><br><span class="line">    RootDir: Text = (</span><br><span class="line">        os.getcwd()</span><br><span class="line">    )  # project root directory (ensure absolute), the path debugtalk.py located</span><br></pre></td></tr></table></figure>
+
+<h4 id="TestsMapping"><a href="#TestsMapping" class="headerlink" title="TestsMapping"></a>TestsMapping</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class TestsMapping(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试映射</span><br><span class="line">    1.project_meta</span><br><span class="line">    2.testcases 测试用例集，list下有多个用例</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    project_meta: ProjectMeta</span><br><span class="line">    testcases: List[TestCase]</span><br></pre></td></tr></table></figure>
+
+<h4 id="TestCaseTime"><a href="#TestCaseTime" class="headerlink" title="TestCaseTime"></a>TestCaseTime</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class TestCaseTime(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试用例时间</span><br><span class="line">    1.start_at：开始时间默认为0</span><br><span class="line">    2.start_at_iso_format：以iso格式启动</span><br><span class="line">    3.duration：持续时间</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    start_at: float = 0</span><br><span class="line">    start_at_iso_format: Text = &quot;&quot;</span><br><span class="line">    duration: float = 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="TestCaseInOut"><a href="#TestCaseInOut" class="headerlink" title="TestCaseInOut"></a>TestCaseInOut</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class TestCaseInOut(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试用例的输入输出：</span><br><span class="line">    config_vars：配置变量</span><br><span class="line">    export_vars：导出变量</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    config_vars: VariablesMapping = &#123;&#125;</span><br><span class="line">    export_vars: Dict = &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="RequestStat"><a href="#RequestStat" class="headerlink" title="RequestStat"></a>RequestStat</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class RequestStat(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    请求指标：</span><br><span class="line">    content_size：内容大小</span><br><span class="line">    response_time_ms：响应时间(ms)</span><br><span class="line">    elapsed_ms：逝去的时间(ms)</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    content_size: float = 0</span><br><span class="line">    response_time_ms: float = 0</span><br><span class="line">    elapsed_ms: float = 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="AddressData"><a href="#AddressData" class="headerlink" title="AddressData"></a>AddressData</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class AddressData(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    客户端与服务器地址数据</span><br><span class="line">    client_ip：客户端ip地址</span><br><span class="line">    client_port：客户端端口号</span><br><span class="line">    server_ip：服务器ip地址</span><br><span class="line">    server_port：服务器端口号</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    client_ip: Text = &quot;N/A&quot;</span><br><span class="line">    client_port: int = 0</span><br><span class="line">    server_ip: Text = &quot;N/A&quot;</span><br><span class="line">    server_port: int = 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="RequestData"><a href="#RequestData" class="headerlink" title="RequestData"></a>RequestData</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class RequestData(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    请求数据</span><br><span class="line">    method：请求方法，默认为GET</span><br><span class="line">    url：url地址</span><br><span class="line">    headers：请求头</span><br><span class="line">    cookies：cookie信息</span><br><span class="line">    body：请求体</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    method: MethodEnum = MethodEnum.GET</span><br><span class="line">    url: Url</span><br><span class="line">    headers: Headers = &#123;&#125;</span><br><span class="line">    cookies: Cookies = &#123;&#125;</span><br><span class="line">    body: Union[Text, bytes, List, Dict, None] = &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ResponseData"><a href="#ResponseData" class="headerlink" title="ResponseData"></a>ResponseData</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class ResponseData(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    响应数据</span><br><span class="line">    status_code：状态码</span><br><span class="line">    headers：响应头</span><br><span class="line">    cookies：cookie信息</span><br><span class="line">    encoding：编码格式</span><br><span class="line">    content_type：内容类型</span><br><span class="line">    body：响应体</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    status_code: int</span><br><span class="line">    headers: Dict</span><br><span class="line">    cookies: Cookies</span><br><span class="line">    encoding: Union[Text, None] = None</span><br><span class="line">    content_type: Text</span><br><span class="line">    body: Union[Text, bytes, List, Dict, None]</span><br></pre></td></tr></table></figure>
+
+<h4 id="ReqRespData"><a href="#ReqRespData" class="headerlink" title="ReqRespData"></a>ReqRespData</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class ReqRespData(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    请求响应数据</span><br><span class="line">    request：RequestData</span><br><span class="line">    response：ResponseData</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    request: RequestData</span><br><span class="line">    response: ResponseData</span><br></pre></td></tr></table></figure>
+
+<h4 id="SessionData"><a href="#SessionData" class="headerlink" title="SessionData"></a>SessionData</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class SessionData(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    request session data, including request, response, validators and stat data</span><br><span class="line">    它定义了一些属性，用于表示请求会话数据，包括请求、响应、验证器和统计数据等。</span><br><span class="line">    success 属性表示请求是否成功，是一个布尔值，</span><br><span class="line">    req_resps 属性表示请求和响应数据，是一个 ReqRespData 类型的对象的列表，</span><br><span class="line">    stat 属性表示请求统计数据，是一个 RequestStat 类型的对象，</span><br><span class="line">    address 属性表示请求地址数据，是一个 AddressData 类型的对象，</span><br><span class="line">    validators 属性表示验证器，是一个字典</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    success: bool = False</span><br><span class="line">    # in most cases, req_resps only contains one request &amp; response</span><br><span class="line">    # while when 30X redirect occurs, req_resps will contain multiple request &amp; response</span><br><span class="line">    req_resps: List[ReqRespData] = []</span><br><span class="line">    stat: RequestStat = RequestStat()</span><br><span class="line">    address: AddressData = AddressData()</span><br><span class="line">    validators: Dict = &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="StepResult"><a href="#StepResult" class="headerlink" title="StepResult"></a>StepResult</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class StepResult(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    teststep data, each step maybe corresponding to one request or one testcase</span><br><span class="line">    它定义了一些属性，用于表示测试步骤的相关信息，包括测试步骤名称、测试步骤类型、请求会话数据、测试步骤执行时间、响应内容大小、导出变量和附件等。其中，</span><br><span class="line">    name 属性表示测试步骤名称，是一个字符串，</span><br><span class="line">    step_type 属性表示测试步骤类型，是一个字符串，</span><br><span class="line">    success 属性表示测试步骤是否成功，是一个布尔值，</span><br><span class="line">    data 属性表示请求会话数据，是一个 SessionData 类型的对象或 StepResult 类型的对象的列表，</span><br><span class="line">    elapsed 属性表示测试步骤执行时间，是一个浮点数，</span><br><span class="line">    content_size 属性表示响应内容大小，是一个浮点数，</span><br><span class="line">    export_vars 属性表示导出变量，是一个字典，</span><br><span class="line">    attachment 属性表示测试步骤的附件，是一个字符串。</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    name: Text = &quot;&quot;  # teststep name</span><br><span class="line">    step_type: Text = &quot;&quot;  # teststep type, request or testcase</span><br><span class="line">    success: bool = False</span><br><span class="line">    data: Union[SessionData, List[&quot;StepResult&quot;]] = None</span><br><span class="line">    elapsed: float = 0.0  # teststep elapsed time</span><br><span class="line">    content_size: float = 0  # response content size</span><br><span class="line">    export_vars: VariablesMapping = &#123;&#125;</span><br><span class="line">    attachment: Text = &quot;&quot;  # teststep attachment</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">StepResult.update_forward_refs()</span><br></pre></td></tr></table></figure>
+
+<h4 id="IStep"><a href="#IStep" class="headerlink" title="IStep"></a>IStep</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class IStep(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    它定义了一些方法，用于表示测试步骤的相关信息，包括测试步骤名称、测试步骤类型、测试步骤结构和测试步骤执行等。</span><br><span class="line">    name 方法返回测试步骤名称，是一个字符串，</span><br><span class="line">    type 方法返回测试步骤类型，是一个字符串，</span><br><span class="line">    struct 方法返回测试步骤结构，是一个 TStep 类型的对象，</span><br><span class="line">    run 方法用于执行测试步骤，接受一个 runner 参数，返回一个 StepResult 类型的对象。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    </span><br><span class="line">    def name(self) -&gt; str:</span><br><span class="line">        raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    def type(self) -&gt; str:</span><br><span class="line">        raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    def struct(self) -&gt; TStep:</span><br><span class="line">        raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    def run(self, runner) -&gt; StepResult:</span><br><span class="line">        # runner: HttpRunner</span><br><span class="line">        raise NotImplementedError</span><br></pre></td></tr></table></figure>
+
+<h4 id="TestCaseSummary"><a href="#TestCaseSummary" class="headerlink" title="TestCaseSummary"></a>TestCaseSummary</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class PlatformInfo(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    平台信息</span><br><span class="line">    httprunner_version：httprunner版本号</span><br><span class="line">    python_version：python版本</span><br><span class="line">    platform：平台</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    httprunner_version: Text</span><br><span class="line">    python_version: Text</span><br><span class="line">    platform: Text</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="PlatformInfo"><a href="#PlatformInfo" class="headerlink" title="PlatformInfo"></a>PlatformInfo</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class PlatformInfo(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    平台信息</span><br><span class="line">    httprunner_version：httprunner版本号</span><br><span class="line">    python_version：python版本</span><br><span class="line">    platform：平台</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    httprunner_version: Text</span><br><span class="line">    python_version: Text</span><br><span class="line">    platform: Text</span><br></pre></td></tr></table></figure>
+
+<h4 id="Stat"><a href="#Stat" class="headerlink" title="Stat"></a>Stat</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Stat(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    统计信息</span><br><span class="line">    total：总数</span><br><span class="line">    success：成功的用例数</span><br><span class="line">    fail：失败的用例数</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    total: int = 0</span><br><span class="line">    success: int = 0</span><br><span class="line">    fail: int = 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="TestSuiteSummary"><a href="#TestSuiteSummary" class="headerlink" title="TestSuiteSummary"></a>TestSuiteSummary</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class TestSuiteSummary(BaseModel):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    测试套件结果</span><br><span class="line">    success：成功的状态</span><br><span class="line">    stat：统计信息</span><br><span class="line">    time：测试用例花费的时间</span><br><span class="line">    platform：平台信息</span><br><span class="line">    testcases：测试用例集</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    success: bool = False</span><br><span class="line">    stat: Stat = Stat()</span><br><span class="line">    time: TestCaseTime = TestCaseTime()</span><br><span class="line">    platform: PlatformInfo</span><br><span class="line">    testcases: List[TestCaseSummary]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/" title="Httprunner源码解读(2)models.py" target="_blank" rel="external">http://example.com/2023/06/17/Httprunner源码解读-2-models-py/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">佑珈</span><small class="ml-1x">Tester &amp; Designer</small></a></h3>
+        <div>临渊羡鱼，不如退而结网</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/06/17/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/" title="Httprunner源码解读(1)源码模块内容"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/pay.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechart.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/YoGazz" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://space.bilibili.com/277259094" target="_blank" title="Bilibili" data-toggle=tooltip data-placement=top><i class="icon icon-bilibili"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
