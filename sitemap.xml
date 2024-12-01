@@ -182,14 +182,14 @@
 
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/jenkins/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/docker/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/docker/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/jenkins/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -238,14 +238,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/django/</loc>
-    <lastmod>2024-12-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/rest-framework/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E9%9D%A2%E8%AF%95/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -259,14 +252,21 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E9%9D%A2%E8%AF%95/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/django/</loc>
+    <lastmod>2024-12-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/rest-framework/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -310,7 +310,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E5%90%8E%E7%AB%AF/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -324,7 +324,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E5%BC%80%E5%8F%91/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
