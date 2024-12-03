@@ -205,6 +205,13 @@
   </url>
   
   <url>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/git/</loc>
+    <lastmod>2024-12-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/tags/httprunner/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -254,13 +261,6 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
-    <lastmod>2024-12-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E9%9D%A2%E8%AF%95/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -268,7 +268,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/git/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -305,6 +305,13 @@
   </url>
   
   <url>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/Git/</loc>
+    <lastmod>2024-12-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/categories/Httprunner/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -333,13 +340,6 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2024-12-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -347,7 +347,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/Git/</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/categories/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

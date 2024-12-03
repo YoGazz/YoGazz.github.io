@@ -84,6 +84,74 @@
       </tags>
   </entry>
   <entry>
+    <title>Git使用详细教程</title>
+    <url>/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>现在大部分的开发团队都以 Git 作为自己的版本控制工具，需要对 Git 的使用非常的熟悉。<br>这篇文章中本人整理了自己在工作过程中经常使用到的 Git 命令，方便在偶尔忘记时速查。<br><img src="/../images/git.png" alt="git.png"></p>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Httprunner源码解读(1)源码模块内容</title>
+    <url>/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台<br>都是基于httprunner，所以，读懂源码必不可少</p>
+<span id="more"></span>
+
+<h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="/../images/h1.png" alt="git.png"></p>
+<h4 id="builtin"><a href="#builtin" class="headerlink" title="builtin"></a>builtin</h4><p>这个包做了一些内置的功能</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">├── __init__.<span class="keyword">py</span></span><br><span class="line">├── comparators.<span class="keyword">py</span></span><br><span class="line">└── functions.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>comparators：内置验证校验器</li>
+<li>functions：内置的一些方法</li>
+</ul>
+<h4 id="database"><a href="#database" class="headerlink" title="database"></a>database</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">└── engine.py</span><br></pre></td></tr></table></figure>
+<p>数据库模块是基于 DBEngine 实现的，用于对测试数据进行存储和管理。它支持多种类型数据库，如 MySQL、PostgreSQL、SQLite 等</p>
+<p><strong>engine.py实现了一个数据库引擎类DBEngine，用于连接数据库并执行SQL语句。在初始化时，它会根据传入的数据库URI创建一个SQLAlchemy的engine，<br>并使用sessionmaker创建一个session。在执行SQL语句时，它会根据语句的类型（SELECT、UPDATE、DELETE、INSERT）返回不同的结果。如果是SELECT语句，<br>它会根据size参数返回对应数量的结果，如果size为1，则返回一个字典，否则返回一个字典列表。在返回结果前，它会对结果进行处理，将datetime.datetime<br>和datetime.date类型转换为字符串，将json字符串转换为字典。如果是UPDATE、DELETE、INSERT语句，则返回一个字典，包含受影响的行数。</strong> </p>
+<h4 id="ext"><a href="#ext" class="headerlink" title="ext"></a>ext</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">└── uploader</span><br><span class="line">   └── __init__.py</span><br></pre></td></tr></table></figure>
+<p>在httprunner基础上集成了别的插件</p>
+<ul>
+<li><p>uploader：集成了上传文件的功能<br>这是一个名为uploader的HTTPRunner扩展，它提供了上传文件的功能。如果要使用此扩展，需要先安装以下依赖项：</p>
+</li>
+<li><p>requests_toolbelt</p>
+</li>
+<li><p>filetype</p>
+</li>
+</ul>
+<p><strong>uploader扩展提供了prepare_upload_step函数，用于预处理上传测试步骤。它会将上传信息替换为MultipartEncoder对象。<br>如果上传信息不存在，则不进行处理。MultipartEncoder对象是使用multipart_encoder函数初始化的，该函数接受上传字段作为参数，<br>并返回一个初始化的MultipartEncoder对象。multipart_content_type函数用于准备请求头的Content-Type。如果依赖项未安装，<br>则会引发ModuleNotFoundError异常。</strong> </p>
+<h4 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── data_convertor.py</span><br><span class="line">└── thrift_client.py</span><br></pre></td></tr></table></figure>
+
+<p><strong>thrift 模块是用于支持 Apache Thrift 的模块，可以将 thrift 服务定义文件（.thrift 文件）转换为 Python 代码，并生成可用的客户端和服务端代码。它基于 thrift 的 Python 库进行开发，<br>支持多种类型的 thrift 服务，如 TCP、HTTP 等。</strong></p>
+<h4 id="cli-py"><a href="#cli-py" class="headerlink" title="cli.py"></a>cli.py</h4><p>命令行驱动执行</p>
+<h4 id="client-py"><a href="#client-py" class="headerlink" title="client.py"></a>client.py</h4><p>客户端相关方法,主要是封装 requests.Session.request,安全调用,输出log等, 给runner.py调用.</p>
+<h4 id="compat-py"><a href="#compat-py" class="headerlink" title="compat.py"></a>compat.py</h4><p>提供各种处理兼容性的方法,包括让v2版本的用例能在v3版本继续运行的相关转换方法</p>
+<h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><p>包含三个类：ConfigThrift、ConfigDB 和 Config。<br>这些类的作用是为 HttpRunner 提供配置信息，包括 Thrift 协议相关的配置信息和数据库相关的配置信息。通过使用这些类，用户可以方便地设置和管理配置信息，从而更好地控制测试用例的执行过程。 </p>
+<h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p>
+<h4 id="loader-py"><a href="#loader-py" class="headerlink" title="loader.py"></a>loader.py</h4><p>加载文件内容的方法</p>
+<h4 id="make-py"><a href="#make-py" class="headerlink" title="make.py"></a>make.py</h4><p>主要集成参数使之生效在测试用例中，如config、request、teststep等等，构成一个可用的用例</p>
+<h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h4><p>定义各种model类,以BaseModel为父类</p>
+<h4 id="parser-py"><a href="#parser-py" class="headerlink" title="parser.py"></a>parser.py</h4><p>各种解析方法，主要用于数值类型判断后自动转换</p>
+<h4 id="response-py"><a href="#response-py" class="headerlink" title="response.py"></a>response.py</h4><p>处理响应报文格式</p>
+<h4 id="runner-py"><a href="#runner-py" class="headerlink" title="runner.py"></a>runner.py</h4><p>运行项目的核心</p>
+<h4 id="step-py"><a href="#step-py" class="headerlink" title="step.py"></a>step.py</h4><p>文件定义了 Step 类，该类表示 HttpRunner 测试用例中的一个步骤，提供了多个属性和方法，用于获取步骤的信息和运行步骤</p>
+<h4 id="step-request-py"><a href="#step-request-py" class="headerlink" title="step_request.py"></a>step_request.py</h4><p>用于运行 HttpRunner 测试步骤中的请求</p>
+<h4 id="step-sql-request-py"><a href="#step-sql-request-py" class="headerlink" title="step_sql_request.py"></a>step_sql_request.py</h4><p>定义了 run_step_sql_request 函数，该函数表示 HttpRunner 测试用例中的一个 SQL 查询步骤，提供了解析 SQL 查询请求、<br>执行 SQL 查询、提取 SQL 查询结果、更新 step_variables 和验证 SQL 查询结果等功能。 </p>
+<h4 id="step-testcase-py"><a href="#step-testcase-py" class="headerlink" title="step_testcase.py"></a>step_testcase.py</h4><p>定义了 StepTestCase 类，该类表示 HttpRunner 测试用例中的一个测试步骤，继承自 Step 类，提供了多个属性和方法，<br>用于获取测试步骤的信息和运行测试步骤</p>
+<h4 id="step-thrift-request-py"><a href="#step-thrift-request-py" class="headerlink" title="step_thrift_request.py"></a>step_thrift_request.py</h4><p>定义了 run_step_thrift_request 函数，该函数表示 HttpRunner 测试用例中的一个 Thrift 请求步骤，提供了解析 Thrift 请求、<br>执行 Thrift 请求、提取 Thrift 请求结果、更新 step_variables 和验证 Thrift 请求结果等功能。 </p>
+<h4 id="utils-py"><a href="#utils-py" class="headerlink" title="utils.py"></a>utils.py</h4><p>一些工具函数用于处理数据、打印信息等,辅助测试用例的编写和执行，可以在测试用例中直接使用。 </p>
+]]></content>
+      <categories>
+        <category>Httprunner</category>
+      </categories>
+      <tags>
+        <tag>httprunner</tag>
+        <tag>接口自动化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Httprunner源码解读(2)models.py</title>
     <url>/2023/06/11/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-2-models-py/</url>
     <content><![CDATA[<h3 id="models-py的代码结构"><a href="#models-py的代码结构" class="headerlink" title="models.py的代码结构"></a>models.py的代码结构</h3><p><img src="/../images/models.png" alt="img.png"><br><strong>这个模块中定义了12个属性和29个模型类</strong><br><strong>文件主要包含了一系列用于描述测试配置、请求和响应的数据模型类。这些数据模型通常继承自 Pydantic’s BaseModel 类，它们用于实现类型检查、数据验证以及序列化和反序列化等功能。</strong></p>
@@ -174,6 +242,43 @@
       </tags>
   </entry>
   <entry>
+    <title>Httprunner源码解读(3)client.py</title>
+    <url>/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/</url>
+    <content><![CDATA[<h3 id="client-py的代码结构"><a href="#client-py的代码结构" class="headerlink" title="client.py的代码结构"></a>client.py的代码结构</h3><p><img src="/../images/client.png" alt="img.png"><br><strong>这个模块中定义了2个类和1个方法</strong></p>
+<h4 id="ApiResponse类"><a href="#ApiResponse类" class="headerlink" title="ApiResponse类"></a>ApiResponse类</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ApiResponse(Response):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    继承Response 类，重写了raise_for_status方法，用于检查响应是否包含错误信息，并在响应中包含错误信息时抛出相应的异常</span><br><span class="line">    raise_for_status 方法首先检查响应对象是否包含 error 属性，并且该属性的值不为 None。如果 error 属性存在且不为 None，则抛出 error 异常。</span><br><span class="line">    否则，调用父类 Response 的 raise_for_status 方法，检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def raise_for_status(self):</span><br><span class="line">        if hasattr(self, &quot;error&quot;) and self.error:</span><br><span class="line">            raise self.error</span><br><span class="line">        Response.raise_for_status(self)</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h4 id="get-req-resp-record方法"><a href="#get-req-resp-record方法" class="headerlink" title="get_req_resp_record方法"></a>get_req_resp_record方法</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def get_req_resp_record(resp_obj: Response) -&gt; ReqRespData:</span><br><span class="line">    &quot;&quot;&quot;get request and response info from Response() object.&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"># 定义了一个打印日志的函数，将打印的日志解析为标准的json格式</span><br><span class="line">    def log_print(req_or_resp, r_type):</span><br><span class="line">        msg = f&quot;\n================== &#123;r_type&#125; details ==================\n&quot;</span><br><span class="line">        for key, value in req_or_resp.dict().items():</span><br><span class="line">            if isinstance(value, dict) or isinstance(value, list):</span><br><span class="line">                value = json.dumps(value, indent=4, ensure_ascii=False)</span><br><span class="line"></span><br><span class="line">            msg += &quot;&#123;:&lt;8&#125; : &#123;&#125;\n&quot;.format(key, value)</span><br><span class="line">        logger.debug(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record actual request info</span><br><span class="line">    # 是先获取request_headers、request_cookies、request_body，然后将获取到的信息放入RequestData模型中，最后打印请求的信息</span><br><span class="line">    request_headers = dict(resp_obj.request.headers)</span><br><span class="line">    request_cookies = resp_obj.request._cookies.get_dict()</span><br><span class="line"></span><br><span class="line">    request_body = resp_obj.request.body</span><br><span class="line">    if request_body is not None:</span><br><span class="line">        try:</span><br><span class="line">            request_body = json.loads(request_body)</span><br><span class="line">        except json.JSONDecodeError:</span><br><span class="line">            # str: a=1&amp;b=2</span><br><span class="line">            pass</span><br><span class="line">        except UnicodeDecodeError:</span><br><span class="line">            # bytes/bytearray: request body in protobuf</span><br><span class="line">            pass</span><br><span class="line">        except TypeError:</span><br><span class="line">            # neither str nor bytes/bytearray, e.g. &lt;MultipartEncoder&gt;</span><br><span class="line">            pass</span><br><span class="line"></span><br><span class="line">        request_content_type = lower_dict_keys(request_headers).get(&quot;content-type&quot;)</span><br><span class="line">        if request_content_type and &quot;multipart/form-data&quot; in request_content_type:</span><br><span class="line">            # upload file type</span><br><span class="line">            request_body = &quot;upload file stream (OMITTED)&quot;</span><br><span class="line"></span><br><span class="line">    request_data = RequestData(</span><br><span class="line">        method=resp_obj.request.method,</span><br><span class="line">        url=resp_obj.request.url,</span><br><span class="line">        headers=request_headers,</span><br><span class="line">        cookies=request_cookies,</span><br><span class="line">        body=request_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log request details in debug mode</span><br><span class="line">    log_print(request_data, &quot;request&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record response info</span><br><span class="line">    # 获取resp_headers、content_type、response_body，最后将这些数据都放入ResponseData模型类中，最后打印响应日志</span><br><span class="line">    resp_headers = dict(resp_obj.headers)</span><br><span class="line">    lower_resp_headers = lower_dict_keys(resp_headers)</span><br><span class="line">    content_type = lower_resp_headers.get(&quot;content-type&quot;, &quot;&quot;)</span><br><span class="line"></span><br><span class="line">    if &quot;image&quot; in content_type:</span><br><span class="line">        # response is image type, record bytes content only</span><br><span class="line">        response_body = resp_obj.content</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            # try to record json data</span><br><span class="line">            response_body = resp_obj.json()</span><br><span class="line">        except ValueError:</span><br><span class="line">            # only record at most 512 text charactors</span><br><span class="line">            resp_text = resp_obj.text</span><br><span class="line">            response_body = omit_long_data(resp_text)</span><br><span class="line"></span><br><span class="line">    response_data = ResponseData(</span><br><span class="line">        status_code=resp_obj.status_code,</span><br><span class="line">        cookies=resp_obj.cookies or &#123;&#125;,</span><br><span class="line">        encoding=resp_obj.encoding,</span><br><span class="line">        headers=resp_headers,</span><br><span class="line">        content_type=content_type,</span><br><span class="line">        body=response_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log response details in debug mode</span><br><span class="line">    log_print(response_data, &quot;response&quot;)</span><br><span class="line"></span><br><span class="line">    # 请求信息和响应信息全部放入ReqRespData模型中，最后get_req_resp_record函数返回的内容就是ReqRespData模型</span><br><span class="line">req_resp_data = ReqRespData(request=request_data, response=response_data)</span><br><span class="line">    return req_resp_data</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="HttpSession类"><a href="#HttpSession类" class="headerlink" title="HttpSession类"></a>HttpSession类</h4><p><strong><code>HttpSession</code> 是一个用于执行 HTTP 请求的类，它继承自 <code>requests.Session</code> 类，并扩展了一些功能。<code>HttpSession</code> 类的主要作用是在发送 HTTP 请求时记录请求和响应的信息，以便后续进行统计和分析</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def __init__(self):</span><br><span class="line">    super(HttpSession, self).__init__()</span><br><span class="line">    self.data = SessionData()</span><br></pre></td></tr></table></figure>
+<p><strong>初始化方法，定义了data属性的默认值为SessionData模型，该模型包含了req_resps: List[ReqRespData] &#x3D; []请求响应内容</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def update_last_req_resp_record(self, resp_obj):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    update request and response info from Response() object.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # TODO: fix</span><br><span class="line">    self.data.req_resps.pop()</span><br><span class="line">    self.data.req_resps.append(get_req_resp_record(resp_obj))</span><br></pre></td></tr></table></figure>
+<p><strong>update_last_req_resp_record 方法用于更新最后一次请求和响应的信息，该方法会从 Response 对象中提取请求和响应的信息，并更新到 SessionData 对象中</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def _send_request_safe_mode(self, method, url, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Send a HTTP request, and catch any exception that might occur due to connection problems.</span><br><span class="line">    Safe mode has been removed from requests 1.x.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    try:</span><br><span class="line">        return requests.Session.request(self, method, url, **kwargs)</span><br><span class="line">    except (MissingSchema, InvalidSchema, InvalidURL):</span><br><span class="line">        raise</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        resp = ApiResponse()</span><br><span class="line">        resp.error = ex</span><br><span class="line">        resp.status_code = 0  # with this status_code, content returns None</span><br><span class="line">        resp.request = Request(method, url).prepare()</span><br><span class="line">        return resp</span><br></pre></td></tr></table></figure>
+<p><strong>_send_request_safe_mode 方法用于发送 HTTP 请求，并捕获可能发生的连接问题异常。如果发送请求时发生异常，则返回一个 ApiResponse 对象，该对象包含了异常信息和请求对象。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def request(self, method, url, name=None, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Constructs and sends a :py:class:`requests.Request`.</span><br><span class="line">    Returns :py:class:`requests.Response` object.</span><br><span class="line"></span><br><span class="line">    :param method:</span><br><span class="line">        method for the new :class:`Request` object.</span><br><span class="line">    :param url:</span><br><span class="line">        URL for the new :class:`Request` object.</span><br><span class="line">    :param name: (optional)</span><br><span class="line">        Placeholder, make compatible with Locust&#x27;s HttpSession</span><br><span class="line">    :param params: (optional)</span><br><span class="line">        Dictionary or bytes to be sent in the query string for the :class:`Request`.</span><br><span class="line">    :param data: (optional)</span><br><span class="line">        Dictionary or bytes to send in the body of the :class:`Request`.</span><br><span class="line">    :param headers: (optional)</span><br><span class="line">        Dictionary of HTTP Headers to send with the :class:`Request`.</span><br><span class="line">    :param cookies: (optional)</span><br><span class="line">        Dict or CookieJar object to send with the :class:`Request`.</span><br><span class="line">    :param files: (optional)</span><br><span class="line">        Dictionary of ``&#x27;filename&#x27;: file-like-objects`` for multipart encoding upload.</span><br><span class="line">    :param auth: (optional)</span><br><span class="line">        Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.</span><br><span class="line">    :param timeout: (optional)</span><br><span class="line">        How long to wait for the server to send data before giving up, as a float, or \</span><br><span class="line">        a (`connect timeout, read timeout &lt;user/advanced.html#timeouts&gt;`_) tuple.</span><br><span class="line">        :type timeout: float or tuple</span><br><span class="line">    :param allow_redirects: (optional)</span><br><span class="line">        Set to True by default.</span><br><span class="line">    :type allow_redirects: bool</span><br><span class="line">    :param proxies: (optional)</span><br><span class="line">        Dictionary mapping protocol to the URL of the proxy.</span><br><span class="line">    :param stream: (optional)</span><br><span class="line">        whether to immediately download the response content. Defaults to ``False``.</span><br><span class="line">    :param verify: (optional)</span><br><span class="line">        if ``True``, the SSL cert will be verified. A CA_BUNDLE path can also be provided.</span><br><span class="line">    :param cert: (optional)</span><br><span class="line">        if String, path to ssl client cert file (.pem). If Tuple, (&#x27;cert&#x27;, &#x27;key&#x27;) pair.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.data = SessionData()</span><br><span class="line"></span><br><span class="line">    # timeout default to 120 seconds</span><br><span class="line">    kwargs.setdefault(&quot;timeout&quot;, 120)</span><br><span class="line"></span><br><span class="line">    # set stream to True, in order to get client/server IP/Port</span><br><span class="line">    kwargs[&quot;stream&quot;] = True</span><br><span class="line"></span><br><span class="line">    start_timestamp = time.time()</span><br><span class="line">    response = self._send_request_safe_mode(method, url, **kwargs)</span><br><span class="line">    response_time_ms = round((time.time() - start_timestamp) * 1000, 2)</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        client_ip, client_port = response.raw._connection.sock.getsockname()</span><br><span class="line">        self.data.address.client_ip = client_ip</span><br><span class="line">        self.data.address.client_port = client_port</span><br><span class="line">        logger.debug(f&quot;client IP: &#123;client_ip&#125;, Port: &#123;client_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        server_ip, server_port = response.raw._connection.sock.getpeername()</span><br><span class="line">        self.data.address.server_ip = server_ip</span><br><span class="line">        self.data.address.server_port = server_port</span><br><span class="line">        logger.debug(f&quot;server IP: &#123;server_ip&#125;, Port: &#123;server_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    # get length of the response content</span><br><span class="line">    content_size = int(dict(response.headers).get(&quot;content-length&quot;) or 0)</span><br><span class="line"></span><br><span class="line">    # record the consumed time</span><br><span class="line">    self.data.stat.response_time_ms = response_time_ms</span><br><span class="line">    self.data.stat.elapsed_ms = response.elapsed.microseconds / 1000.0</span><br><span class="line">    self.data.stat.content_size = content_size</span><br><span class="line"></span><br><span class="line">    # record request and response histories, include 30X redirection</span><br><span class="line">    response_list = response.history + [response]</span><br><span class="line">    self.data.req_resps = [</span><br><span class="line">        get_req_resp_record(resp_obj) for resp_obj in response_list</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        response.raise_for_status()</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        logger.error(f&quot;&#123;str(ex)&#125;&quot;)</span><br><span class="line">    else:</span><br><span class="line">        logger.info(</span><br><span class="line">            f&quot;status_code: &#123;response.status_code&#125;, &quot;</span><br><span class="line">            f&quot;response_time(ms): &#123;response_time_ms&#125; ms, &quot;</span><br><span class="line">            f&quot;response_length: &#123;content_size&#125; bytes&quot;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    return response</span><br></pre></td></tr></table></figure>
+<p><strong>最重要的 request 方法。request 方法用于构造并发送一个 HTTP 请求，并返回一个 requests.Response 对象。在发送请求之前，<br>request 方法会先清空之前的请求和响应信息，然后设置一些默认参数，如超时时间、是否允许重定向等。接着，request 方法会调用 _send_request_safe_mode 方法发送请求，<br>并记录请求和响应的信息。最后，request 方法会检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</strong><br><strong>主要做了以下事情</strong></p>
+<ul>
+<li>设置了超时时间120s</li>
+<li>计算整个请求花费了多少时间</li>
+<li>定义了客户端ip地址和端口号、服务端ip地址和端口号</li>
+<li>计算了响应体的内容大小</li>
+<li>记录了消耗时间</li>
+<li>记录了request和response记录，包括重定向记录</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Httprunner</category>
+      </categories>
+      <tags>
+        <tag>httprunner</tag>
+        <tag>接口自动化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jmeter压测-Linux运行Jmeter环境</title>
     <url>/2023/06/05/Jmeter%E5%8E%8B%E6%B5%8B-Linux%E8%BF%90%E8%A1%8CJmeter%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用jmeter做压测的时候，在windows上不太稳定，所有一直在linux服务器上使用jmeter做压力测试。<br>本篇记录下linux上搭建jmeter环境，以及运行jmeter脚本，查看报告。</p>
@@ -213,43 +318,6 @@
       <tags>
         <tag>Jmeter</tag>
         <tag>性能测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Httprunner源码解读(3)client.py</title>
-    <url>/2023/06/12/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-3-client-py/</url>
-    <content><![CDATA[<h3 id="client-py的代码结构"><a href="#client-py的代码结构" class="headerlink" title="client.py的代码结构"></a>client.py的代码结构</h3><p><img src="/../images/client.png" alt="img.png"><br><strong>这个模块中定义了2个类和1个方法</strong></p>
-<h4 id="ApiResponse类"><a href="#ApiResponse类" class="headerlink" title="ApiResponse类"></a>ApiResponse类</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ApiResponse(Response):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    继承Response 类，重写了raise_for_status方法，用于检查响应是否包含错误信息，并在响应中包含错误信息时抛出相应的异常</span><br><span class="line">    raise_for_status 方法首先检查响应对象是否包含 error 属性，并且该属性的值不为 None。如果 error 属性存在且不为 None，则抛出 error 异常。</span><br><span class="line">    否则，调用父类 Response 的 raise_for_status 方法，检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def raise_for_status(self):</span><br><span class="line">        if hasattr(self, &quot;error&quot;) and self.error:</span><br><span class="line">            raise self.error</span><br><span class="line">        Response.raise_for_status(self)</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h4 id="get-req-resp-record方法"><a href="#get-req-resp-record方法" class="headerlink" title="get_req_resp_record方法"></a>get_req_resp_record方法</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def get_req_resp_record(resp_obj: Response) -&gt; ReqRespData:</span><br><span class="line">    &quot;&quot;&quot;get request and response info from Response() object.&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"># 定义了一个打印日志的函数，将打印的日志解析为标准的json格式</span><br><span class="line">    def log_print(req_or_resp, r_type):</span><br><span class="line">        msg = f&quot;\n================== &#123;r_type&#125; details ==================\n&quot;</span><br><span class="line">        for key, value in req_or_resp.dict().items():</span><br><span class="line">            if isinstance(value, dict) or isinstance(value, list):</span><br><span class="line">                value = json.dumps(value, indent=4, ensure_ascii=False)</span><br><span class="line"></span><br><span class="line">            msg += &quot;&#123;:&lt;8&#125; : &#123;&#125;\n&quot;.format(key, value)</span><br><span class="line">        logger.debug(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record actual request info</span><br><span class="line">    # 是先获取request_headers、request_cookies、request_body，然后将获取到的信息放入RequestData模型中，最后打印请求的信息</span><br><span class="line">    request_headers = dict(resp_obj.request.headers)</span><br><span class="line">    request_cookies = resp_obj.request._cookies.get_dict()</span><br><span class="line"></span><br><span class="line">    request_body = resp_obj.request.body</span><br><span class="line">    if request_body is not None:</span><br><span class="line">        try:</span><br><span class="line">            request_body = json.loads(request_body)</span><br><span class="line">        except json.JSONDecodeError:</span><br><span class="line">            # str: a=1&amp;b=2</span><br><span class="line">            pass</span><br><span class="line">        except UnicodeDecodeError:</span><br><span class="line">            # bytes/bytearray: request body in protobuf</span><br><span class="line">            pass</span><br><span class="line">        except TypeError:</span><br><span class="line">            # neither str nor bytes/bytearray, e.g. &lt;MultipartEncoder&gt;</span><br><span class="line">            pass</span><br><span class="line"></span><br><span class="line">        request_content_type = lower_dict_keys(request_headers).get(&quot;content-type&quot;)</span><br><span class="line">        if request_content_type and &quot;multipart/form-data&quot; in request_content_type:</span><br><span class="line">            # upload file type</span><br><span class="line">            request_body = &quot;upload file stream (OMITTED)&quot;</span><br><span class="line"></span><br><span class="line">    request_data = RequestData(</span><br><span class="line">        method=resp_obj.request.method,</span><br><span class="line">        url=resp_obj.request.url,</span><br><span class="line">        headers=request_headers,</span><br><span class="line">        cookies=request_cookies,</span><br><span class="line">        body=request_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log request details in debug mode</span><br><span class="line">    log_print(request_data, &quot;request&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # record response info</span><br><span class="line">    # 获取resp_headers、content_type、response_body，最后将这些数据都放入ResponseData模型类中，最后打印响应日志</span><br><span class="line">    resp_headers = dict(resp_obj.headers)</span><br><span class="line">    lower_resp_headers = lower_dict_keys(resp_headers)</span><br><span class="line">    content_type = lower_resp_headers.get(&quot;content-type&quot;, &quot;&quot;)</span><br><span class="line"></span><br><span class="line">    if &quot;image&quot; in content_type:</span><br><span class="line">        # response is image type, record bytes content only</span><br><span class="line">        response_body = resp_obj.content</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            # try to record json data</span><br><span class="line">            response_body = resp_obj.json()</span><br><span class="line">        except ValueError:</span><br><span class="line">            # only record at most 512 text charactors</span><br><span class="line">            resp_text = resp_obj.text</span><br><span class="line">            response_body = omit_long_data(resp_text)</span><br><span class="line"></span><br><span class="line">    response_data = ResponseData(</span><br><span class="line">        status_code=resp_obj.status_code,</span><br><span class="line">        cookies=resp_obj.cookies or &#123;&#125;,</span><br><span class="line">        encoding=resp_obj.encoding,</span><br><span class="line">        headers=resp_headers,</span><br><span class="line">        content_type=content_type,</span><br><span class="line">        body=response_body,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # log response details in debug mode</span><br><span class="line">    log_print(response_data, &quot;response&quot;)</span><br><span class="line"></span><br><span class="line">    # 请求信息和响应信息全部放入ReqRespData模型中，最后get_req_resp_record函数返回的内容就是ReqRespData模型</span><br><span class="line">req_resp_data = ReqRespData(request=request_data, response=response_data)</span><br><span class="line">    return req_resp_data</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="HttpSession类"><a href="#HttpSession类" class="headerlink" title="HttpSession类"></a>HttpSession类</h4><p><strong><code>HttpSession</code> 是一个用于执行 HTTP 请求的类，它继承自 <code>requests.Session</code> 类，并扩展了一些功能。<code>HttpSession</code> 类的主要作用是在发送 HTTP 请求时记录请求和响应的信息，以便后续进行统计和分析</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def __init__(self):</span><br><span class="line">    super(HttpSession, self).__init__()</span><br><span class="line">    self.data = SessionData()</span><br></pre></td></tr></table></figure>
-<p><strong>初始化方法，定义了data属性的默认值为SessionData模型，该模型包含了req_resps: List[ReqRespData] &#x3D; []请求响应内容</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def update_last_req_resp_record(self, resp_obj):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    update request and response info from Response() object.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # TODO: fix</span><br><span class="line">    self.data.req_resps.pop()</span><br><span class="line">    self.data.req_resps.append(get_req_resp_record(resp_obj))</span><br></pre></td></tr></table></figure>
-<p><strong>update_last_req_resp_record 方法用于更新最后一次请求和响应的信息，该方法会从 Response 对象中提取请求和响应的信息，并更新到 SessionData 对象中</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def _send_request_safe_mode(self, method, url, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Send a HTTP request, and catch any exception that might occur due to connection problems.</span><br><span class="line">    Safe mode has been removed from requests 1.x.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    try:</span><br><span class="line">        return requests.Session.request(self, method, url, **kwargs)</span><br><span class="line">    except (MissingSchema, InvalidSchema, InvalidURL):</span><br><span class="line">        raise</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        resp = ApiResponse()</span><br><span class="line">        resp.error = ex</span><br><span class="line">        resp.status_code = 0  # with this status_code, content returns None</span><br><span class="line">        resp.request = Request(method, url).prepare()</span><br><span class="line">        return resp</span><br></pre></td></tr></table></figure>
-<p><strong>_send_request_safe_mode 方法用于发送 HTTP 请求，并捕获可能发生的连接问题异常。如果发送请求时发生异常，则返回一个 ApiResponse 对象，该对象包含了异常信息和请求对象。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def request(self, method, url, name=None, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Constructs and sends a :py:class:`requests.Request`.</span><br><span class="line">    Returns :py:class:`requests.Response` object.</span><br><span class="line"></span><br><span class="line">    :param method:</span><br><span class="line">        method for the new :class:`Request` object.</span><br><span class="line">    :param url:</span><br><span class="line">        URL for the new :class:`Request` object.</span><br><span class="line">    :param name: (optional)</span><br><span class="line">        Placeholder, make compatible with Locust&#x27;s HttpSession</span><br><span class="line">    :param params: (optional)</span><br><span class="line">        Dictionary or bytes to be sent in the query string for the :class:`Request`.</span><br><span class="line">    :param data: (optional)</span><br><span class="line">        Dictionary or bytes to send in the body of the :class:`Request`.</span><br><span class="line">    :param headers: (optional)</span><br><span class="line">        Dictionary of HTTP Headers to send with the :class:`Request`.</span><br><span class="line">    :param cookies: (optional)</span><br><span class="line">        Dict or CookieJar object to send with the :class:`Request`.</span><br><span class="line">    :param files: (optional)</span><br><span class="line">        Dictionary of ``&#x27;filename&#x27;: file-like-objects`` for multipart encoding upload.</span><br><span class="line">    :param auth: (optional)</span><br><span class="line">        Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.</span><br><span class="line">    :param timeout: (optional)</span><br><span class="line">        How long to wait for the server to send data before giving up, as a float, or \</span><br><span class="line">        a (`connect timeout, read timeout &lt;user/advanced.html#timeouts&gt;`_) tuple.</span><br><span class="line">        :type timeout: float or tuple</span><br><span class="line">    :param allow_redirects: (optional)</span><br><span class="line">        Set to True by default.</span><br><span class="line">    :type allow_redirects: bool</span><br><span class="line">    :param proxies: (optional)</span><br><span class="line">        Dictionary mapping protocol to the URL of the proxy.</span><br><span class="line">    :param stream: (optional)</span><br><span class="line">        whether to immediately download the response content. Defaults to ``False``.</span><br><span class="line">    :param verify: (optional)</span><br><span class="line">        if ``True``, the SSL cert will be verified. A CA_BUNDLE path can also be provided.</span><br><span class="line">    :param cert: (optional)</span><br><span class="line">        if String, path to ssl client cert file (.pem). If Tuple, (&#x27;cert&#x27;, &#x27;key&#x27;) pair.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.data = SessionData()</span><br><span class="line"></span><br><span class="line">    # timeout default to 120 seconds</span><br><span class="line">    kwargs.setdefault(&quot;timeout&quot;, 120)</span><br><span class="line"></span><br><span class="line">    # set stream to True, in order to get client/server IP/Port</span><br><span class="line">    kwargs[&quot;stream&quot;] = True</span><br><span class="line"></span><br><span class="line">    start_timestamp = time.time()</span><br><span class="line">    response = self._send_request_safe_mode(method, url, **kwargs)</span><br><span class="line">    response_time_ms = round((time.time() - start_timestamp) * 1000, 2)</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        client_ip, client_port = response.raw._connection.sock.getsockname()</span><br><span class="line">        self.data.address.client_ip = client_ip</span><br><span class="line">        self.data.address.client_port = client_port</span><br><span class="line">        logger.debug(f&quot;client IP: &#123;client_ip&#125;, Port: &#123;client_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        server_ip, server_port = response.raw._connection.sock.getpeername()</span><br><span class="line">        self.data.address.server_ip = server_ip</span><br><span class="line">        self.data.address.server_port = server_port</span><br><span class="line">        logger.debug(f&quot;server IP: &#123;server_ip&#125;, Port: &#123;server_port&#125;&quot;)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    # get length of the response content</span><br><span class="line">    content_size = int(dict(response.headers).get(&quot;content-length&quot;) or 0)</span><br><span class="line"></span><br><span class="line">    # record the consumed time</span><br><span class="line">    self.data.stat.response_time_ms = response_time_ms</span><br><span class="line">    self.data.stat.elapsed_ms = response.elapsed.microseconds / 1000.0</span><br><span class="line">    self.data.stat.content_size = content_size</span><br><span class="line"></span><br><span class="line">    # record request and response histories, include 30X redirection</span><br><span class="line">    response_list = response.history + [response]</span><br><span class="line">    self.data.req_resps = [</span><br><span class="line">        get_req_resp_record(resp_obj) for resp_obj in response_list</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        response.raise_for_status()</span><br><span class="line">    except RequestException as ex:</span><br><span class="line">        logger.error(f&quot;&#123;str(ex)&#125;&quot;)</span><br><span class="line">    else:</span><br><span class="line">        logger.info(</span><br><span class="line">            f&quot;status_code: &#123;response.status_code&#125;, &quot;</span><br><span class="line">            f&quot;response_time(ms): &#123;response_time_ms&#125; ms, &quot;</span><br><span class="line">            f&quot;response_length: &#123;content_size&#125; bytes&quot;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    return response</span><br></pre></td></tr></table></figure>
-<p><strong>最重要的 request 方法。request 方法用于构造并发送一个 HTTP 请求，并返回一个 requests.Response 对象。在发送请求之前，<br>request 方法会先清空之前的请求和响应信息，然后设置一些默认参数，如超时时间、是否允许重定向等。接着，request 方法会调用 _send_request_safe_mode 方法发送请求，<br>并记录请求和响应的信息。最后，request 方法会检查响应的状态码是否为 4xx 或 5xx，如果是，则抛出相应的异常。</strong><br><strong>主要做了以下事情</strong></p>
-<ul>
-<li>设置了超时时间120s</li>
-<li>计算整个请求花费了多少时间</li>
-<li>定义了客户端ip地址和端口号、服务端ip地址和端口号</li>
-<li>计算了响应体的内容大小</li>
-<li>记录了消耗时间</li>
-<li>记录了request和response记录，包括重定向记录</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Httprunner</category>
-      </categories>
-      <tags>
-        <tag>httprunner</tag>
-        <tag>接口自动化</tag>
       </tags>
   </entry>
   <entry>
@@ -384,6 +452,35 @@
       </tags>
   </entry>
   <entry>
+    <title>如何进行技术面试（面试官视角）</title>
+    <url>/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/</url>
+    <content><![CDATA[<p>说起来在我第一次做面试官之前，并没有人教过我应该怎么做，我则一直将面试视作通过一小时左右的沟通，对候选人形成一个整体的印象，<br>最后给出一个主观的评价的过程。在这么多次的面试中，我也总结出了一些经验可以和大家分享。</p>
+<span id="more"></span>
+
+<h4 id="验证简历真实性"><a href="#验证简历真实性" class="headerlink" title="验证简历真实性"></a>验证简历真实性</h4><p>首先花一些时间聊一聊简历上提到的项目，请对方进一步介绍这个项目的业务、自己在其中承担的职责和遇到的问题。然后针对其中自己了解<br>的部分提几个问题，如「据我所知这类项目的难点是某某方面，请问你是否有遇到、是如何解决的」，确认对方的项目经验是否真实、是否比<br>较深度地参与了项目。</p>
+<h4 id="围绕简历提问"><a href="#围绕简历提问" class="headerlink" title="围绕简历提问"></a>围绕简历提问</h4><p>尽量提问对方了解和擅长的话题，让对方有足够的表达机会，发挥出正常水平，考察候选人擅长的部分要比不擅长的部分更有价值。</p>
+<h4 id="开放性问题"><a href="#开放性问题" class="headerlink" title="开放性问题"></a>开放性问题</h4><p>避免问有标准答案的问题，而是可以问「遇到某种情况时可能是什么原因、你会怎么做」或「请解释一下某个事物是如何工作的」这样开放性<br>的问题，给对方足够的发挥空间、主动提到一些自己的知识和经验。</p>
+<p>也许有些候选人不喜欢这样的问题，认为缺少安全感、不知道该说什么，但我觉得开放性问题才有足够的区分度，才能在短时间内对候选人形<br>成立体的印象。我们可以在候选人实在不知道从何说起时，对问题再做进一步的解释和提示。</p>
+<h4 id="围绕话题由浅入深"><a href="#围绕话题由浅入深" class="headerlink" title="围绕话题由浅入深"></a>围绕话题由浅入深</h4><p>应该针对同一话题准备多个难度逐步增加的问题，让对方回答时思路能够相对流畅，更容易考察对方在这一话题上的深度；反过来应该避免大<br>量零散、无联系、无难度区分的小问题。</p>
+<h4 id="没必要执着于答案"><a href="#没必要执着于答案" class="headerlink" title="没必要执着于答案"></a>没必要执着于答案</h4><p>有时在反复提示下对方的答案仍差那么一点，在面试时间大多比较紧张的情况下，我们没必要花更多的时间去让对方答出答案。在候选人表示<br>无法准确回答问题时，也可以引导他做出一些合理的猜测（这时的重点在于猜测是否合理而不是是否正确）。只要候选人在这一问题上说足够<br>多的话，我们就可以考察到其水平了，不一定要等他说出最后的答案。</p>
+<p>自己不懂也没关系</p>
+<p>在一开始，我会担心问出的问题我自己也不了解，对方回答之后会把自己问倒或者无法考察对方水平。但后来发现完全没有必要，因为面试官<br>没有义务即时地对候选人的回答做出评价（告诉对方对还是错），即使对于不了解的话题，自己也可以从对方的自信程度、逻辑层面，对回答<br>有一个大体的判断的。</p>
+<h4 id="现场编码可以很简单"><a href="#现场编码可以很简单" class="headerlink" title="现场编码可以很简单"></a>现场编码可以很简单</h4><p>候选人在现场会非常紧张，面试时间也有限，在现场编码环节没必要出太难的题，重点在于考察候选人是否有最基本编程思维和编码能力。例<br>如我觉得一些难度不高，但适合用递归解决的题目会比较合适，可以考虑在候选人编码的过程中一直保持沟通，注重过程而不是结果。</p>
+<p>同时我反对为候选人在面试前或面试后布置编码的作业，这会让候选人付出不对等的时间去准备面试，也很容易从「考察候选人的能力」变成<br>「考察候选人的诚意」。</p>
+<h4 id="重复使用一套题库没什么问题"><a href="#重复使用一套题库没什么问题" class="headerlink" title="重复使用一套题库没什么问题"></a>重复使用一套题库没什么问题</h4><p>可以自己建立自己的面试题库，在一次次面试中对其进行反复地打磨，让问题更准确、考察更全面。有些话题可能是永远都不过时的，例如对于<br>后端工程师可能是并发模型及与之相关的线程、内存等话题。</p>
+<h4 id="给对方提问的机会"><a href="#给对方提问的机会" class="headerlink" title="给对方提问的机会"></a>给对方提问的机会</h4><p>一般面试的最后一个步骤是让候选人提问，不要把这个过程敷衍掉，可以引导对方提问，告诉对方都可以问哪些问题。如可以补充一下没有提及<br>的技术话题、可以问我司的技术架构或选型、可以问所面试的职位和如果入职之后所参与的项目、可以问日常工作环境和时间等。这样可以让对<br>方有一个主动打开话题的机会，互相判断需求是否匹配，即使没有通过面试也让对方对公司有一个比较好的印象。</p>
+<h4 id="有任何顾虑都可以-pass-掉"><a href="#有任何顾虑都可以-pass-掉" class="headerlink" title="有任何顾虑都可以 pass 掉"></a>有任何顾虑都可以 pass 掉</h4><p>我们前面做了这么多都是为了让候选人有更好的面试体验、发挥出自己最好的水平。这种情况下如果仍对候选人某一方面的表现有顾虑的话，应该<br>果断地拒绝掉，招进来一个不合适的人损失远比错过一个合适的人大。</p>
+<h4 id="沟通是否顺畅很重要"><a href="#沟通是否顺畅很重要" class="headerlink" title="沟通是否顺畅很重要"></a>沟通是否顺畅很重要</h4><p>沟通是后续开展一切工作的基础，如果觉得与候选人的沟通不顺畅，对方总是不能理解自己的意思，那么即使候选人的技术水平满足要求，也应该<br>慎重考虑。</p>
+<h4 id="留下面试的记录"><a href="#留下面试的记录" class="headerlink" title="留下面试的记录"></a>留下面试的记录</h4><p>我每次面试结束后都会尽快开始写对候选人的评价，大多在一两百字，先列出面试聊到的内容、觉得好和不好的地方、了解到的对方的技术栈，然<br>后总结一下对候选人技术水平和沟通情况的评价。这样可以帮助自己整理思路，在候选人比较多的时候也不会记混，最后给出通过与否的评价，同<br>时还能给下一轮的面试官提供参考。</p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据迁移测试</title>
     <url>/2024/11/22/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E6%B5%8B%E8%AF%95/</url>
     <content><![CDATA[<p><strong>数据迁移主要是在新老系统切换的时候，主要是以下新、两种</strong></p>
@@ -424,47 +521,6 @@
       </categories>
       <tags>
         <tag>数据迁移</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何进行技术面试（面试官视角）</title>
-    <url>/2023/02/28/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E8%A7%86%E8%A7%92%EF%BC%89/</url>
-    <content><![CDATA[<p>说起来在我第一次做面试官之前，并没有人教过我应该怎么做，我则一直将面试视作通过一小时左右的沟通，对候选人形成一个整体的印象，<br>最后给出一个主观的评价的过程。在这么多次的面试中，我也总结出了一些经验可以和大家分享。</p>
-<span id="more"></span>
-
-<h4 id="验证简历真实性"><a href="#验证简历真实性" class="headerlink" title="验证简历真实性"></a>验证简历真实性</h4><p>首先花一些时间聊一聊简历上提到的项目，请对方进一步介绍这个项目的业务、自己在其中承担的职责和遇到的问题。然后针对其中自己了解<br>的部分提几个问题，如「据我所知这类项目的难点是某某方面，请问你是否有遇到、是如何解决的」，确认对方的项目经验是否真实、是否比<br>较深度地参与了项目。</p>
-<h4 id="围绕简历提问"><a href="#围绕简历提问" class="headerlink" title="围绕简历提问"></a>围绕简历提问</h4><p>尽量提问对方了解和擅长的话题，让对方有足够的表达机会，发挥出正常水平，考察候选人擅长的部分要比不擅长的部分更有价值。</p>
-<h4 id="开放性问题"><a href="#开放性问题" class="headerlink" title="开放性问题"></a>开放性问题</h4><p>避免问有标准答案的问题，而是可以问「遇到某种情况时可能是什么原因、你会怎么做」或「请解释一下某个事物是如何工作的」这样开放性<br>的问题，给对方足够的发挥空间、主动提到一些自己的知识和经验。</p>
-<p>也许有些候选人不喜欢这样的问题，认为缺少安全感、不知道该说什么，但我觉得开放性问题才有足够的区分度，才能在短时间内对候选人形<br>成立体的印象。我们可以在候选人实在不知道从何说起时，对问题再做进一步的解释和提示。</p>
-<h4 id="围绕话题由浅入深"><a href="#围绕话题由浅入深" class="headerlink" title="围绕话题由浅入深"></a>围绕话题由浅入深</h4><p>应该针对同一话题准备多个难度逐步增加的问题，让对方回答时思路能够相对流畅，更容易考察对方在这一话题上的深度；反过来应该避免大<br>量零散、无联系、无难度区分的小问题。</p>
-<h4 id="没必要执着于答案"><a href="#没必要执着于答案" class="headerlink" title="没必要执着于答案"></a>没必要执着于答案</h4><p>有时在反复提示下对方的答案仍差那么一点，在面试时间大多比较紧张的情况下，我们没必要花更多的时间去让对方答出答案。在候选人表示<br>无法准确回答问题时，也可以引导他做出一些合理的猜测（这时的重点在于猜测是否合理而不是是否正确）。只要候选人在这一问题上说足够<br>多的话，我们就可以考察到其水平了，不一定要等他说出最后的答案。</p>
-<p>自己不懂也没关系</p>
-<p>在一开始，我会担心问出的问题我自己也不了解，对方回答之后会把自己问倒或者无法考察对方水平。但后来发现完全没有必要，因为面试官<br>没有义务即时地对候选人的回答做出评价（告诉对方对还是错），即使对于不了解的话题，自己也可以从对方的自信程度、逻辑层面，对回答<br>有一个大体的判断的。</p>
-<h4 id="现场编码可以很简单"><a href="#现场编码可以很简单" class="headerlink" title="现场编码可以很简单"></a>现场编码可以很简单</h4><p>候选人在现场会非常紧张，面试时间也有限，在现场编码环节没必要出太难的题，重点在于考察候选人是否有最基本编程思维和编码能力。例<br>如我觉得一些难度不高，但适合用递归解决的题目会比较合适，可以考虑在候选人编码的过程中一直保持沟通，注重过程而不是结果。</p>
-<p>同时我反对为候选人在面试前或面试后布置编码的作业，这会让候选人付出不对等的时间去准备面试，也很容易从「考察候选人的能力」变成<br>「考察候选人的诚意」。</p>
-<h4 id="重复使用一套题库没什么问题"><a href="#重复使用一套题库没什么问题" class="headerlink" title="重复使用一套题库没什么问题"></a>重复使用一套题库没什么问题</h4><p>可以自己建立自己的面试题库，在一次次面试中对其进行反复地打磨，让问题更准确、考察更全面。有些话题可能是永远都不过时的，例如对于<br>后端工程师可能是并发模型及与之相关的线程、内存等话题。</p>
-<h4 id="给对方提问的机会"><a href="#给对方提问的机会" class="headerlink" title="给对方提问的机会"></a>给对方提问的机会</h4><p>一般面试的最后一个步骤是让候选人提问，不要把这个过程敷衍掉，可以引导对方提问，告诉对方都可以问哪些问题。如可以补充一下没有提及<br>的技术话题、可以问我司的技术架构或选型、可以问所面试的职位和如果入职之后所参与的项目、可以问日常工作环境和时间等。这样可以让对<br>方有一个主动打开话题的机会，互相判断需求是否匹配，即使没有通过面试也让对方对公司有一个比较好的印象。</p>
-<h4 id="有任何顾虑都可以-pass-掉"><a href="#有任何顾虑都可以-pass-掉" class="headerlink" title="有任何顾虑都可以 pass 掉"></a>有任何顾虑都可以 pass 掉</h4><p>我们前面做了这么多都是为了让候选人有更好的面试体验、发挥出自己最好的水平。这种情况下如果仍对候选人某一方面的表现有顾虑的话，应该<br>果断地拒绝掉，招进来一个不合适的人损失远比错过一个合适的人大。</p>
-<h4 id="沟通是否顺畅很重要"><a href="#沟通是否顺畅很重要" class="headerlink" title="沟通是否顺畅很重要"></a>沟通是否顺畅很重要</h4><p>沟通是后续开展一切工作的基础，如果觉得与候选人的沟通不顺畅，对方总是不能理解自己的意思，那么即使候选人的技术水平满足要求，也应该<br>慎重考虑。</p>
-<h4 id="留下面试的记录"><a href="#留下面试的记录" class="headerlink" title="留下面试的记录"></a>留下面试的记录</h4><p>我每次面试结束后都会尽快开始写对候选人的评价，大多在一两百字，先列出面试聊到的内容、觉得好和不好的地方、了解到的对方的技术栈，然<br>后总结一下对候选人技术水平和沟通情况的评价。这样可以帮助自己整理思路，在候选人比较多的时候也不会记混，最后给出通过与否的评价，同<br>时还能给下一轮的面试官提供参考。</p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git使用详细教程</title>
-    <url>/2023/06/05/Git%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>现在大部分的开发团队都以 Git 作为自己的版本控制工具，需要对 Git 的使用非常的熟悉。<br>这篇文章中本人整理了自己在工作过程中经常使用到的 Git 命令，方便在偶尔忘记时速查。<br><img src="/../images/git.png" alt="git.png"></p>
-]]></content>
-      <categories>
-        <category>Git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -597,62 +653,6 @@
       </categories>
       <tags>
         <tag>程序员</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Httprunner源码解读(1)源码模块内容</title>
-    <url>/2023/06/10/Httprunner%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-1-%E6%BA%90%E7%A0%81%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于团队要基于httprunner开展接口自动化测试，本人后续也想基于httprunner测试框架搭建一个API测试平台，而且目前很多开源的测试平台<br>都是基于httprunner，所以，读懂源码必不可少</p>
-<span id="more"></span>
-
-<h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="/../images/h1.png" alt="git.png"></p>
-<h4 id="builtin"><a href="#builtin" class="headerlink" title="builtin"></a>builtin</h4><p>这个包做了一些内置的功能</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">├── __init__.<span class="keyword">py</span></span><br><span class="line">├── comparators.<span class="keyword">py</span></span><br><span class="line">└── functions.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>comparators：内置验证校验器</li>
-<li>functions：内置的一些方法</li>
-</ul>
-<h4 id="database"><a href="#database" class="headerlink" title="database"></a>database</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">└── engine.py</span><br></pre></td></tr></table></figure>
-<p>数据库模块是基于 DBEngine 实现的，用于对测试数据进行存储和管理。它支持多种类型数据库，如 MySQL、PostgreSQL、SQLite 等</p>
-<p><strong>engine.py实现了一个数据库引擎类DBEngine，用于连接数据库并执行SQL语句。在初始化时，它会根据传入的数据库URI创建一个SQLAlchemy的engine，<br>并使用sessionmaker创建一个session。在执行SQL语句时，它会根据语句的类型（SELECT、UPDATE、DELETE、INSERT）返回不同的结果。如果是SELECT语句，<br>它会根据size参数返回对应数量的结果，如果size为1，则返回一个字典，否则返回一个字典列表。在返回结果前，它会对结果进行处理，将datetime.datetime<br>和datetime.date类型转换为字符串，将json字符串转换为字典。如果是UPDATE、DELETE、INSERT语句，则返回一个字典，包含受影响的行数。</strong> </p>
-<h4 id="ext"><a href="#ext" class="headerlink" title="ext"></a>ext</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── __init__.py</span><br><span class="line">└── uploader</span><br><span class="line">   └── __init__.py</span><br></pre></td></tr></table></figure>
-<p>在httprunner基础上集成了别的插件</p>
-<ul>
-<li><p>uploader：集成了上传文件的功能<br>这是一个名为uploader的HTTPRunner扩展，它提供了上传文件的功能。如果要使用此扩展，需要先安装以下依赖项：</p>
-</li>
-<li><p>requests_toolbelt</p>
-</li>
-<li><p>filetype</p>
-</li>
-</ul>
-<p><strong>uploader扩展提供了prepare_upload_step函数，用于预处理上传测试步骤。它会将上传信息替换为MultipartEncoder对象。<br>如果上传信息不存在，则不进行处理。MultipartEncoder对象是使用multipart_encoder函数初始化的，该函数接受上传字段作为参数，<br>并返回一个初始化的MultipartEncoder对象。multipart_content_type函数用于准备请求头的Content-Type。如果依赖项未安装，<br>则会引发ModuleNotFoundError异常。</strong> </p>
-<h4 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── data_convertor.py</span><br><span class="line">└── thrift_client.py</span><br></pre></td></tr></table></figure>
-
-<p><strong>thrift 模块是用于支持 Apache Thrift 的模块，可以将 thrift 服务定义文件（.thrift 文件）转换为 Python 代码，并生成可用的客户端和服务端代码。它基于 thrift 的 Python 库进行开发，<br>支持多种类型的 thrift 服务，如 TCP、HTTP 等。</strong></p>
-<h4 id="cli-py"><a href="#cli-py" class="headerlink" title="cli.py"></a>cli.py</h4><p>命令行驱动执行</p>
-<h4 id="client-py"><a href="#client-py" class="headerlink" title="client.py"></a>client.py</h4><p>客户端相关方法,主要是封装 requests.Session.request,安全调用,输出log等, 给runner.py调用.</p>
-<h4 id="compat-py"><a href="#compat-py" class="headerlink" title="compat.py"></a>compat.py</h4><p>提供各种处理兼容性的方法,包括让v2版本的用例能在v3版本继续运行的相关转换方法</p>
-<h4 id="config-py"><a href="#config-py" class="headerlink" title="config.py"></a>config.py</h4><p>包含三个类：ConfigThrift、ConfigDB 和 Config。<br>这些类的作用是为 HttpRunner 提供配置信息，包括 Thrift 协议相关的配置信息和数据库相关的配置信息。通过使用这些类，用户可以方便地设置和管理配置信息，从而更好地控制测试用例的执行过程。 </p>
-<h4 id="exceptions-py"><a href="#exceptions-py" class="headerlink" title="exceptions.py"></a>exceptions.py</h4><p>定义了失败类型的异常信息</p>
-<h4 id="loader-py"><a href="#loader-py" class="headerlink" title="loader.py"></a>loader.py</h4><p>加载文件内容的方法</p>
-<h4 id="make-py"><a href="#make-py" class="headerlink" title="make.py"></a>make.py</h4><p>主要集成参数使之生效在测试用例中，如config、request、teststep等等，构成一个可用的用例</p>
-<h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h4><p>定义各种model类,以BaseModel为父类</p>
-<h4 id="parser-py"><a href="#parser-py" class="headerlink" title="parser.py"></a>parser.py</h4><p>各种解析方法，主要用于数值类型判断后自动转换</p>
-<h4 id="response-py"><a href="#response-py" class="headerlink" title="response.py"></a>response.py</h4><p>处理响应报文格式</p>
-<h4 id="runner-py"><a href="#runner-py" class="headerlink" title="runner.py"></a>runner.py</h4><p>运行项目的核心</p>
-<h4 id="step-py"><a href="#step-py" class="headerlink" title="step.py"></a>step.py</h4><p>文件定义了 Step 类，该类表示 HttpRunner 测试用例中的一个步骤，提供了多个属性和方法，用于获取步骤的信息和运行步骤</p>
-<h4 id="step-request-py"><a href="#step-request-py" class="headerlink" title="step_request.py"></a>step_request.py</h4><p>用于运行 HttpRunner 测试步骤中的请求</p>
-<h4 id="step-sql-request-py"><a href="#step-sql-request-py" class="headerlink" title="step_sql_request.py"></a>step_sql_request.py</h4><p>定义了 run_step_sql_request 函数，该函数表示 HttpRunner 测试用例中的一个 SQL 查询步骤，提供了解析 SQL 查询请求、<br>执行 SQL 查询、提取 SQL 查询结果、更新 step_variables 和验证 SQL 查询结果等功能。 </p>
-<h4 id="step-testcase-py"><a href="#step-testcase-py" class="headerlink" title="step_testcase.py"></a>step_testcase.py</h4><p>定义了 StepTestCase 类，该类表示 HttpRunner 测试用例中的一个测试步骤，继承自 Step 类，提供了多个属性和方法，<br>用于获取测试步骤的信息和运行测试步骤</p>
-<h4 id="step-thrift-request-py"><a href="#step-thrift-request-py" class="headerlink" title="step_thrift_request.py"></a>step_thrift_request.py</h4><p>定义了 run_step_thrift_request 函数，该函数表示 HttpRunner 测试用例中的一个 Thrift 请求步骤，提供了解析 Thrift 请求、<br>执行 Thrift 请求、提取 Thrift 请求结果、更新 step_variables 和验证 Thrift 请求结果等功能。 </p>
-<h4 id="utils-py"><a href="#utils-py" class="headerlink" title="utils.py"></a>utils.py</h4><p>一些工具函数用于处理数据、打印信息等,辅助测试用例的编写和执行，可以在测试用例中直接使用。 </p>
-]]></content>
-      <categories>
-        <category>Httprunner</category>
-      </categories>
-      <tags>
-        <tag>httprunner</tag>
-        <tag>接口自动化</tag>
       </tags>
   </entry>
 </search>
