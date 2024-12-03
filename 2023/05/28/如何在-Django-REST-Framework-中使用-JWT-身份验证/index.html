@@ -23,7 +23,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在 Django REST Framework 中使用 JWT 身份验证">
 <meta property="og:url" content="https://github.com/YoGazz/YoGazz.github.io/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/index.html">
-<meta property="og:site_name" content="佑珈の博客">
+<meta property="og:site_name" content="佑珈">
 <meta property="og:description" content="JWT 代表JSON Web Token，它是客户端&#x2F;服务器应用程序使用的一种身份验证策略，其中客户端是使用 JavaScript 和一些前端框架（如 Angular、React 或 VueJS）的 Web 应用程序。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://simpleisbetterthancomplex.com/media/2018/12/drf-web.png">
@@ -47,7 +47,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/YoGazz/YoGazz.github.io/2023/05/28/%E5%A6%82%E4%BD%95%E5%9C%A8-Django-REST-Framework-%E4%B8%AD%E4%BD%BF%E7%94%A8-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/","path":"2023/05/28/如何在-Django-REST-Framework-中使用-JWT-身份验证/","title":"如何在 Django REST Framework 中使用 JWT 身份验证"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>如何在 Django REST Framework 中使用 JWT 身份验证 | 佑珈の博客</title>
+<title>如何在 Django REST Framework 中使用 JWT 身份验证 | 佑珈</title>
   
 
 
@@ -60,7 +60,7 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<link rel="alternate" href="/atom.xml" title="佑珈の博客" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="佑珈" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -81,7 +81,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">佑珈の博客</p>
+      <p class="site-title">佑珈</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录生活中的点点滴滴</p>
@@ -181,12 +181,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佑珈の博客">
+      <meta itemprop="name" content="佑珈">
       <meta itemprop="description" content="我自是年少，韶华倾覆">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="如何在 Django REST Framework 中使用 JWT 身份验证 | 佑珈の博客">
+      <meta itemprop="name" content="如何在 Django REST Framework 中使用 JWT 身份验证 | 佑珈">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -226,6 +226,21 @@
     </span>
 
   
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -238,71 +253,71 @@
 <span id="more"></span>
 
 <h4 id="JWT-是如何工作的？"><a href="#JWT-是如何工作的？" class="headerlink" title="JWT 是如何工作的？"></a>JWT 是如何工作的？</h4><p>JWT 只是一个授权令牌，应该包含在所有请求中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8000/hello/ -H &#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9.Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8000</span><span class="regexp">/hello/</span> -H <span class="string">&#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9.Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>JWT 是通过将用户名+密码交换为<strong>访问令牌</strong>和<strong>刷新令牌</strong>来获取的。</p>
 <p>访问<strong>令牌</strong>通常是短暂的（5 分钟左右过期，但可以自定义）。</p>
 <p>刷新<strong>令牌的</strong>寿命稍长一些（24 小时后过期，也可自定义）。它类似于身份验证会话。过期后，您需要再次使用用户名+密码进行完整登录。</p>
 <p>这是为什么？</p>
 <p>这是一项安全功能，也是因为 JWT 拥有更多信息。如果你仔细看我上面给出的例子，你会看到令牌由三部分组成：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxx.yyyyy.zzzzz</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxx<span class="selector-class">.yyyyy</span>.zzzzz</span><br></pre></td></tr></table></figure>
 
 <p>这些是构成 JWT 的三个独特部分：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">header</span><span class="selector-class">.payload</span>.signature</span><br></pre></td></tr></table></figure>
 
 <p>所以我们在这里：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">header = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</span><br><span class="line">payload = eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9</span><br><span class="line">signature = Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">header</span> <span class="operator">=</span> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</span><br><span class="line"><span class="attribute">payload</span> <span class="operator">=</span> eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzODI4NDMxLCJqdGkiOiI3ZjU5OTdiNzE1MGQ0NjU3OWRjMmI0OTE2NzA5N2U3YiIsInVzZXJfaWQiOjF9</span><br><span class="line"><span class="attribute">signature</span> <span class="operator">=</span> Ju70kdcaHKn1Qaz8H42zrOYk0Jx9kIckTn9Xx7vhikY</span><br></pre></td></tr></table></figure>
 
 <p>此信息使用 Base64 编码。如果我们解码，我们会看到这样的东西：</p>
 <p><strong>标头</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;,</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>有效负载</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;token_type&quot;: &quot;access&quot;,</span><br><span class="line">  &quot;exp&quot;: 1543828431,</span><br><span class="line">  &quot;jti&quot;: &quot;7f5997b7150d46579dc2b49167097e7b&quot;,</span><br><span class="line">  &quot;user_id&quot;: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;token_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;access&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exp&quot;</span><span class="punctuation">:</span> <span class="number">1543828431</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;jti&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7f5997b7150d46579dc2b49167097e7b&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;user_id&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>签名</strong></p>
 <p>签名由 JWT 后端发出，使用 header base64 + payload base64 + <code>SECRET_KEY</code>。根据每个请求验证此签名。如果客户端更改了标头或有效负载中的任何信息，它将使签名无效。检查和验证签名的唯一方法是使用应用程序的 <code>SECRET_KEY</code>. 除此之外，这就是为什么您应该始终保守<code>SECRET_KEY</code> <strong>秘密</strong>！</p>
 <hr>
 <h4 id="安装与设置"><a href="#安装与设置" class="headerlink" title="安装与设置"></a>安装与设置</h4><p>对于本教程，我们将使用<a href="https://github.com/davesque/django-rest-framework-simplejwt"><code>djangorestframework_simplejwt</code></a> DRF 开发人员推荐的库。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework_simplejwt</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> djangorestframework_simplejwt</span><br></pre></td></tr></table></figure>
 
 <p><strong>设置.py</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    &#x27;DEFAULT_AUTHENTICATION_CLASSES&#x27;: [</span><br><span class="line">        &#x27;rest_framework_simplejwt.authentication.JWTAuthentication&#x27;,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">REST_FRAMEWORK</span> = &#123;</span><br><span class="line">    <span class="string">&#x27;DEFAULT_AUTHENTICATION_CLASSES&#x27;</span>: [</span><br><span class="line">        <span class="string">&#x27;rest_framework_simplejwt.authentication.JWTAuthentication&#x27;</span>,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>网址.py</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from rest_framework_simplejwt import views as jwt_views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    # Your URLs...</span><br><span class="line">    path(&#x27;api/token/&#x27;, jwt_views.TokenObtainPairView.as_view(), name=&#x27;token_obtain_pair&#x27;),</span><br><span class="line">    path(&#x27;api/token/refresh/&#x27;, jwt_views.TokenRefreshView.as_view(), name=&#x27;token_refresh&#x27;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.urls <span class="keyword">import</span> <span class="built_in">path</span></span><br><span class="line">from rest_framework_simplejwt <span class="keyword">import</span> views <span class="keyword">as</span> jwt_views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    # Your URLs...</span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;api/token/&#x27;</span>, jwt_views.TokenObtainPairView.as_view(), <span class="keyword">name</span>=<span class="string">&#x27;token_obtain_pair&#x27;</span>),</span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;api/token/refresh/&#x27;</span>, jwt_views.TokenRefreshView.as_view(), <span class="keyword">name</span>=<span class="string">&#x27;token_refresh&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><p>对于本教程，我将使用以下路由和 API 视图：</p>
 <p><strong>视图.py</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework.views import APIView</span><br><span class="line">from rest_framework.response import Response</span><br><span class="line">from rest_framework.permissions import IsAuthenticated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class HelloView(APIView):</span><br><span class="line">    permission_classes = (IsAuthenticated,)</span><br><span class="line"></span><br><span class="line">    def get(self, request):</span><br><span class="line">        content = &#123;&#x27;message&#x27;: &#x27;Hello, World!&#x27;&#125;</span><br><span class="line">        return Response(content)</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> IsAuthenticated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="symbol">HelloView</span>(<span class="symbol">APIView</span>):</span><br><span class="line">    <span class="symbol">permission_classes</span> = (<span class="symbol">IsAuthenticated,</span>)</span><br><span class="line"></span><br><span class="line">    <span class="symbol">def</span> <span class="symbol">get</span>(<span class="symbol">self, <span class="symbol">request</span></span>):</span><br><span class="line">        <span class="symbol">content</span> = &#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello, World!&#x27;</span>&#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure>
 
 <p><strong>网址.py</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from myapi.core import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;hello/&#x27;, views.HelloView.as_view(), name=&#x27;hello&#x27;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> <span class="type">path</span></span><br><span class="line"><span class="keyword">from</span> myapi.core <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;hello/&#x27;</span>, views.HelloView.as_view(), <span class="type">name</span>=<span class="string">&#x27;hello&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><p>我将使用<a target="_blank" rel="noopener" href="https://httpie.org/">HTTPie</a>通过终端使用 API 端点。但您也可以使用 <a target="_blank" rel="noopener" href="https://curl.haxx.se/">cURL</a>（在许多操作系统中都很容易使用）在本地进行尝试。</p>
 <p>或者，通过访问端点 URL 来使用 DRF Web 界面，如下所示：</p>
 <p><img src="https://simpleisbetterthancomplex.com/media/2018/12/drf-web.png" alt="DRF JWT 获取token"></p>
 <h5 id="获取令牌"><a href="#获取令牌" class="headerlink" title="获取令牌"></a>获取令牌</h5><p>第一步是<strong>验证并获取令牌</strong>。端点是<code>/api/token/</code>，它只接受<strong>POST</strong>请求。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http://127.0.0.1:8000/api/token/ username=vitor password=123</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8000</span><span class="regexp">/api/</span>token/ username=vitor password=<span class="number">123</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-obtain-token.png" alt="HTTPie JWT 获取令牌"></p>
 <p>所以基本上你的响应主体是两个标记：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;access&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjU5LCJqdGkiOiIyYmQ1NjI3MmIzYjI0YjNmOGI1MjJlNThjMzdjMTdlMSIsInVzZXJfaWQiOjF9.D92tTuVi_YcNkJtiLGHtcn6tBcxLCBxz9FKD3qzhUg8&quot;,</span><br><span class="line">    &quot;refresh&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMxMDM1OSwianRpIjoiMjk2ZDc1ZDA3Nzc2NDE0ZjkxYjhiOTY4MzI4NGRmOTUiLCJ1c2VyX2lkIjoxfQ.rA-mnGRg71NEW_ga0sJoaMODS5ABjE5HnxJDb0F8xAo&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;access&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjU5LCJqdGkiOiIyYmQ1NjI3MmIzYjI0YjNmOGI1MjJlNThjMzdjMTdlMSIsInVzZXJfaWQiOjF9.D92tTuVi_YcNkJtiLGHtcn6tBcxLCBxz9FKD3qzhUg8&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;refresh&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMxMDM1OSwianRpIjoiMjk2ZDc1ZDA3Nzc2NDE0ZjkxYjhiOTY4MzI4NGRmOTUiLCJ1c2VyX2lkIjoxfQ.rA-mnGRg71NEW_ga0sJoaMODS5ABjE5HnxJDb0F8xAo&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>之后，您将在客户端存储<strong>访问令牌</strong>和<strong>刷新令牌，通常在</strong><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a>中。</p>
 <p>为了访问后端受保护的视图（即需要身份验证的 API 端点），您应该在所有请求的标头中包含访问令牌<strong>，</strong>如下所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http://127.0.0.1:8000/hello/ &quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8000</span><span class="regexp">/hello/</span> <span class="string">&quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-bearer.png" alt="HTTPie JWT 你好，世界！"></p>
 <p>您可以在接下来的五分钟内使用此<strong>访问令牌。</strong></p>
 <p>五分钟后，令牌将过期，如果您再次尝试访问该视图，您将收到以下错误：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http://127.0.0.1:8000/hello/ &quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http http:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8000</span><span class="regexp">/hello/</span> <span class="string">&quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQ1MjI0MjAwLCJqdGkiOiJlMGQxZDY2MjE5ODc0ZTY3OWY0NjM0ZWU2NTQ2YTIwMCIsInVzZXJfaWQiOjF9.9eHat3CvRQYnb5EdcgYFzUyMobXzxlAVh_IAgqyvzCE&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-expired.png" alt="HTTPie JWT 已过期"></p>
 <h5 id="刷新令牌"><a href="#刷新令牌" class="headerlink" title="刷新令牌"></a>刷新令牌</h5><p>要获取新的<strong>访问令牌</strong><code>/api/token/refresh/</code>，您应该使用发布 刷新令牌的<strong>刷新令牌</strong>端点：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http://127.0.0.1:8000/api/token/refresh/ refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMwODIyMiwianRpIjoiNzAyOGFlNjc0ZTdjNDZlMDlmMzUwYjg3MjU1NGUxODQiLCJ1c2VyX2lkIjoxfQ.Md8AO3dDrQBvWYWeZsd_A1J39z6b6HEwWIUZ7ilOiPE</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http post http:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8000</span><span class="regexp">/api/</span>token<span class="regexp">/refresh/</span> refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU0NTMwODIyMiwianRpIjoiNzAyOGFlNjc0ZTdjNDZlMDlmMzUwYjg3MjU1NGUxODQiLCJ1c2VyX2lkIjoxfQ.Md8AO3dDrQBvWYWeZsd_A1J39z6b6HEwWIUZ7ilOiPE</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://simpleisbetterthancomplex.com/media/2018/12/jwt-refresh-token.png" alt="HTTPie JWT 刷新令牌"></p>
 <p>返回的是一个新的<strong>访问令牌</strong>，您应该在后续请求中使用它。</p>
@@ -361,8 +376,27 @@
   </span>
   <span class="author" itemprop="copyrightHolder">佑珈</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">16k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">59 分钟</span>
+  </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共16k字</span>
+</div>
 
     </div>
   </footer>
