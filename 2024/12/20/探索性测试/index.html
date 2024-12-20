@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,300italic,400,400italic,700,700italic%7CNoto+Serif+SC:300,300italic,400,400italic,700,700italic%7CSource+Code+Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、什么是探索性测试探索性测试（Exploratory Testing）是一种软件测试方法，它强调测试人员在测试过程中同时设计测试、执行测试并学习系统的行为，与传统的脚本化测试不同，探索性测试不依赖于预先编写的详细测试用例，而是让测试人员根据他们对系统的理解和直觉来灵活地探索和测试软件的各个方面 探索性测试将戴明环方法使用到了极致，它强调将测试相关学习、测试设计、测试执行和测试结果解读作为相互支持">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索性测试">
+<meta property="og:url" content="https://github.com/YoGazz/YoGazz.github.io/2024/12/20/%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="佑珈">
+<meta property="og:description" content="一、什么是探索性测试探索性测试（Exploratory Testing）是一种软件测试方法，它强调测试人员在测试过程中同时设计测试、执行测试并学习系统的行为，与传统的脚本化测试不同，探索性测试不依赖于预先编写的详细测试用例，而是让测试人员根据他们对系统的理解和直觉来灵活地探索和测试软件的各个方面 探索性测试将戴明环方法使用到了极致，它强调将测试相关学习、测试设计、测试执行和测试结果解读作为相互支持">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-20T01:50:49.000Z">
+<meta property="article:modified_time" content="2024-12-20T01:52:12.344Z">
+<meta property="article:author" content="佑珈">
+<meta property="article:tag" content="工作方法">
+<meta property="article:tag" content="效率">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/YoGazz/YoGazz.github.io/2024/12/20/%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/YoGazz/YoGazz.github.io/2024/12/20/%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95/","path":"2024/12/20/探索性测试/","title":"探索性测试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>探索性测试 | 佑珈</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="佑珈" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">佑珈</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活中的点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">一、什么是探索性测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95%E7%9A%84%E5%85%B8%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、探索性测试的典型方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">2.1.</span> <span class="nav-text">1. 单一功能特性测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BA%A4%E4%BA%92%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">2.2.</span> <span class="nav-text">2. 交互特性测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%B3%BB%E7%BB%9F%E4%BA%A4%E4%BA%92%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">3. 系统交互测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%B1%80%E9%83%A8%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">1、局部探索性测试方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%85%A8%E5%B1%80%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">2.5.</span> <span class="nav-text">2、全局探索性测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E6%B7%B7%E5%90%88%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">2.6.</span> <span class="nav-text">3、混合探索性测试</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="佑珈"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">佑珈</p>
+  <div class="site-description" itemprop="description">我自是年少，韶华倾覆</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/YoGazz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;YoGazz" rel="noopener me"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5136762246" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5136762246" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/277259094?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;277259094?spm_id_from&#x3D;333.1007.0.0" rel="noopener me" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@%E8%B0%8E%E8%AF%B4" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@%E8%B0%8E%E8%AF%B4" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.gov.cn/" title="https:&#x2F;&#x2F;www.gov.cn&#x2F;" rel="noopener" target="_blank">中华人民共和国</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1413585838&auto=1&height=66"></iframe>
+
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/YoGazz/YoGazz.github.io/2024/12/20/%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="佑珈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佑珈">
+      <meta itemprop="description" content="我自是年少，韶华倾覆">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="探索性测试 | 佑珈">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          探索性测试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-20 09:50:49 / 修改时间：09:52:12" itemprop="dateCreated datePublished" datetime="2024-12-20T09:50:49+08:00">2024-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">测试</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一、什么是探索性测试"><a href="#一、什么是探索性测试" class="headerlink" title="一、什么是探索性测试"></a>一、什么是探索性测试</h3><p>探索性测试（Exploratory Testing）是一种软件测试方法，它强调测试人员在测试过程中同时设计测试、执行测试并学习系统的行为，与传统的脚本化测试不同，探索性测试不依赖于预先编写的详细测试用例，而是让测试人员根据他们对系统的理解和直觉来灵活地探索和测试软件的各个方面</p>
+<p>探索性测试将戴明环方法使用到了极致，它强调将测试相关学习、测试设计、测试执行和测试结果解读作为相互支持的活动，并行执行。其思维模型CPIE包括4个阶段：</p>
+<p> Collation（整理）：首先是测试相关学习，需要我们收集和整理被测产品的信息，并了解和理解它们。通常在这个阶段，我会翻开需求文档、方案文档看看，或者搜索之前的bug清单寻找思路</p>
+<p>※ Prioritization（排序）：进行测试设计，确定所有测试任务的优先级</p>
+<p>※ Investigation（调查）：对即将执行的测试任务进行仔细的分析并确定测试输入和预期输出，也属于测试设计的一部分</p>
+<p>※ Experimentation（实验）：重点在测试执行和对测试结果的验证，验证我们的预期是否正确，检查我们在整理阶段获取到的信息是否正确。根据实验结果，测试人员将收集更多的信息，并调整测试任务的优先级。以此不断达到收集反馈、调整测试、优化价值的效果。</p>
+<h3 id="二、探索性测试的典型方法"><a href="#二、探索性测试的典型方法" class="headerlink" title="二、探索性测试的典型方法"></a>二、探索性测试的典型方法</h3><p>根据不同产品的特性，可以将产品<a target="_blank" rel="noopener" href="https://edu.csdn.net/cloud/sd_summit?utm_source=glcblog&spm=1001.2101.3001.7020">功能测试</a>分成三个层次：单一功能特性测试、交互特性测试和系统交互测试。针对每个层次，探索性测试的方法可以简单的概括为：局部探索性测试方法、全局探索性测试法和混合探索性测试法。</p>
+<p>在软件测试领域，针对产品的不同方面和层次，测试的种类和重点也有所不同。以下是对单一功能特性测试、交互特性测试和系统交互测试的详细解释：</p>
+<h4 id="1-单一功能特性测试"><a href="#1-单一功能特性测试" class="headerlink" title="1. 单一功能特性测试"></a>1. 单一功能特性测试</h4><p>单一功能特性测试主要关注软件系统中某个具体功能的性能和正确性。这种测试的目的是验证单个功能是否按照设计需求正确实现，并且能够在预期的环境中稳定运行。测试人员会依据功能需求和设计文档，设计测试用例来检验功能的各个方面，包括输入、处理和输出是否符合预期。</p>
+<p>例如，在一个电子邮件系统中，单一功能测试可能包括验证“发送邮件”功能是否能正确地将邮件发送至指定的收件人，邮件内容是否准确无误，以及附件是否能正常添加和发送等。</p>
+<h4 id="2-交互特性测试"><a href="#2-交互特性测试" class="headerlink" title="2. 交互特性测试"></a>2. 交互特性测试</h4><p>交互特性测试侧重于评估软件界面的可用性、易用性和用户满意度。这种测试关注的是用户与软件界面交互时的体验，包括菜单、按钮、输入框等用户交互元素的布局、响应速度和准确性。测试人员会模拟用户操作，检查界面元素是否直观易用，交互流程是否顺畅，以及是否有任何可能导致用户困惑或操作失误的设计。</p>
+<p>以智能手机为例，交互特性测试可能包括触控响应速度、滑动流畅度、手势识别准确度等方面的测试，以确保用户能够方便、快速地完成操作。</p>
+<h4 id="3-系统交互测试"><a href="#3-系统交互测试" class="headerlink" title="3. 系统交互测试"></a>3. 系统交互测试</h4><p>系统交互测试旨在验证软件系统与其他系统或组件之间的交互是否正确无误。这种测试关注的是系统在不同环境下的兼容性、稳定性和性能表现。测试人员会检查系统在与外部实体（如其他软件系统、硬件设备或网络服务）交互时是否会出现问题，如数据丢失、性能下降或安全漏洞等。</p>
+<p>例如，在一个企业资源规划（ERP）系统中，系统交互测试可能包括验证该系统是否能与财务系统、库存管理系统等其他企业应用无缝集成，以及在数据交换过程中是否会出现错误或延迟等问题。</p>
+<p>综上所述，单一功能特性测试、交互特性测试和系统交互测试是软件测试中不可或缺的组成部分，它们分别从不同的角度和层次确保软件系统的质量、可用性和稳定性。</p>
+<h4 id="1、局部探索性测试方法"><a href="#1、局部探索性测试方法" class="headerlink" title="1、局部探索性测试方法"></a>1、局部探索性测试方法</h4><p>我们首先会对软件的单一功能进行比较细致的探索式测试。“探索”的过程主要是基于功能需求以及非功能性需求进行扩展和延伸。</p>
+<p>比如以软件系统的用户登录功能为例，作为探索式测试人员，首先应该站在最终用户的角度去理解和使用登录功能。为此，探索式测试人员需要分析出用户登录功能的所有原子输入项。假定原子输入项只有用户名、密码和登录按钮。接着组合这些原子输入项构成最基本典型的测试场景。</p>
+<p>再比如，用真实合法的用户名以及密码完成登录就是一个非常基本典型的场景，如果该场景能够成功登录，就可以切换到下一个；如果该场景不能够成功登录，就需要去“探索”为什么没能登录成功，比如你可能会怀疑是否是因为用户名或者密码是区分大小写的，又或者是不是因为你多次错误的尝试而导致的。</p>
+<p>基于你的怀疑，进一步去设计新的测试用例来验证你的猜测。总之，通过以上这样的“探索”过程，你将测试学习、测试设计、测试执行和测试结果评估串联成了一个快速迭代的过程，并在你脑海中快速建立了登录功能的详细模型。</p>
+<h4 id="2、全局探索性测试"><a href="#2、全局探索性测试" class="headerlink" title="2、全局探索性测试"></a>2、全局探索性测试</h4><p>以用户登录功能为例，在系统交互的探索式测试中，就不仅要考虑单一的登录功能了，而是要考虑用户登录与系统其他功能相结合的场景。</p>
+<p>比如，你可以尝试不登录直接访问登录后的路径去观察系统的行为；再比如，你可以尝试不登录就去查看订单状态的操作等等。这些组合场景的设计主要取决于你想要验证，或者说想要“探索”的系统功能。很多时候这些灵感来自于你之前对系统的探索而取得的系统认识，同时你的技术直觉也在此扮演了重要角色。</p>
+<h4 id="3、混合探索性测试"><a href="#3、混合探索性测试" class="headerlink" title="3、混合探索性测试"></a>3、混合探索性测试</h4><p>混合探索性测试就是将探索性测试与传统的基于场景的测试方法相结合，通过引入变化达到系统交互测试的目的。</p>
+<p>![image-20241219151136172](&#x2F;Users&#x2F;zhangbijiang&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20241219151136172.png)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95/" rel="tag"># 工作方法</a>
+              <a href="/tags/%E6%95%88%E7%8E%87/" rel="tag"># 效率</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/01/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E5%9B%BE%E8%A7%A3/" rel="prev" title="番茄工作法图解">
+                  <i class="fa fa-chevron-left"></i> 番茄工作法图解
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佑珈</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">18k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:06</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共19k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
