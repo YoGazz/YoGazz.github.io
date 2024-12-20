@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/links/index.html</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/repository/index.html</loc>
     
     <lastmod>2023-05-26</lastmod>
     
@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/repository/index.html</loc>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/links/index.html</loc>
     
     <lastmod>2023-05-26</lastmod>
     
@@ -286,13 +286,6 @@
   </url>
   
   <url>
-    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
-    <lastmod>2024-12-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95/</loc>
     <lastmod>2024-12-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -301,6 +294,13 @@
   
   <url>
     <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%88%E7%8E%87/</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
     <lastmod>2024-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

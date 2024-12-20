@@ -17,8 +17,8 @@ https://github.com/YoGazz/YoGazz.github.io/categories/index.html
 https://github.com/YoGazz/YoGazz.github.io/about/index.html
 https://github.com/YoGazz/YoGazz.github.io/tags/index.html
 https://github.com/YoGazz/YoGazz.github.io/books/index.html
-https://github.com/YoGazz/YoGazz.github.io/links/index.html
 https://github.com/YoGazz/YoGazz.github.io/repository/index.html
+https://github.com/YoGazz/YoGazz.github.io/links/index.html
 https://github.com/YoGazz/YoGazz.github.io/404.html
 https://github.com/YoGazz/YoGazz.github.io
 https://github.com/YoGazz/YoGazz.github.io/tags/docker/
@@ -32,9 +32,9 @@ https://github.com/YoGazz/YoGazz.github.io/tags/markdown/
 https://github.com/YoGazz/YoGazz.github.io/tags/django/
 https://github.com/YoGazz/YoGazz.github.io/tags/rest-framework/
 https://github.com/YoGazz/YoGazz.github.io/tags/%E9%9D%A2%E8%AF%95/
-https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/
 https://github.com/YoGazz/YoGazz.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95/
 https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%88%E7%8E%87/
+https://github.com/YoGazz/YoGazz.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/
 https://github.com/YoGazz/YoGazz.github.io/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/
 https://github.com/YoGazz/YoGazz.github.io/categories/Linux/
 https://github.com/YoGazz/YoGazz.github.io/categories/Git/
