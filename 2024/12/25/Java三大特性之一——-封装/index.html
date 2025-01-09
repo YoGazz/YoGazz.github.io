@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,300italic,400,400italic,700,700italic%7CNoto+Serif+SC:300,300italic,400,400italic,700,700italic%7CSource+Code+Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、什么是封装我们知道在面向对象编程的世界里有三大特征，分别是封装，继承，多态，那我们来了解了解何为封装。     举个例子，拿我们的手机来说，我们所看到的手机外观基本都是非常漂亮的，我们只知道手机该怎么用手机有什么功能，但我们并不知道这些功能这小小的手机是怎么做到的那么小的体积做到有这么多的功能，我们身为使用者，我们是无法知道手机内部是怎么实现这么多功能的，这同时也是手机的制作者想要的，在手机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java三大特性之一—— 封装">
+<meta property="og:url" content="https://github.com/YoGazz/YoGazz.github.io/2024/12/25/Java%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94-%E5%B0%81%E8%A3%85/index.html">
+<meta property="og:site_name" content="佑珈">
+<meta property="og:description" content="一、什么是封装我们知道在面向对象编程的世界里有三大特征，分别是封装，继承，多态，那我们来了解了解何为封装。     举个例子，拿我们的手机来说，我们所看到的手机外观基本都是非常漂亮的，我们只知道手机该怎么用手机有什么功能，但我们并不知道这些功能这小小的手机是怎么做到的那么小的体积做到有这么多的功能，我们身为使用者，我们是无法知道手机内部是怎么实现这么多功能的，这同时也是手机的制作者想要的，在手机制">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-25T08:54:46.000Z">
+<meta property="article:modified_time" content="2024-12-25T09:27:33.240Z">
+<meta property="article:author" content="佑珈">
+<meta property="article:tag" content="java基础">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/YoGazz/YoGazz.github.io/2024/12/25/Java%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94-%E5%B0%81%E8%A3%85/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/YoGazz/YoGazz.github.io/2024/12/25/Java%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94-%E5%B0%81%E8%A3%85/","path":"2024/12/25/Java三大特性之一——-封装/","title":"Java三大特性之一—— 封装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java三大特性之一—— 封装 | 佑珈</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="佑珈" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">佑珈</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活中的点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%81%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">一、什么是封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">二、访问修饰限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E3%80%81public"><span class="nav-number">2.1.</span> <span class="nav-text">2.1、public</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E3%80%81protected"><span class="nav-number">2.2.</span> <span class="nav-text">2.2、protected</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E3%80%81default"><span class="nav-number">2.3.</span> <span class="nav-text">2.3、default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E3%80%81private"><span class="nav-number">2.4.</span> <span class="nav-text">2.4、private</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">三、包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%85"><span class="nav-number">3.1.</span> <span class="nav-text">3.1、什么是包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%E3%80%81%E5%AF%BC%E5%85%A5%E5%85%B6%E4%BB%96%E5%8C%85%E4%B8%AD%E7%9A%84%E7%B1%BB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2、导入其他包中的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8C%85"><span class="nav-number">3.3.</span> <span class="nav-text">3.3、自定义包</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="佑珈"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">佑珈</p>
+  <div class="site-description" itemprop="description">我自是年少，韶华倾覆</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/YoGazz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;YoGazz" rel="noopener me"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5136762246" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5136762246" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/277259094?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;277259094?spm_id_from&#x3D;333.1007.0.0" rel="noopener me" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@%E8%B0%8E%E8%AF%B4" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@%E8%B0%8E%E8%AF%B4" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.gov.cn/" title="https:&#x2F;&#x2F;www.gov.cn&#x2F;" rel="noopener" target="_blank">中华人民共和国</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1413585838&auto=1&height=66"></iframe>
+
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/YoGazz/YoGazz.github.io/2024/12/25/Java%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94-%E5%B0%81%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="佑珈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佑珈">
+      <meta itemprop="description" content="我自是年少，韶华倾覆">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java三大特性之一—— 封装 | 佑珈">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java三大特性之一—— 封装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-25 16:54:46 / 修改时间：17:27:33" itemprop="dateCreated datePublished" datetime="2024-12-25T16:54:46+08:00">2024-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、什么是封装"><a href="#一、什么是封装" class="headerlink" title="一、什么是封装"></a>一、什么是封装</h2><p>我们知道在面向对象编程的世界里有三大特征，分别是封装，继承，多态，那我们来了解了解何为封装。</p>
+<p>    举个例子，拿我们的手机来说，我们所看到的手机外观基本都是非常漂亮的，我们只知道手机该怎么用手机有什么功能，但我们并不知道这些功能这小小的手机是怎么做到的那么小的体积做到有这么多的功能，我们身为使用者，我们是无法知道手机内部是怎么实现这么多功能的，这同时也是手机的制作者想要的，在手机制作者的世界里面，他认为使用者只需要会使用自己放出的功能就足够了，手机内部功能的实现是怎么做到的，使用者没必要知道，使用者会玩手机就足够了。</p>
+<p>这其中就体现了封装，使用者只能使用制作者放出来的东西，使用者不知道手机的内部功能的实现，我想要你知道的你才能知道，我不想要你知道的你就不能知道。封装指的是将数据和操作数据的方法有机结合，同时对外隐藏内部的细节，只暴露必要的接口供其他对象使用。<br>    Java的封装主要是通过类和访问权限来实现的，类可以将数据和操作数据的方法进行有机结合在一起，访问权限用来控制成员变量和成员方法能否在类外进行使用，从而实现对对象内部的实现细节进行隐藏。同时包也是对类，接口等的封装机制的体现，是一种对类和接口很好的组织方式。</p>
+<p>封装性的主要目的是保护数据，防止外部的不合理访问和修改，从而提高代码的可维护性和可复用性。</p>
+<h2 id="二、访问修饰限定符"><a href="#二、访问修饰限定符" class="headerlink" title="二、访问修饰限定符"></a>二、访问修饰限定符</h2><p>那如何实现封装呢，这儿就需要使用到访问修饰限定符：public、private、protected、default。通过<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90&spm=1001.2101.3001.7020">访问权限</a>的不同来控制方法或者属性能否可以直接在类外使用</p>
+<h3 id="2-1、public"><a href="#2-1、public" class="headerlink" title="2.1、public"></a>2.1、public</h3><p>public是Java里权限最大的，当前类，同一个包中的其他类，不同包的子类，不同包的非子类，都可以访问。可以理解外一个人的外貌，每个人都可以看得见。</p>
+<h3 id="2-2、protected"><a href="#2-2、protected" class="headerlink" title="2.2、protected"></a>2.2、protected</h3><p> protected是访问权限里面第二大的，通常用于被继承的父类，当前类，同一个包中的其他类，不同包的子类。</p>
+<h3 id="2-3、default"><a href="#2-3、default" class="headerlink" title="2.3、default"></a>2.3、default</h3><p>default并不是一个关键字，当类内的方法或者属性没有被任何访问修饰限定符修饰时，当前方法或者属性被称为包访问权限。可以想象为一个家庭或者一个家族，包访问权限就相当与只有该家庭或者家族内部的人才知道的事情，家庭外或者家族外的人不知道这件事情</p>
+<h3 id="2-4、private"><a href="#2-4、private" class="headerlink" title="2.4、private"></a>2.4、private</h3><p>private是所有权限中最小的，相当于某件事情只有自己知道，其他任何人都不知道。也被称之为私有权限</p>
+<p> 大多数情况下，成员属性设置为private，成员方法设置为public，将对象的属性隐藏起来，提供开放的接口供给外部使用，这些接口可以操作成员属性。可以操作成员属性的方法一般有两种，一种是set方法，一种是get方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test1</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;<span class="comment">//私有</span></span><br><span class="line">    <span class="keyword">private</span> String name;<span class="comment">//私有</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> set方法可以对成员属性进行赋值<br>    get方法可以取到成员属性的值<br>当成员属性数量多的时候，一个一个的定义set，get方法就会很繁琐并且消耗大量时间，此时编译器就提供了相应的快捷方式，可以一键生成set，get方法</p>
+<h2 id="三、包"><a href="#三、包" class="headerlink" title="三、包"></a>三、包</h2><h3 id="3-1、什么是包"><a href="#3-1、什么是包" class="headerlink" title="3.1、什么是包"></a>3.1、什么是包</h3><p>在面向对象体系中，提出了软件包的概念，即为了更好的管理类，创建一个包把多个类收集在一起，称之为软件包。有点类似于文件夹，文件夹里面可以存储多个内容，将内容类似的存储在同一个文件夹中，比如说一个班级有男生和女生，男生的信息存储到一号文件夹，女生的信息存储到二号文件夹，此时学生的信息可以更好的进行管理<br>    包是对类和接口等的封装机制的体现 ，是类或者接口的容器，它通过命名空间来区分不同的类，使得即使类名相同，只要它们位于不同的包中就不会发生冲突。这也就意味着在同一个工程里面可以存在名字相同的类</p>
+<h3 id="3-2、导入其他包中的类"><a href="#3-2、导入其他包中的类" class="headerlink" title="3.2、导入其他包中的类"></a>3.2、导入其他包中的类</h3><p>Java本身提供了很多现成的类供我们使用，但在使用之前必须要进行导包，导包需要使用到import关键字，但大多数时候并不需要我们手动导包，编译器会自动导包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br></pre></td></tr></table></figure>
+
+<p>导包导包，顾名思义就是将包内我们所需要的类导入当前类中，import java.util.*，并非是将util包内的全部类导入当前类，而是代码需要调用哪个类，编译器就加载对应的util底下的类出来供给JVM使用。<br>    但是这种方式也是有缺陷的，首先就是代码的可读性降低了，其次就是有可能会导致冲突出现。</p>
+<h3 id="3-3、自定义包"><a href="#3-3、自定义包" class="headerlink" title="3.3、自定义包"></a>3.3、自定义包</h3><p> 	  1、在文件的最上方加上一个package语句声明当前类在哪个包中<br>    2、包名通常会使用公司的域名的颠倒形式（例如：com.bit.www），并且必须要小写字母<br>    3、包名和代码路径相匹配，例如创建com.bit.demo1的包，那么会存在一个对应的路径com&#x2F;bit&#x2F;demo1来存储代码<br>    4、如果一个类没有package语句，那么当前类是存放在默认包底下的，src是默认包。<br>    5、程序在运行的时候是默认在src这个包里面查找可执行程序的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/" rel="tag"># java基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/25/%E3%80%8AJava%E8%AF%A6%E8%A7%A3%E3%80%8B-%E6%8A%BD%E8%B1%A1%E7%B1%BB/" rel="prev" title="《Java详解》-抽象类">
+                  <i class="fa fa-chevron-left"></i> 《Java详解》-抽象类
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/25/Java%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94-%E7%BB%A7%E6%89%BF/" rel="next" title="Java三大特性之一—— 继承">
+                  Java三大特性之一—— 继承 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佑珈</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">48k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:55</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共51.3k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
